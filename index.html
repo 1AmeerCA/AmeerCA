@@ -3,237 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pakistan Income Tax Calculator (Salaried & Business)</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Professional Tax Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f7fafc;
+        :root {
+            --Red: #ff0000;
+            --Blue: #007bff;
+            --Gold: #FFED00;
+            --Parrot: #16FF00;
+            --Deep-Green: #2E7D32;
+            --White: #ffffff;
+            --Off-White: #f8f9fa;
+            --Black: #000000;
+            --Gray: #f5f5f5;
+            --Soft-Gray: #d3d3d3;
+            --Dark-Gray: #929292;
+            --Transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .container {
-            max-width: 900px;
-        }
-        .text-primary { color: #165A2F; } /* AmeerCA Green */
-        .bg-primary { background-color: #165A2F; }
-        .bg-accent { background-color: #F5D48A; } /* AmeerCA Gold */
 
-        /* Custom Input Styling */
-        input[type="number"], select {
-            border-color: #d1d5db;
-            transition: border-color 0.2s, box-shadow 0.2s;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
         }
-        input[type="number"]:focus, select:focus {
-            border-color: #165A2F;
-            box-shadow: 0 0 0 3px rgba(22, 90, 47, 0.2);
+
+        body {
+            background-color: var(--Off-White);
+            padding: 20px 10px;
+        }
+
+        /* Section Container */
+        .tax-services-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 15px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            color: var(--Deep-Green);
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--Gold);
+            border-radius: 2px;
+        }
+
+        /* Responsive Grid */
+        .services-grid {
+            display: grid;
+            gap: 25px;
+            /* Mobile: 1 Col | Tablet: 2 Col | Desktop: 3 Col */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Card Style */
+        .service-card {
+            background: var(--White);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--Soft-Gray);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: var(--Transition);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(46, 125, 50, 0.15);
+            border-color: var(--Deep-Green);
+        }
+
+        /* Image Section */
+        .card-image {
+            height: 200px;
+            background-color: var(--Deep-Green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--Transition);
+            opacity: 0.9;
+        }
+
+        .service-card:hover .card-image img {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        /* Card Content */
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body h3 {
+            color: var(--Deep-Green);
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .card-body p {
+            color: var(--Dark-Gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Card Actions */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .btn-open {
+            background: var(--Deep-Green);
+            color: var(--White);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            transition: var(--Transition);
+        }
+
+        .service-card:hover .btn-open {
+            background: var(--Black);
+            color: var(--Gold);
+        }
+
+        .btn-share {
+            background: var(--Off-White);
+            border: 1px solid var(--Soft-Gray);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--Transition);
+        }
+
+        .btn-share:hover {
+            background: var(--Gold);
+            border-color: var(--Gold);
+        }
+
+        .btn-share svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--Deep-Green);
+        }
+
+        /* --- POPUP (MODAL) SYSTEM --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--White);
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 25px;
+            position: relative;
+            overflow-y: auto;
+            animation: modalSlide 0.4s ease-out;
+            border: 3px solid var(--Gold);
+        }
+
+        @keyframes modalSlide {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            background: var(--Deep-Green);
+            color: var(--White);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .close-modal {
+            background: var(--Gold);
+            color: var(--Black);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .section-header h2 { font-size: 1.7rem; }
+            .service-card { min-width: 100%; }
+            .card-image { height: 180px; }
+            .modal-content { border-radius: 15px; }
         }
     </style>
 </head>
+<body>
 
-<body class="p-4 sm:p-8">
-    <div class="container mx-auto bg-white shadow-2xl rounded-xl overflow-hidden">
-        
-        <header class="bg-primary text-white p-6 sm:p-8 text-center">
-            <h1 class="text-3xl sm:text-4xl font-extrabold flex items-center justify-center">
-                <i class="fas fa-calculator mr-3 text-accent"></i>
-                Pakistan Income Tax Calculator
-            </h1>
-            <p class="text-sm mt-2 opacity-80">For Tax Year 2024-2025 (Based on general FBR slabs)</p>
-        </header>
+    <section class="tax-services-section">
+        <div class="section-header">
+            <h2>Professional Tax Tools</h2>
+        </div>
 
-        <div class="p-6 sm:p-10">
-
-            <div class="mb-8">
-                <label for="taxpayer-type" class="block text-lg font-semibold mb-2 text-primary">Taxpayer Status:</label>
-                <select id="taxpayer-type" class="w-full p-3 border rounded-lg text-gray-700 font-medium bg-gray-50 focus:ring-2 focus:ring-primary" onchange="calculateTax()">
-                    <option value="salaried">Salaried Individual</option>
-                    <option value="business">Business Individual / AOP</option>
-                </select>
-            </div>
-
-            <div class="space-y-6">
-                
-                <div>
-                    <label for="annual-income" class="block text-base font-semibold mb-2 text-gray-700">Annual Taxable Income (Rs.):</label>
-                    <input type="number" id="annual-income" placeholder="Enter income (e.g., 1,800,000)" class="w-full p-3 border rounded-lg text-gray-800" oninput="calculateTax()">
-                </div>
-                
-                <div id="business-only-fields" class="space-y-6 hidden">
-                    <h3 class="text-xl font-bold text-primary border-b pb-2">Business Inputs</h3>
-                    <div>
-                        <label for="advance-tax" class="block text-base font-semibold mb-2 text-gray-700">Advance Tax Paid / Withheld (Rs.):</label>
-                        <input type="number" id="advance-tax" value="0" placeholder="Enter advance tax paid" class="w-full p-3 border rounded-lg text-gray-800" oninput="calculateTax()">
-                    </div>
-                </div>
-
-                <div id="salaried-only-fields" class="space-y-6 hidden">
-                    <h3 class="text-xl font-bold text-primary border-b pb-2">Salaried Inputs</h3>
-                    <p class="text-sm text-gray-500 italic">Salaried individuals typically enjoy lower tax rates.</p>
-                </div>
-            </div>
-
-            <button onclick="calculateTax()" class="hidden"></button>
+        <div class="services-grid">
             
-            <div class="mt-10 p-6 sm:p-8 bg-gray-50 rounded-xl shadow-inner border-t-4 border-accent">
-                <h2 class="text-2xl font-bold mb-4 text-primary flex items-center">
-                    <i class="fas fa-file-invoice-dollar mr-3"></i>
-                    Tax Calculation Summary
-                </h2>
-                
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-lg font-medium text-gray-700">Annual Taxable Income:</span>
-                        <span id="display-income" class="text-lg font-semibold text-gray-800">Rs. 0</span>
+            <div class="service-card" onclick="openModal('salary-tax')">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80" alt="Salary Tax">
+                </div>
+                <div class="card-body">
+                    <h3>Salary Tax Calculator</h3>
+                    <p>Calculate your annual and monthly income tax based on the latest FBR slabs for the financial year 2025-26.</p>
+                    <div class="card-footer">
+                        <button class="btn-open">Open Calculator</button>
+                        <button class="btn-share" onclick="shareContent(event, 'Salary Tax Calculator')">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1-1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                        </button>
                     </div>
-
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-lg font-medium text-gray-700">Tax Payable (Gross):</span>
-                        <span id="tax-payable" class="text-xl font-bold text-red-600">Rs. 0</span>
-                    </div>
-
-                    <div class="flex justify-between items-center text-sm text-gray-600 italic">
-                        <span>Less: Advance/Withholding Tax Paid:</span>
-                        <span id="display-advance-tax" class="font-semibold">Rs. 0</span>
-                    </div>
-
-                    <div class="flex justify-between items-center pt-4 border-t border-primary">
-                        <span class="text-xl font-bold text-gray-800">Tax Due / Refundable:</span>
-                        <span id="net-tax" class="text-2xl font-extrabold text-primary">Rs. 0</span>
-                    </div>
-                    
-                    <p id="net-tax-message" class="text-sm font-medium pt-2 text-center"></p>
                 </div>
             </div>
 
-            <div class="mt-8 text-xs text-gray-500 p-4 border rounded-lg bg-gray-50">
-                <p><strong>Disclaimer:</strong> This calculator provides an *estimate* based on publicly available income tax slabs (for FY 2024-25). It does not include complexities like capital gains tax, minimum tax, fixed tax regimes, tax credits (e.g., investment, donations), or exemptions. Always consult with a Chartered Accountant (CA) or tax professional for definitive tax planning and filing advice.</p>
+            <div class="service-card" onclick="openModal('advance-tax')">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80" alt="Advance Tax">
+                </div>
+                <div class="card-body">
+                    <h3>Advance Tax (Sec 147)</h3>
+                    <p>Determine your quarterly advance tax liability including Section 4C, 113, and 113C minimum tax adjustments.</p>
+                    <div class="card-footer">
+                        <button class="btn-open">Open Calculator</button>
+                        <button class="btn-share" onclick="shareContent(event, 'Advance Tax Calculator')">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1-1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-card" onclick="openModal('business-tax')">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Business Tax">
+                </div>
+                <div class="card-body">
+                    <h3>Business & AOP Tax</h3>
+                    <p>Professional tax planning for Sole Proprietors and Association of Persons with multi-year slab comparisons.</p>
+                    <div class="card-footer">
+                        <button class="btn-open">Open Calculator</button>
+                        <button class="btn-share" onclick="shareContent(event, 'Business Tax Calculator')">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1-1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="taxModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Calculator</h2>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p style="text-align:center; color: var(--Dark-Gray);">Calculator UI Loading...</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Tax Slabs (Rates are based on general FBR structure for clarity)
-        // **Note: These rates are illustrative of the slab structure and may change annually.**
-        const SLABS = {
-            salaried: [
-                { limit: 600000, rate: 0, base: 0 },         // Up to 600,000 is 0
-                { limit: 1200000, rate: 0.05, base: 0 },    // 5% on amount exceeding 600,000
-                { limit: 1800000, rate: 0.15, base: 30000 },// 15% on amount exceeding 1,200,000 + 30,000
-                { limit: 2500000, rate: 0.20, base: 120000 },// 20% on amount exceeding 1,800,000 + 120,000
-                { limit: 3500000, rate: 0.25, base: 260000 },// 25% on amount exceeding 2,500,000 + 260,000
-                { limit: 5000000, rate: 0.30, base: 510000 },// 30% on amount exceeding 3,500,000 + 510,000
-                { limit: Infinity, rate: 0.35, base: 960000 } // 35% on amount exceeding 5,000,000 + 960,000
-            ],
-            business: [
-                { limit: 600000, rate: 0, base: 0 },         // Up to 600,000 is 0
-                { limit: 1200000, rate: 0.05, base: 0 },    // 5% on amount exceeding 600,000
-                { limit: 1800000, rate: 0.15, base: 30000 },// 15% on amount exceeding 1,200,000 + 30,000
-                { limit: 2500000, rate: 0.20, base: 120000 },// 20% on amount exceeding 1,800,000 + 120,000
-                { limit: 3500000, rate: 0.25, base: 260000 },// 25% on amount exceeding 2,500,000 + 260,000
-                { limit: 5000000, rate: 0.30, base: 510000 },// 30% on amount exceeding 3,500,000 + 510,000
-                { limit: 8000000, rate: 0.35, base: 960000 },// 35% on amount exceeding 5,000,000 + 960,000
-                { limit: Infinity, rate: 0.40, base: 2010000 } // 40% on amount exceeding 8,000,000 + 2,010,000
-            ]
-        };
+        // Modal Logic
+        const modal = document.getElementById('taxModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
 
-        // Utility to format number as currency
-        const formatter = new Intl.NumberFormat('en-PK', {
-            style: 'currency',
-            currency: 'PKR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        });
+        function openModal(type) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scroll
 
-        function calculateTax() {
-            const type = document.getElementById('taxpayer-type').value;
-            const incomeInput = document.getElementById('annual-income').value;
-            const advanceTaxInput = document.getElementById('advance-tax').value;
-
-            // Show/Hide fields based on type
-            const isBusiness = type === 'business';
-            document.getElementById('business-only-fields').classList.toggle('hidden', !isBusiness);
-            document.getElementById('salaried-only-fields').classList.toggle('hidden', isBusiness);
-            
-            const income = parseFloat(incomeInput) || 0;
-            const advanceTax = isBusiness ? (parseFloat(advanceTaxInput) || 0) : 0;
-            let taxPayable = 0;
-            let netTax = 0;
-
-            // Input Validation and early exit
-            if (income <= 0) {
-                taxPayable = 0;
-                netTax = -advanceTax; // If income is 0, net tax is just the refundable advance tax
-                updateDisplay(income, taxPayable, advanceTax, netTax);
-                return;
+            if (type === 'salary-tax') {
+                modalTitle.innerText = "Salary Tax Calculator";
+                modalBody.innerHTML = `<div style="padding:20px; text-align:center; border: 2px dashed var(--Deep-Green);">
+                    <h3>[Your Salary Tax Calculator Code Here]</h3>
+                    <p>Paste the Salary Tax HTML/JS logic here.</p>
+                </div>`;
+            } else if (type === 'advance-tax') {
+                modalTitle.innerText = "Advance Tax (Sec 147)";
+                modalBody.innerHTML = `<div style="padding:20px; text-align:center; border: 2px dashed var(--Deep-Green);">
+                    <h3>[Your Advance Tax Calculator Code Here]</h3>
+                    <p>Paste the Section 147 logic here.</p>
+                </div>`;
+            } else if (type === 'business-tax') {
+                modalTitle.innerText = "Business Tax Calculator";
+                modalBody.innerHTML = `<div style="padding:20px; text-align:center; border: 2px dashed var(--Deep-Green);">
+                    <h3>[Your Business Tax Calculator Code Here]</h3>
+                    <p>Paste the Business Tax logic here.</p>
+                </div>`;
             }
-
-            const slabs = SLABS[type];
-            let previousLimit = 0;
-            
-            // Calculate Tax based on slabs
-            for (let i = 0; i < slabs.length; i++) {
-                const slab = slabs[i];
-                const limit = slab.limit;
-                
-                if (income > previousLimit) {
-                    if (income <= limit) {
-                        // Income falls within this slab
-                        const taxableAmount = income - previousLimit;
-                        taxPayable = slab.base + (taxableAmount * slab.rate);
-                        break; // Calculation complete
-                    } else {
-                        // Income exceeds this slab, move to next
-                        if (limit !== Infinity) {
-                            taxPayable = slab.base + ((limit - previousLimit) * slab.rate);
-                        }
-                    }
-                }
-                previousLimit = limit;
-            }
-
-            // Calculate Net Tax Payable / Refundable
-            netTax = taxPayable - advanceTax;
-
-            // Update all display elements
-            updateDisplay(income, taxPayable, advanceTax, netTax);
         }
 
-        function updateDisplay(income, taxPayable, advanceTax, netTax) {
-            document.getElementById('display-income').textContent = formatter.format(income);
-            document.getElementById('tax-payable').textContent = formatter.format(Math.max(0, taxPayable));
-            document.getElementById('display-advance-tax').textContent = formatter.format(advanceTax);
-            document.getElementById('net-tax').textContent = formatter.format(netTax);
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
-            const netTaxElement = document.getElementById('net-tax');
-            const messageElement = document.getElementById('net-tax-message');
-            
-            netTaxElement.classList.remove('text-primary', 'text-red-600', 'text-green-600');
-            messageElement.classList.remove('text-primary', 'text-red-600', 'text-green-600');
+        // Close on outside click
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
 
-            if (netTax > 0) {
-                // Tax Due
-                netTaxElement.classList.add('text-red-600');
-                messageElement.textContent = "You have a **NET TAX LIABILITY** due to the FBR.";
-                messageElement.classList.add('text-red-600');
-            } else if (netTax < 0) {
-                // Refundable
-                netTaxElement.classList.add('text-primary'); // Use primary color for positive outcome
-                messageElement.textContent = "You have a **REFUNDABLE AMOUNT** from the FBR.";
-                messageElement.classList.add('text-primary');
-                document.getElementById('net-tax').textContent = formatter.format(Math.abs(netTax)); // Display absolute value for refund
+        // Share Functionality (Mobile Native Share)
+        function shareContent(event, title) {
+            event.stopPropagation(); // Prevent card click
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: 'Check out this professional tax tool!',
+                    url: window.location.href
+                }).then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
             } else {
-                // Zero
-                netTaxElement.classList.add('text-gray-800');
-                messageElement.textContent = "Your net tax due is **ZERO** based on your inputs.";
-                messageElement.classList.add('text-gray-600');
+                alert("Sharing link: " + window.location.href);
             }
         }
-
-        // Initial calculation on page load
-        document.addEventListener('DOMContentLoaded', calculateTax);
     </script>
 </body>
-
 </html>
