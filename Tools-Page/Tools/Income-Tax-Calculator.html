@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Tax Calculator - Calculate Income Tax for Salaried & Business | TY 2026</title>
+    <meta name="description" content="Free Pakistan Income Tax Calculator for Salaried and Business individuals. Calculate tax liability, take-home salary, and tax slabs for Tax Years 2024-2027. Instant results with advance tax calculation.">
+    <meta name="keywords" content="Pakistan tax calculator, income tax Pakistan, salary tax calculator, tax calculation, FBR tax, tax slabs 2026, take home salary, tax refund">
+    <meta name="author" content="Tax Calculator">
+    <meta property="og:title" content="Pakistan Tax Calculator - Calculate Income Tax">
+    <meta property="og:description" content="Free Pakistan Income Tax Calculator for Salaried and Business">
+    <meta property="og:type" content="website">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="taxData.js"></script>
+    
+    <style>
+        :root {
+            --Deep-Green: #165A2F;
+            --Green: #10b981;
+            --Light-Green: #34d399;
+            --White: #ffffff;
+            --Off-White: #f9fafb;
+            --Soft-Gray: #e5e7eb;
+            --Dark-Gray: #374151;
+            --Gold: #fbbf24;
+            --Gold-Dark: #f59e0b;
+            --Black: #000000;
+            --Red: #ef4444;
+            --Blue: #3b82f6;
+            --Purple: #8b5cf6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--White);
+            color: var(--Dark-Gray);
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .compact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Doughnut Chart */
+        .doughnut-chart {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--Green) 0% var(--percentage, 0%),
+                var(--Soft-Gray) var(--percentage, 0%) 100%
+            );
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .doughnut-center {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--White);
+            border-radius: 50%;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--Deep-Green);
+        }
+        
+        /* Year Selector */
+        .year-selector-container {
+            position: relative;
+        }
+        
+        .year-select-btn {
+            background: linear-gradient(135deg, var(--Deep-Green), #2c9c3a);
+            color: var(--White);
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
+            min-width: 110px;
+        }
+        
+        .year-dropdown {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            background: var(--White);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            z-index: 1000;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+            overflow: hidden;
+        }
+        
+        .year-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .SelectTY {
+            background: linear-gradient(135deg, var(--Deep-Green), #2c9c3a); 
+            color: white; 
+            padding: 10px 12px;
+        }
+
+        /* Table Styles */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        
+        .results-table th {
+            background: linear-gradient(135deg, var(--Gold), var(--Gold-Dark));
+            padding: 8px 6px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--Black);
+            border: 1px solid var(--Gold-Dark);
+        }
+        
+        .results-table td {
+            padding: 8px 6px;
+            border: 1px solid var(--Soft-Gray);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .results-table .desc-col {
+            background: linear-gradient(135deg, var(--Gold), var(--Gold-Dark));
+            color: var(--Black);
+            font-weight: 700;
+            text-align: left;
+            padding-left: 8px;
+        }
+        
+        .green-row {
+            background: linear-gradient(135deg, var(--Green), var(--Light-Green));
+            color: var(--White);
+        }
+        
+        .red-row {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            color: var(--White);
+        }
+        
+        .blue-row {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            color: var(--White);
+        }
+        
+        .purple-row {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            color: var(--White);
+        }
+        
+        /* Compact Card */
+        .compact-card {
+            background: var(--White);
+            border: 1px solid var(--Soft-Gray);
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+        
+        /* History Item */
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--Soft-Gray);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .history-item:hover {
+            background: var(--Off-White);
+        }
+        
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: var(--Dark-Gray);
+            color: var(--White);
+            padding: 10px 14px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 9999;
+            font-size: 11px;
+        }
+        
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Take Home Items */
+        .take-home-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 6px;
+            font-size: 11px;
+        }
+        
+        .take-home-item.take-home {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+            border-left: 3px solid var(--Green);
+        }
+        
+        .take-home-item.tax-paid {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(248, 113, 113, 0.1));
+            border-left: 3px solid var(--Red);
+        }
+        
+        .take-home-item.effective-rate {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
+            border-left: 3px solid var(--Blue);
+        }
+        
+        /* Input Group */
+        .input-group {
+            display: flex;
+            align-items: center;
+            background: var(--White);
+            border: 1px solid var(--Soft-Gray);
+            border-radius: 5px;
+            padding: 0 6px;
+            transition: all 0.3s;
+        }
+        
+        .input-group:focus-within {
+            border-color: var(--Green);
+            box-shadow: 0 0 0 1px var(--Green);
+        }
+        
+        .input-group input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 6px;
+            background: transparent;
+            font-size: 11px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--Deep-Green), #2c9c3a);
+            color: var(--White);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--Soft-Gray);
+            color: var(--Dark-Gray);
+        }
+        
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .compact-container {
+                padding: 8px;
+            }
+            
+            .results-table {
+                font-size: 10px;
+            }
+            
+            .results-table th,
+            .results-table td {
+                padding: 6px 4px;
+            }
+            
+            .compact-card {
+                padding: 10px;
+            }
+            
+            .doughnut-chart {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .doughnut-center {
+                width: 35px;
+                height: 35px;
+                top: 17.5px;
+                left: 17.5px;
+                font-size: 10px;
+            }
+            
+            #toast {
+                left: 15px;
+                right: 15px;
+                bottom: 10px;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .grid-cols-1 > div {
+                margin-bottom: 8px;
+            }
+            
+            .year-select-btn {
+                font-size: 0.75rem;
+                padding: 5px 10px;
+                min-width: 100px;
+            }
+            
+            .compact-card {
+                padding: 8px;
+            }
+            
+            body {
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .take-home-item {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+            
+            .input-group input {
+                padding: 5px;
+                font-size: 10px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .compact-card {
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+            
+            #toast {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="p-1 sm:p-2">
+    <div class="compact-container">
+        <!-- Header -->
+        <header class="mb-3 sm:mb-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-gray-800 flex items-center">
+                        <i class="fas fa-calculator mr-2 text-green-600"></i>
+                        Pakistan Tax Calculator
+                    </h1>
+                    <p class="text-xs text-gray-600">Calculate income tax for salaried and business individuals</p>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <button onclick="shareCalculation()" 
+                            class="p-1.5 text-gray-600 hover:text-green-600 rounded-lg hover:bg-gray-50"
+                            title="Share Results" aria-label="Share calculation">
+                        <i class="fas fa-share-alt text-sm"></i>
+                    </button>
+                    <button onclick="copyToClipboard('full')" 
+                            class="p-1.5 text-gray-600 hover:text-green-600 rounded-lg hover:bg-gray-50"
+                            title="Copy Results" aria-label="Copy to clipboard">
+                        <i class="far fa-copy text-sm"></i>
+                    </button>
+                    <button onclick="window.print()" 
+                            class="p-1.5 text-gray-600 hover:text-green-600 rounded-lg hover:bg-gray-50"
+                            title="Print" aria-label="Print results">
+                        <i class="fas fa-print text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Row 1: Input, Take Home, History -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-2 mb-2">
+            <!-- Input Section -->
+            <div class="compact-card">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2 flex items-center">
+                    <i class="fas fa-edit mr-2 text-green-600"></i>
+                    Tax Inputs
+                </h2>
+                
+                <div class="grid grid-cols-1 gap-2">
+                    <!-- Taxpayer Type and Year Selector -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <!-- Taxpayer Type -->
+                        <div>
+                            <label class="text-xs font-medium text-gray-700 mb-1 block">Taxpayer Status</label>
+                            <div class="flex space-x-1">
+                                <button id="btn-salaried" 
+                                        onclick="setTaxpayerType('salaried')"
+                                        class="flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-green-600 text-white"
+                                        aria-label="Salaried taxpayer">
+                                    <i class="fas fa-user-tie mr-1"></i> Salaried
+                                </button>
+                                <button id="btn-business" 
+                                        onclick="setTaxpayerType('business')"
+                                        class="flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                        aria-label="Business taxpayer">
+                                    <i class="fas fa-briefcase mr-1"></i> Business
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Year Selector -->
+                        <div>
+                            <label class="text-xs font-medium text-gray-700 mb-1 block">Tax Year</label>
+                            <div class="year-selector-container">
+                                <button class="year-select-btn" id="yearSelectBtn" aria-label="Select tax year">
+                                    <span class="btn-icon">
+                                        <i class="fas fa-calendar-alt text-xs"></i>
+                                    </span>
+                                    <span class="btn-text">TY 2026</span>
+                                    <span class="btn-arrow">
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </span>
+                                </button>
+                                
+                                <div class="year-dropdown" id="yearDropdown">
+                                    <div class="SelectTY">
+                                        <h4 class="text-sm font-semibold"><i class="fas fa-calendar-alt mr-2"></i> Select Tax Year</h4>
+                                    </div>
+                                    <div style="padding: 4px 0;">
+                                        <button class="year-option active" data-year="TY2027" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span style="background: var(--Gold); color: var(--Black); font-size: 0.6rem; font-weight: 700; padding: 1px 4px; border-radius: 8px; margin-right: 4px;">Upcoming</span>
+                                            <span>TY 2027</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button>
+                                        <button class="year-option" data-year="TY2026" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span style="background: var(--Gold); color: var(--Black); font-size: 0.6rem; font-weight: 700; padding: 1px 4px; border-radius: 8px; margin-right: 4px;">Current</span>
+                                            <span>TY 2026</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button>
+                                        <button class="year-option" data-year="TY2025" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span>TY 2025</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button>
+                                        <button class="year-option" data-year="TY2024" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span>TY 2024</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button>
+                                        <button class="year-option" data-year="TY2023" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span>TY 2023</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button> <button class="year-option" data-year="TY2022" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span>TY 2022</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button> <button class="year-option" data-year="TY2021" style="width: 100%; padding: 10px 12px; background: none; border: none; text-align: left; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s;">
+                                            <span>TY 2021</span>
+                                            <i class="fas fa-check text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div style="padding: 8px 12px; background: var(--Off-White); border-top: 1px solid var(--Soft-Gray); color: var(--Dark-Gray); font-size: 0.7rem;">
+                                        <small><i class="fas fa-info-circle mr-1"></i> Tax Year (July - June)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Income Period -->
+                    <div>
+                        <label class="text-xs font-medium text-gray-700 mb-1 block">Income Period</label>
+                        <div class="flex border rounded overflow-hidden">
+                            <button onclick="setInputPeriod('annual')" 
+                                    id="btn-annual"
+                                    class="flex-1 px-2 py-1.5 bg-green-600 text-white text-xs font-medium"
+                                    aria-label="Annual income">
+                                Annual
+                            </button>
+                            <button onclick="setInputPeriod('monthly')" 
+                                    id="btn-monthly"
+                                    class="flex-1 px-2 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium"
+                                    aria-label="Monthly income">
+                                Monthly
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Income Input -->
+                    <div>
+                        <label class="text-xs font-medium text-gray-700 mb-1 block">Taxable Income (PKR)</label>
+                        <div class="input-group">
+                            <input type="number" 
+                                   id="income-input" 
+                                   placeholder="Enter amount"
+                                   class="flex-1"
+                                   oninput="calculateTax()"
+                                   aria-label="Taxable income amount">
+                            <button onclick="clearInput()" 
+                                    class="p-1 text-gray-400 hover:text-red-500"
+                                    title="Clear"
+                                    aria-label="Clear input">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Advance Tax Input -->
+                    <div>
+                        <label class="text-xs font-medium text-gray-700 mb-1 block">Advance Tax / WHT Paid (PKR)</label>
+                        <div class="input-group">
+                            <input type="number" 
+                                   id="advance-tax-input" 
+                                   value="0"
+                                   placeholder="Enter WHT"
+                                   class="flex-1"
+                                   oninput="calculateTax()"
+                                   aria-label="Advance tax paid">
+                            <button onclick="clearAdvanceTax()" 
+                                    class="p-1 text-gray-400 hover:text-red-500"
+                                    title="Clear"
+                                    aria-label="Clear advance tax">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Take Home Analysis -->
+            <div class="compact-card">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2 flex items-center">
+                    <i class="fas fa-chart-pie mr-2 text-blue-600"></i>
+                    Take Home Analysis
+                </h2>
+                
+                <div class="flex items-start gap-3">
+                    <!-- Doughnut Chart -->
+                    <div class="relative">
+                        <div class="doughnut-chart" id="doughnut-chart"></div>
+                        <div class="doughnut-center" id="doughnut-percent">0%</div>
+                    </div>
+                    
+                    <!-- Figures -->
+                    <div class="flex-1 space-y-1">
+                        <div class="take-home-item take-home">
+                            <div>
+                                <div class="font-medium text-green-800">Take Home</div>
+                                <div class="text-green-600">After tax income</div>
+                            </div>
+                            <div class="font-bold text-green-600" id="take-home-amount">PKR 0</div>
+                        </div>
+                        
+                        <div class="take-home-item tax-paid">
+                            <div>
+                                <div class="font-medium text-red-800">Tax Paid</div>
+                                <div class="text-red-600">Total tax liability</div>
+                            </div>
+                            <div class="font-bold text-red-600" id="tax-paid-amount">PKR 0</div>
+                        </div>
+                        
+                        <div class="take-home-item effective-rate">
+                            <div>
+                                <div class="font-medium text-blue-800">Effective Rate</div>
+                                <div class="text-blue-600">Tax as % of income</div>
+                            </div>
+                            <div class="font-bold text-blue-600" id="effective-rate">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="compact-card">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2 flex items-center justify-between">
+                    <div>
+                        <i class="fas fa-history mr-2 text-purple-600"></i>
+                        Calculation History
+                    </div>
+                    <div class="flex space-x-1">
+                        <button onclick="clearHistory()" 
+                                class="p-1 text-red-500 hover:text-red-600"
+                                title="Clear All History"
+                                aria-label="Clear all history">
+                            <i class="fas fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                </h2>
+                
+                <div id="history-container" class="max-h-48 overflow-y-auto">
+                    <div class="text-center text-gray-400 py-4 text-sm" id="empty-history">
+                        <i class="fas fa-history text-xl mb-1 block"></i>
+                        <p>No calculations saved yet</p>
+                        <p class="text-xs mt-1">Calculations are saved automatically</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Results and Slabs -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-2">
+            <!-- Results Section -->
+            <div class="compact-card">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2 flex items-center justify-between">
+                    <div>
+                        <i class="fas fa-file-invoice-dollar mr-2 text-green-600"></i>
+                        Tax Results Summary
+                    </div>
+                    <button onclick="copyToClipboard('results')" 
+                            class="text-xs text-gray-600 hover:text-gray-800"
+                            aria-label="Copy results">
+                        <i class="far fa-copy mr-1"></i> Copy
+                    </button>
+                </h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Monthly (PKR)</th>
+                                <th>Yearly (PKR)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Income Row -->
+                            <tr>
+                                <td class="desc-col">Income</td>
+                                <td id="monthly-income-display" class="green-row">0</td>
+                                <td id="annual-income-display" class="green-row">0</td>
+                            </tr>
+                            <!-- Normal Tax Row -->
+                            <tr>
+                                <td class="desc-col">Tax Under Normal Tax Regime NTR</td>
+                                <td id="monthly-normal-tax" class="red-row">0</td>
+                                <td id="annual-normal-tax" class="red-row">0</td>
+                            </tr>
+                            <!-- Surcharge Row -->
+                            <tr id="surcharge-row" class="hidden">
+                                <td class="desc-col">Surcharge 10% | 9%</td>
+                                <td id="monthly-surcharge" class="red-row">0</td>
+                                <td id="annual-surcharge" class="red-row">0</td>
+                            </tr>
+                            <!-- Super Tax Row -->
+                            <tr id="super-tax-row" class="hidden">
+                                <td class="desc-col">Super Tax</td>
+                                <td id="monthly-super-tax" class="red-row">0</td>
+                                <td id="annual-super-tax" class="red-row">0</td>
+                            </tr>
+                            <!-- Total Tax Row -->
+                            <tr>
+                                <td class="desc-col">Total Tax</td>
+                                <td id="monthly-total-tax" class="blue-row">0</td>
+                                <td id="annual-total-tax" class="blue-row">0</td>
+                            </tr>
+                            <!-- Advance Tax Row -->
+                            <tr>
+                                <td class="desc-col">Advance Tax</td>
+                                <td id="monthly-advance-tax" class="green-row">0</td>
+                                <td id="annual-advance-tax" class="green-row">0</td>
+                            </tr>
+                            <!-- Net Tax Payable/Refund Row -->
+                            <tr id="net-tax-row">
+                                <td class="desc-col">Net Tax Payable / Refund</td>
+                                <td id="monthly-net-tax" class="purple-row">0</td>
+                                <td id="annual-net-tax" class="purple-row">0</td>
+                            </tr>
+                            <!-- Income After Tax Row -->
+                            <tr>
+                                <td class="desc-col">Income After Tax</td>
+                                <td id="monthly-take-home" class="green-row">0</td>
+                                <td id="annual-take-home" class="green-row">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Applied Tax Slabs -->
+            <div class="compact-card">
+                <h2 class="text-sm font-semibold text-gray-800 mb-2 flex items-center justify-between">
+                    <div>
+                        <i class="fas fa-layer-group mr-2 text-orange-600"></i>
+                        Applied Tax Slabs - <span id="slab-year-label" class="font-normal">TY 2026</span>
+                    </div>
+                    <button onclick="copyToClipboard('slabs')" 
+                            class="text-xs text-gray-600 hover:text-gray-800"
+                            aria-label="Copy tax slabs">
+                        <i class="far fa-copy mr-1"></i> Copy
+                    </button>
+                </h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs border rounded">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="p-2 text-left">Income Range (PKR)</th>
+                                <th class="p-2 text-center">Rate</th>
+                                <th class="p-2 text-right">Fixed Amount</th>
+                                <th class="p-2 text-right">Tax Amount</th>
+                                <th class="p-2 text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="slabs-table-body" class="divide-y">
+                            <!-- Slabs will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Positive Disclaimer -->
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-3 mb-2">
+            <div class="flex items-start">
+                <div class="flex-shrink-0 mt-0.5">
+                    <i class="fas fa-lightbulb text-green-600"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-bold text-green-800 mb-1">Smart Tax Planning Made Easy</h3>
+                    <div class="text-xs text-green-700">
+                        <p class="mb-1">This calculator provides accurate estimates based on current tax laws. Remember:</p>
+                        <ul class="list-disc pl-4 space-y-0.5 mb-1">
+                            <li>Explore tax-saving investment options under various sections</li>
+                            <li>Consider deductible expenses and allowances</li>
+                            <li>Plan for retirement contributions for tax benefits</li>
+                            <li>Consult with a tax professional for personalized advice</li>
+                        </ul>
+                        <p class="font-medium">Start planning early for optimal tax outcomes!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" role="alert" aria-live="polite" aria-atomic="true">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+            <span id="toast-message">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script>
+        // --- GLOBAL VARIABLES ---
+        let ANNUAL_RESULTS = {};
+        let currentTaxpayerType = 'salaried';
+        let currentInputPeriod = 'annual';
+        let currentYear = 'TY2026';
+        let autoSaveTimeout = null;
+        let HISTORY_ITEMS = new Map();
+
+        // --- YEAR SELECTOR FUNCTIONALITY ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearSelectBtn = document.getElementById('yearSelectBtn');
+            const yearDropdown = document.getElementById('yearDropdown');
+            const yearOptions = document.querySelectorAll('.year-option');
+            
+            // Toggle dropdown
+            yearSelectBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                yearDropdown.classList.toggle('show');
+            });
+            
+            // Handle year selection
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    const selectedYear = this.getAttribute('data-year');
+                    
+                    // Update button text
+                    document.querySelector('.btn-text').textContent = selectedYear;
+                    
+                    // Update active state
+                    yearOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Close dropdown
+                    yearDropdown.classList.remove('show');
+                    
+                    // Update year and recalculate
+                    currentYear = selectedYear;
+                    document.getElementById('slab-year-label').textContent = selectedYear;
+                    calculateTax();
+                    
+                    // Show toast
+                    showToast(`Tax year updated to ${selectedYear}`);
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!yearSelectBtn.contains(e.target) && !yearDropdown.contains(e.target)) {
+                    yearDropdown.classList.remove('show');
+                }
+            });
+            
+            // Set TY2026 as default
+            const ty2026Option = document.querySelector('.year-option[data-year="TY2026"]');
+            if (ty2026Option) {
+                ty2026Option.click();
+            }
+        });
+
+        // --- UTILITY FUNCTIONS ---
+        const formatter = new Intl.NumberFormat('en-PK', {
+            style: 'currency',
+            currency: 'PKR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        });
+
+        function formatCurrency(amount) {
+            return formatter.format(Math.round(amount));
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- AUTO-SAVE HISTORY FUNCTION ---
+        function autoSaveToHistory() {
+            const R = ANNUAL_RESULTS;
+            if (R.income <= 0 || !R.income || isNaN(R.income)) return;
+            
+            // Create a unique key for this calculation
+            const historyKey = `${R.income}-${R.year}-${R.type}`;
+            
+            const historyItem = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                date: new Date().toLocaleDateString(),
+                year: R.year,
+                type: R.type,
+                income: R.income,
+                tax: R.gross,
+                net: R.net,
+                advanceTax: R.advanceTax,
+                takeHome: R.income - R.gross
+            };
+            
+            // Store in Map (for quick lookup)
+            HISTORY_ITEMS.set(historyKey, historyItem);
+            
+            // Convert Map to array and save to localStorage
+            const historyArray = Array.from(HISTORY_ITEMS.values())
+                .sort((a, b) => b.id - a.id) // Sort by most recent
+                .slice(0, 15); // Keep only last 15 items
+            
+            localStorage.setItem('taxHistory', JSON.stringify(historyArray));
+            loadHistory();
+        }
+
+        // --- INPUT MANAGEMENT ---
+        function setTaxpayerType(type) {
+            currentTaxpayerType = type;
+            document.getElementById('btn-salaried').className = 
+                type === 'salaried' 
+                ? 'flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-green-600 text-white'
+                : 'flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200';
+            document.getElementById('btn-business').className = 
+                type === 'business' 
+                ? 'flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-green-600 text-white'
+                : 'flex-1 p-1.5 border rounded text-xs font-medium transition-all bg-gray-100 text-gray-700 hover:bg-gray-200';
+            calculateTax();
+        }
+
+        function setInputPeriod(period) {
+            currentInputPeriod = period;
+            const annualBtn = document.getElementById('btn-annual');
+            const monthlyBtn = document.getElementById('btn-monthly');
+            
+            annualBtn.className = period === 'annual' 
+                ? 'flex-1 px-2 py-1.5 bg-green-600 text-white text-xs font-medium'
+                : 'flex-1 px-2 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium';
+            
+            monthlyBtn.className = period === 'monthly' 
+                ? 'flex-1 px-2 py-1.5 bg-green-600 text-white text-xs font-medium'
+                : 'flex-1 px-2 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium';
+            
+            // Convert input if value exists
+            const input = document.getElementById('income-input');
+            if (input.value) {
+                let value = parseFloat(input.value);
+                if (period === 'annual' && currentInputPeriod !== 'annual') {
+                    input.value = Math.round(value * 12);
+                } else if (period === 'monthly' && currentInputPeriod !== 'monthly') {
+                    input.value = Math.round(value / 12);
+                }
+            }
+            calculateTax();
+        }
+
+        function clearInput() {
+            document.getElementById('income-input').value = '';
+            calculateTax();
+        }
+
+        function clearAdvanceTax() {
+            document.getElementById('advance-tax-input').value = '0';
+            calculateTax();
+        }
+
+        // --- TAX CALCULATION FUNCTIONS ---
+        function calculateNormalTax(income, slabs) {
+            if (!slabs || income <= 0) return { tax: 0, slabIndex: -1 };
+            
+            let taxPayable = 0;
+            let previousLimit = 0;
+            let currentSlabIndex = -1;
+            
+            for (let i = 0; i < slabs.length; i++) {
+                const slab = slabs[i];
+                if (income > previousLimit) {
+                    if (income <= slab.limit) {
+                        const taxableAmount = income - previousLimit;
+                        taxPayable = slab.base + (taxableAmount * slab.rate);
+                        currentSlabIndex = i;
+                        break;
+                    } else if (slab.limit !== Infinity) {
+                        const taxableInThisSlab = slab.limit - previousLimit;
+                        taxPayable = slab.base + (taxableInThisSlab * slab.rate);
+                    }
+                }
+                previousLimit = slab.limit;
+            }
+            return { tax: Math.max(0, taxPayable), slabIndex: currentSlabIndex };
+        }
+
+        function calculateSurcharge(taxableIncome, normalTax, year, type) {
+            const surchargeInfo = SURCHARGE_RATES[year];
+            if (!surchargeInfo || taxableIncome < surchargeInfo.threshold) {
+                return { amount: 0, rate: 0 };
+            }
+            const rate = surchargeInfo[type] || 0;
+            return { amount: normalTax * rate, rate: rate };
+        }
+
+        function calculateSuperTax(taxableIncome, year) {
+            const superTaxSlabs = SUPER_TAX_SLABS[year];
+            if (!superTaxSlabs || taxableIncome < 150000000) { 
+                return { amount: 0, rateText: "N/A" };
+            }
+
+            let superTaxPayable = 0;
+            let previousLimit = 0;
+            let effectiveRate = 0;
+
+            for (const slab of superTaxSlabs) {
+                if (taxableIncome > previousLimit) {
+                    if (taxableIncome <= slab.limit) {
+                        const taxableAmount = taxableIncome - previousLimit;
+                        superTaxPayable = slab.base + (taxableAmount * slab.rate);
+                        effectiveRate = slab.rate;
+                        break; 
+                    } else if (slab.limit !== Infinity) {
+                        superTaxPayable = slab.base + ((slab.limit - previousLimit) * slab.rate);
+                    } else {
+                        const taxableAmount = taxableIncome - previousLimit;
+                        superTaxPayable = slab.base + (taxableAmount * slab.rate);
+                        effectiveRate = slab.rate;
+                        break;
+                    }
+                }
+                previousLimit = slab.limit;
+            }
+            
+            return { amount: Math.max(0, superTaxPayable), rateText: `${(effectiveRate * 100).toFixed(1)}%` };
+        }
+
+        // --- MAIN CALCULATION FUNCTION ---
+        function calculateTax() {
+            const year = currentYear;
+            const type = currentTaxpayerType;
+            
+            let incomeAmount = parseFloat(document.getElementById('income-input').value) || 0;
+            let advanceTaxAmount = parseFloat(document.getElementById('advance-tax-input').value) || 0;
+
+            // Convert to Annual
+            const annualMultiplier = (currentInputPeriod === 'monthly') ? 12 : 1;
+            const annualIncome = incomeAmount * annualMultiplier;
+            const annualAdvanceTax = advanceTaxAmount * annualMultiplier;
+
+            if (annualIncome <= 0 || isNaN(annualIncome)) {
+                ANNUAL_RESULTS = { 
+                    gross: 0, 
+                    normal: 0, 
+                    surcharge: 0, 
+                    super: 0, 
+                    advanceTax: annualAdvanceTax, 
+                    net: -annualAdvanceTax, 
+                    surchargeRate: 0, 
+                    superRate: "N/A",
+                    income: annualIncome,
+                    slabIndex: -1,
+                    year: year,
+                    type: type
+                };
+                updateDisplay();
+                updateTakeHomeAnalysis();
+                updateSlabsTable();
+                return;
+            }
+
+            const slabs = ALL_SLABS[year]?.[type];
+
+            if (!slabs) {
+                ANNUAL_RESULTS = { 
+                    gross: 0, 
+                    normal: 0, 
+                    surcharge: 0, 
+                    super: 0, 
+                    advanceTax: annualAdvanceTax, 
+                    net: -annualAdvanceTax, 
+                    surchargeRate: 0, 
+                    superRate: "N/A",
+                    income: annualIncome,
+                    slabIndex: -1,
+                    year: year,
+                    type: type
+                };
+                updateDisplay();
+                updateTakeHomeAnalysis();
+                updateSlabsTable();
+                return;
+            }
+
+            // Calculate taxes
+            const normalTaxResult = calculateNormalTax(annualIncome, slabs);
+            const normalTax = normalTaxResult.tax;
+            const currentSlabIndex = normalTaxResult.slabIndex;
+            const surcharge = calculateSurcharge(annualIncome, normalTax, year, type);
+            const superTax = calculateSuperTax(annualIncome, year);
+
+            const grossTaxLiability = normalTax + surcharge.amount + superTax.amount;
+            const netTax = grossTaxLiability - annualAdvanceTax;
+            
+            // Store results
+            ANNUAL_RESULTS = {
+                gross: grossTaxLiability,
+                normal: normalTax,
+                surcharge: surcharge.amount,
+                super: superTax.amount,
+                advanceTax: annualAdvanceTax,
+                net: netTax,
+                surchargeRate: surcharge.rate,
+                superRate: superTax.rateText,
+                income: annualIncome,
+                slabIndex: currentSlabIndex,
+                type: type,
+                year: year
+            };
+            
+            // Update UI
+            updateDisplay();
+            updateTakeHomeAnalysis();
+            updateSlabsTable();
+            
+            // Auto-save to history with debounce
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(autoSaveToHistory, 1000);
+        }
+
+        // --- DISPLAY UPDATE FUNCTIONS ---
+        function updateDisplay() {
+            const R = ANNUAL_RESULTS;
+            const annualIncome = R.income;
+            const monthlyIncome = annualIncome / 12;
+            const netTaxPayable = R.net > 0 ? R.net : 0;
+            const netTaxRefund = R.net < 0 ? Math.abs(R.net) : 0;
+            
+            // Monthly displays
+            document.getElementById('monthly-income-display').textContent = formatCurrency(monthlyIncome);
+            document.getElementById('monthly-normal-tax').textContent = formatCurrency(R.normal / 12);
+            document.getElementById('monthly-surcharge').textContent = formatCurrency(R.surcharge / 12);
+            document.getElementById('monthly-super-tax').textContent = formatCurrency(R.super / 12);
+            document.getElementById('monthly-total-tax').textContent = formatCurrency(R.gross / 12);
+            document.getElementById('monthly-advance-tax').textContent = formatCurrency(R.advanceTax / 12);
+            
+            // Net tax payable/refund
+            const monthlyNetTaxCell = document.getElementById('monthly-net-tax');
+            if (R.net > 0) {
+                monthlyNetTaxCell.textContent = formatCurrency(R.net / 12);
+                monthlyNetTaxCell.className = 'red-row';
+            } else if (R.net < 0) {
+                monthlyNetTaxCell.textContent = formatCurrency(Math.abs(R.net) / 12);
+                monthlyNetTaxCell.className = 'green-row';
+            } else {
+                monthlyNetTaxCell.textContent = '0';
+                monthlyNetTaxCell.className = 'purple-row';
+            }
+            
+            document.getElementById('monthly-take-home').textContent = formatCurrency((annualIncome - R.gross) / 12);
+            
+            // Annual displays
+            document.getElementById('annual-income-display').textContent = formatCurrency(annualIncome);
+            document.getElementById('annual-normal-tax').textContent = formatCurrency(R.normal);
+            document.getElementById('annual-surcharge').textContent = formatCurrency(R.surcharge);
+            document.getElementById('annual-super-tax').textContent = formatCurrency(R.super);
+            document.getElementById('annual-total-tax').textContent = formatCurrency(R.gross);
+            document.getElementById('annual-advance-tax').textContent = formatCurrency(R.advanceTax);
+            
+            // Net tax payable/refund annual
+            const annualNetTaxCell = document.getElementById('annual-net-tax');
+            if (R.net > 0) {
+                annualNetTaxCell.textContent = formatCurrency(R.net);
+                annualNetTaxCell.className = 'red-row';
+                document.querySelector('#net-tax-row .desc-col').textContent = 'Net Tax Payable';
+            } else if (R.net < 0) {
+                annualNetTaxCell.textContent = formatCurrency(Math.abs(R.net));
+                annualNetTaxCell.className = 'green-row';
+                document.querySelector('#net-tax-row .desc-col').textContent = 'Tax Refund';
+            } else {
+                annualNetTaxCell.textContent = '0';
+                annualNetTaxCell.className = 'purple-row';
+                document.querySelector('#net-tax-row .desc-col').textContent = 'Net Tax Payable / Refund';
+            }
+            
+            document.getElementById('annual-take-home').textContent = formatCurrency(annualIncome - R.gross);
+            
+            // Show/hide surcharge and super tax rows
+            const surchargeRow = document.getElementById('surcharge-row');
+            const superTaxRow = document.getElementById('super-tax-row');
+            
+            if (R.surcharge > 0) {
+                surchargeRow.classList.remove('hidden');
+                // Update surcharge percentage display
+                const surchargePercent = R.surchargeRate * 100;
+                document.querySelector('#surcharge-row .desc-col').textContent = `Surcharge ${surchargePercent}%`;
+            } else {
+                surchargeRow.classList.add('hidden');
+            }
+            
+            if (R.super > 0) {
+                superTaxRow.classList.remove('hidden');
+            } else {
+                superTaxRow.classList.add('hidden');
+            }
+        }
+
+        function updateTakeHomeAnalysis() {
+            const R = ANNUAL_RESULTS;
+            
+            if (R.income > 0) {
+                const takeHome = R.income - R.gross;
+                const takeHomePercent = (takeHome / R.income * 100).toFixed(1);
+                
+                // Update doughnut chart
+                const doughnutChart = document.getElementById('doughnut-chart');
+                doughnutChart.style.setProperty('--percentage', takeHomePercent + '%');
+                document.getElementById('doughnut-percent').textContent = takeHomePercent + '%';
+                
+                // Update amounts
+                document.getElementById('take-home-amount').textContent = formatCurrency(takeHome);
+                document.getElementById('tax-paid-amount').textContent = formatCurrency(R.gross);
+                
+                // Update effective rate
+                const effectiveRate = (R.gross / R.income * 100).toFixed(1);
+                document.getElementById('effective-rate').textContent = effectiveRate + '%';
+            } else {
+                const doughnutChart = document.getElementById('doughnut-chart');
+                doughnutChart.style.setProperty('--percentage', '0%');
+                document.getElementById('doughnut-percent').textContent = '0%';
+                document.getElementById('take-home-amount').textContent = 'PKR 0';
+                document.getElementById('tax-paid-amount').textContent = 'PKR 0';
+                document.getElementById('effective-rate').textContent = '0%';
+            }
+        }
+
+        function updateSlabsTable() {
+            const year = currentYear;
+            const type = currentTaxpayerType;
+            const slabs = ALL_SLABS[year]?.[type];
+            const R = ANNUAL_RESULTS;
+            
+            const tableBody = document.getElementById('slabs-table-body');
+            tableBody.innerHTML = '';
+            
+            if (!slabs) return;
+            
+            let previousLimit = 0;
+            slabs.forEach((slab, index) => {
+                const row = document.createElement('tr');
+                
+                // Determine if this slab contains the income
+                const isCurrentSlab = index === R.slabIndex;
+                const isPastSlab = index < R.slabIndex;
+                
+                // Calculate tax for this slab
+                let slabTax = 0;
+                if (isPastSlab) {
+                    const slabRange = slab.limit - previousLimit;
+                    slabTax = slab.base + (slabRange * slab.rate);
+                } else if (isCurrentSlab) {
+                    const slabRange = R.income - previousLimit;
+                    slabTax = slab.base + (slabRange * slab.rate);
+                }
+                
+                // Format limit display
+                const limitDisplay = slab.limit === Infinity ? 
+                    formatCurrency(previousLimit) + ' and above' :
+                    formatCurrency(previousLimit) + ' - ' + formatCurrency(slab.limit);
+                
+                row.className = isCurrentSlab ? 'bg-green-50' : '';
+                
+                row.innerHTML = `
+                    <td class="p-2 font-medium">${limitDisplay}</td>
+                    <td class="p-2 text-center">${(slab.rate * 100).toFixed(1)}%</td>
+                    <td class="p-2 text-right">${formatCurrency(slab.base)}</td>
+                    <td class="p-2 text-right font-medium ${isCurrentSlab ? 'text-green-600' : ''}">
+                        ${formatCurrency(slabTax)}
+                    </td>
+                    <td class="p-2 text-center">
+                        ${isCurrentSlab ? 
+                            '<span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Current</span>' : 
+                          isPastSlab ? 
+                            '<span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">Applied</span>' :
+                            '<span class="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">Future</span>'}
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+                previousLimit = slab.limit;
+            });
+        }
+
+        // --- COPY & SHARE FUNCTIONS ---
+        function copyToClipboard(type) {
+            const R = ANNUAL_RESULTS;
+            let text = '';
+            
+            switch(type) {
+                case 'slabs':
+                    const year = currentYear;
+                    text = `Tax Slabs for ${year} (${currentTaxpayerType}):\n`;
+                    const slabs = ALL_SLABS[year]?.[currentTaxpayerType];
+                    if (slabs) {
+                        slabs.forEach((slab, i) => {
+                            const limit = slab.limit === Infinity ? 'Above' : `Up to ${formatCurrency(slab.limit)}`;
+                            text += `${i+1}. ${limit}: ${(slab.rate * 100).toFixed(1)}% (Fixed: ${formatCurrency(slab.base)})\n`;
+                        });
+                    }
+                    break;
+                case 'results':
+                    text = `PAKISTAN TAX CALCULATION RESULTS\n`;
+                    text += `==============================\n`;
+                    text += `Tax Year: ${R.year}\n`;
+                    text += `Taxpayer: ${R.type === 'salaried' ? 'Salaried' : 'Business'}\n`;
+                    text += `Annual Income: ${formatCurrency(R.income)}\n`;
+                    text += `Normal Tax: ${formatCurrency(R.normal)}\n`;
+                    if (R.surcharge > 0) text += `Surcharge: ${formatCurrency(R.surcharge)}\n`;
+                    if (R.super > 0) text += `Super Tax: ${formatCurrency(R.super)}\n`;
+                    text += `Total Tax: ${formatCurrency(R.gross)}\n`;
+                    text += `Advance Tax: ${formatCurrency(R.advanceTax)}\n`;
+                    text += `Net Tax: ${formatCurrency(Math.abs(R.net))} ${R.net >= 0 ? '(Payable)' : '(Refund)'}\n`;
+                    text += `Monthly Take Home: ${formatCurrency((R.income - R.gross) / 12)}\n`;
+                    text += `Effective Tax Rate: ${(R.gross / R.income * 100).toFixed(1)}%\n`;
+                    break;
+                case 'full':
+                    text = `PAKISTAN INCOME TAX CALCULATION\n`;
+                    text += `==============================\n`;
+                    text += `Tax Year: ${R.year}\n`;
+                    text += `Taxpayer: ${R.type === 'salaried' ? 'Salaried' : 'Business'}\n`;
+                    text += `Annual Income: ${formatCurrency(R.income)}\n`;
+                    text += `Gross Tax: ${formatCurrency(R.gross)}\n`;
+                    text += `Advance Tax: ${formatCurrency(R.advanceTax)}\n`;
+                    text += `Net Tax: ${formatCurrency(Math.abs(R.net))} ${R.net >= 0 ? '(Due)' : '(Refund)'}\n`;
+                    text += `Monthly Take Home: ${formatCurrency((R.income - R.gross) / 12)}\n`;
+                    break;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showToast('Failed to copy');
+            });
+        }
+
+        function shareCalculation() {
+            const R = ANNUAL_RESULTS;
+            const shareText = `Pakistan Tax Calculation:\n\n` +
+                             `Income: ${formatCurrency(R.income)}\n` +
+                             `Tax: ${formatCurrency(R.gross)}\n` +
+                             `Advance Tax: ${formatCurrency(R.advanceTax)}\n` +
+                             `Net: ${formatCurrency(Math.abs(R.net))} ${R.net >= 0 ? '(Payable)' : '(Refund)'}\n` +
+                             `Take Home: ${formatCurrency((R.income - R.gross) / 12)}/month`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Pakistan Tax Calculation',
+                    text: shareText
+                }).catch(err => {
+                    copyToClipboard('full');
+                });
+            } else {
+                copyToClipboard('full');
+            }
+        }
+
+        // --- HISTORY FUNCTIONS ---
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('taxHistory') || '[]');
+            const container = document.getElementById('history-container');
+            const emptyHistory = document.getElementById('empty-history');
+            
+            // Clear and rebuild HISTORY_ITEMS Map
+            HISTORY_ITEMS.clear();
+            history.forEach(item => {
+                const key = `${item.income}-${item.year}-${item.type}`;
+                HISTORY_ITEMS.set(key, item);
+            });
+            
+            if (history.length === 0) {
+                emptyHistory.classList.remove('hidden');
+                container.innerHTML = '';
+                return;
+            }
+            
+            emptyHistory.classList.add('hidden');
+            container.innerHTML = '';
+            
+            // Sort by most recent
+            const sortedHistory = Array.from(HISTORY_ITEMS.values())
+                .sort((a, b) => b.id - a.id);
+            
+            sortedHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.setAttribute('data-id', item.id);
+                historyItem.innerHTML = `
+                    <div class="flex-1" onclick="loadHistoryItem(${item.id})">
+                        <div class="flex items-center justify-between mb-1">
+                            <div class="font-medium text-sm">${formatCurrency(item.income)}</div>
+                            <div class="text-xs text-gray-500">${item.timestamp}</div>
+                        </div>
+                        <div class="flex items-center justify-between text-xs text-gray-600">
+                            <span>${item.type === 'salaried' ? 'Salaried' : 'Business'} • ${item.year}</span>
+                            <button onclick="event.stopPropagation(); deleteHistoryItem(${item.id})" 
+                                    class="text-gray-400 hover:text-red-500"
+                                    aria-label="Delete this calculation">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ml-2 text-right">
+                        <div class="text-sm font-bold ${item.net >= 0 ? 'text-red-600' : 'text-green-600'}">
+                            ${formatCurrency(Math.abs(item.net))}
+                        </div>
+                        <div class="text-xs ${item.net >= 0 ? 'text-red-500' : 'text-green-500'}">
+                            ${item.net >= 0 ? 'Payable' : 'Refund'}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(historyItem);
+            });
+        }
+
+        function loadHistoryItem(id) {
+            const history = JSON.parse(localStorage.getItem('taxHistory') || '[]');
+            const item = history.find(h => h.id === id);
+            
+            if (item) {
+                // Set year
+                currentYear = item.year;
+                document.querySelector('.btn-text').textContent = item.year;
+                document.getElementById('slab-year-label').textContent = item.year;
+                
+                // Update year selector UI
+                document.querySelectorAll('.year-option').forEach(opt => {
+                    opt.classList.remove('active');
+                    if (opt.getAttribute('data-year') === item.year) {
+                        opt.classList.add('active');
+                    }
+                });
+                
+                // Set taxpayer type
+                setTaxpayerType(item.type);
+                
+                // Set income (always annual in storage)
+                document.getElementById('income-input').value = item.income;
+                
+                // Set advance tax
+                document.getElementById('advance-tax-input').value = item.advanceTax || 0;
+                
+                // Set input period to annual
+                setInputPeriod('annual');
+                
+                // Calculate tax with these values
+                calculateTax();
+                
+                showToast('Calculation loaded from history');
+            }
+        }
+
+        function deleteHistoryItem(id) {
+            if (!confirm('Delete this calculation from history?')) return;
+            
+            let history = JSON.parse(localStorage.getItem('taxHistory') || '[]');
+            history = history.filter(item => item.id !== id);
+            localStorage.setItem('taxHistory', JSON.stringify(history));
+            loadHistory();
+            showToast('Calculation removed from history');
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all calculation history?')) {
+                localStorage.removeItem('taxHistory');
+                HISTORY_ITEMS.clear();
+                loadHistory();
+                showToast('History cleared');
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set defaults
+            setTaxpayerType('salaried');
+            setInputPeriod('annual');
+            
+            // Load history
+            loadHistory();
+            
+            // Calculate initial tax (if there's input)
+            calculateTax();
+            
+            // Focus input
+            document.getElementById('income-input').focus();
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    calculateTax();
+                }
+                if (e.key === 'Escape') {
+                    clearInput();
+                }
+            });
+        });
+
+        // --- SEO ENHANCEMENTS ---
+        // Structured Data for search engines
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Pakistan Tax Calculator",
+            "description": "Free Pakistan Income Tax Calculator for Salaried and Business individuals",
+            "url": window.location.href,
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Any",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "PKR"
+            }
+        };
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

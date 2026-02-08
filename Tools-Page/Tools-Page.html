@@ -1,0 +1,2311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Tax Calculators | Income Tax, Sales Tax, FBR Tools</title>
+    <meta name="description" content="Free professional tax calculators for income tax, sales tax, FBR, withholding tax, property tax, and more. Advanced tools for tax professionals, businesses, and individuals.">
+    <meta name="keywords" content="tax calculator, income tax calculator, sales tax calculator, FBR tax, withholding tax, property tax calculator, tax tools, financial calculators">
+    <meta name="author" content="Tax Calculators Hub">
+    <meta name="robots" content="index, follow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --Red: #ff0000;
+            --Blue: #007bff;
+            --Gold: #FFED00;
+            --Parrot: #16FF00;
+            --Deep-Green: #2E7D32;
+            --White: #ffffff;
+            --Off-White: #f8f9fa;
+            --Black: #000000;
+            --Gray: #f5f5f5;
+            --Soft-Gray: #d3d3d3;
+            --Dark-Gray: #929292;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--Off-White);
+            color: var(--Black);
+            line-height: 1.4;
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        /* SEO Rich Content */
+        .seo-content {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles */
+        button:focus,
+        input:focus,
+        select:focus {
+            outline: 2px solid var(--Deep-Green);
+            outline-offset: 1px;
+        }
+
+        /* Ultra Compact Layout */
+        .tools-section {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            min-height: calc(100vh - 20px);
+            width: 85%;
+        }
+
+        /* Sidebar */
+        .tools-sidebar {
+            width: 200px;
+            background-color: var(--White);
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            padding: 10px;
+            height: fit-content;
+            position: sticky;
+            top: 8px;
+            flex-shrink: 0;
+            max-height: calc(100vh - 20px);
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 1001;
+            background-color: var(--Deep-Green);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--Gray);
+        }
+
+        .sidebar-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--Deep-Green);
+        }
+
+        .sidebar-close {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--Dark-Gray);
+            cursor: pointer;
+            font-size: 1rem;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-categories {
+            margin-bottom: 10px;
+        }
+
+        .category-item {
+            margin-bottom: 4px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 8px;
+            background-color: var(--Off-White);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid var(--Deep-Green);
+            font-size: 0.75rem;
+            min-height: 32px;
+        }
+
+        .category-header:hover {
+            background-color: var(--Gray);
+        }
+
+        .category-header.active {
+            background-color: var(--Deep-Green);
+            color: var(--White);
+        }
+
+        .category-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .category-icon {
+            font-size: 0.75rem;
+            width: 14px;
+        }
+
+        .category-count {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 1px 4px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .category-tools {
+            padding-left: 10px;
+            padding-top: 4px;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .sidebar-tool {
+            display: flex;
+            align-items: center;
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            background-color: var(--Off-White);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            font-size: 0.7rem;
+            min-height: 26px;
+        }
+
+        .sidebar-tool:hover {
+            background-color: var(--Gray);
+            border-left-color: var(--Deep-Green);
+        }
+
+        .sidebar-tool-icon {
+            margin-right: 5px;
+            font-size: 0.75rem;
+            width: 12px;
+            text-align: center;
+        }
+
+        .sidebar-tool-name {
+            font-weight: 500;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Main Content */
+        .tools-main-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            gap: 10px;
+        }
+
+        .main-content-area {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+
+            /*max-width: 1000px; /* The maximum width it can reach */
+            /*width: 0%;       /* It can be up to 100% of its parent's width */
+            /*margin: 0 auto;    /* Centers the element horizontally */
+
+        }
+
+        /* Ultra Compact Header */
+        .tools-header {
+            margin-bottom: 8px;
+            padding: 8px 10px;
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            border-radius: 6px;
+            color: var(--White);
+            box-shadow: 0 1px 3px rgba(46, 125, 50, 0.06);
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .tools-header h1 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .tools-header p {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        /* Ultra Compact Controls */
+        .tools-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: var(--White);
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            align-items: center;
+            min-height: 44px;
+        }
+
+        .filter-sort-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .all-btn, .filter-btn, .view-btn, .action-btn {
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+        }
+
+        .all-btn {
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            color: var(--White);
+        }
+
+        .all-btn.active {
+            background: linear-gradient(135deg, #1b5e20, var(--Deep-Green));
+        }
+
+        .filter-btn {
+            background: var(--Gray);
+            color: var(--Dark-Gray);
+        }
+
+        .filter-btn.active {
+            background-color: var(--Deep-Green);
+            color: var(--White);
+        }
+
+        .search-container {
+            flex: 1;
+            min-width: 120px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 5px 8px;
+            padding-right: 26px;
+            border: 1px solid var(--Soft-Gray);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            min-height: 26px;
+        }
+
+        .search-icon, .cancel-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 6px;
+            color: var(--Dark-Gray);
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .cancel-icon {
+            right: 20px;
+            display: none;
+        }
+
+        .view-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .view-btn {
+            background: var(--Gray);
+            color: var(--Dark-Gray);
+        }
+
+        .view-btn.active {
+            background-color: var(--Deep-Green);
+            color: var(--White);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .action-btn {
+            background: var(--Gray);
+            color: var(--Dark-Gray);
+        }
+
+        .action-btn:hover {
+            background-color: var(--Soft-Gray);
+        }
+
+        /* Filter & Sort Dropdowns */
+        .filter-sort-dropdowns {
+            display: none;
+            flex-wrap: wrap;
+            gap: 6px;
+            /*padding: 8px;*/
+            background-color: var(--White);
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            /*margin-bottom: 8px;*/
+        }
+
+        .filter-sort-dropdowns.active {
+            display: flex;
+        }
+
+        .filter-container, .sort-container {
+            flex: 1;
+            min-width: 110px;
+        }
+
+        .filter-select, .sort-select {
+            width: 100%;
+            padding: 5px 6px;
+            border: 1px solid var(--Soft-Gray);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            background-color: var(--White);
+            cursor: pointer;
+            min-height: 26px;
+        }
+
+        /* Ultra Compact Tools Container */
+        .tools-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            align-content: start;
+        }
+
+        /* Icons View (Default) */
+        .tools-container.icons-view .tool-item {
+            padding: 8px 6px;
+            text-align: center;
+            background: var(--White);
+            border-radius: 6px;
+            border: 1px solid var(--Gray);
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 90px;
+        }
+
+        .tools-container.icons-view .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(46, 125, 50, 0.1);
+            border-color: var(--Deep-Green);
+        }
+
+        .tools-container.icons-view .tool-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .tools-container.icons-view .tool-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .tools-container.icons-view .tool-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--Black);
+            margin-bottom: 2px;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .tools-container.icons-view .tool-category {
+            display: none;
+        }
+
+        .tools-container.icons-view .tool-description,
+        .tools-container.icons-view .tool-features,
+        .tools-container.icons-view .tool-actions {
+            display: none;
+        }
+
+        /* Grid View */
+        .tools-container.grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+        }
+
+        .tools-container.grid-view .tool-item {
+            background-color: var(--White);
+            border-radius: 6px;
+            padding: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--Gray);
+            min-height: 140px;
+        }
+
+        .tools-container.grid-view .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(46, 125, 50, 0.08);
+            border-color: var(--Deep-Green);
+        }
+
+        .tools-container.grid-view .tool-image {
+            width: 100%;
+            height: 60px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            overflow: hidden;
+        }
+
+        .tools-container.grid-view .tool-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tools-container.grid-view .tool-category {
+            display: inline-block;
+            background-color: var(--Gray);
+            color: var(--Deep-Green);
+            padding: 2px 5px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            align-self: flex-start;
+        }
+
+        .tools-container.grid-view .tool-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--Black);
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tools-container.grid-view .tool-description {
+            color: var(--Dark-Gray);
+            margin-bottom: 6px;
+            font-size: 0.65rem;
+            line-height: 1.2;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tools-container.grid-view .tool-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin-bottom: 6px;
+        }
+
+        .tools-container.grid-view .tool-feature {
+            background-color: var(--Off-White);
+            padding: 1px 4px;
+            border-radius: 8px;
+            font-size: 0.6rem;
+            color: var(--Deep-Green);
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .tools-container.grid-view .tool-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            padding-top: 4px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .tool-action-buttons {
+            display: flex;
+            gap: 4px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .tool-icon-btn {
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            font-size: 0.7rem;
+        }
+
+        .tool-icon-btn.popup {
+            background: var(--Deep-Green);
+        }
+
+        .tool-icon-btn.popup:hover {
+            background: #1b5e20;
+        }
+
+        .tool-icon-btn.new-tab {
+            background: var(--Blue);
+        }
+
+        .tool-icon-btn.new-tab:hover {
+            background: #0056b3;
+        }
+
+        /* Ultra Compact List View */
+        .tools-container.list-view {
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        .tools-container.list-view .tool-item {
+            background-color: var(--White);
+            border-radius: 4px;
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--Gray);
+            transition: all 0.2s;
+            cursor: pointer;
+            min-height: 48px;
+        }
+
+        .tools-container.list-view .tool-item:hover {
+            background-color: var(--Off-White);
+            border-color: var(--Deep-Green);
+        }
+
+        .tools-container.list-view .tool-image {
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .tools-container.list-view .tool-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .tools-container.list-view .tool-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .tools-container.list-view .tool-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tools-container.list-view .tool-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--Black);
+            margin-bottom: 1px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tools-container.list-view .tool-category {
+            font-size: 0.6rem;
+            color: var(--Deep-Green);
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .tools-container.list-view .tool-description,
+        .tools-container.list-view .tool-features {
+            display: none;
+        }
+
+        .tools-container.list-view .tool-actions {
+            display: flex;
+            gap: 4px;
+            padding: 0;
+            border: none;
+        }
+
+        .tools-container.list-view .tool-icon-btn {
+            width: 24px;
+            height: 24px;
+            font-size: 0.65rem;
+        }
+
+        /* History Sidebar */
+        .history-sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            background-color: var(--White);
+            border-radius: 6px;
+            padding: 10px;
+            height: fit-content;
+            position: sticky;
+            top: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--Gray);
+            max-height: calc(100vh - 20px);
+            overflow-y: auto;
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--Gray);
+        }
+
+        .history-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--Deep-Green);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .history-count {
+            font-weight: normal;
+            font-size: 0.65rem;
+            color: var(--Dark-Gray);
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .clear-history-btn {
+            background: var(--Gray);
+            border: none;
+            padding: 3px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.65rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            min-height: 24px;
+        }
+
+        .clear-history-btn:hover {
+            background-color: var(--Red);
+            color: var(--White);
+        }
+
+        .history-items-container {
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .history-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 15px 8px;
+            color: var(--Dark-Gray);
+        }
+
+        .empty-history i {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            opacity: 0.5;
+        }
+
+        .empty-history p {
+            font-size: 0.7rem;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .history-item {
+            background-color: var(--Off-White);
+            padding: 6px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            min-height: 36px;
+        }
+
+        .history-item:hover {
+            background-color: var(--Gray);
+        }
+
+        .history-item-content {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .history-item-icon {
+            color: var(--Deep-Green);
+            font-size: 0.75rem;
+            width: 14px;
+        }
+
+        .history-item-info {
+            flex: 1;
+        }
+
+        .history-item-name {
+            font-weight: 600;
+            margin-bottom: 1px;
+            font-size: 0.7rem;
+        }
+
+        .history-item-category {
+            font-size: 0.6rem;
+            color: var(--Dark-Gray);
+        }
+
+        .history-item-time {
+            font-size: 0.6rem;
+            color: var(--Dark-Gray);
+            white-space: nowrap;
+            margin-left: 6px;
+        }
+
+        .history-item-actions {
+            display: flex;
+            gap: 3px;
+        }
+
+        .delete-history-item {
+            background: none;
+            border: none;
+            color: var(--Dark-Gray);
+            cursor: pointer;
+            padding: 3px;
+            border-radius: 3px;
+            transition: all 0.2s;
+            font-size: 0.65rem;
+        }
+
+        .delete-history-item:hover {
+            background-color: var(--Red);
+            color: white;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 20px 8px;
+            background-color: var(--White);
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            margin-bottom: 8px;
+            border: 1px solid var(--Gray);
+        }
+
+        .no-results-icon {
+            font-size: 1.5rem;
+            color: var(--Soft-Gray);
+            margin-bottom: 8px;
+        }
+
+        .no-results h3 {
+            font-size: 0.8rem;
+            color: var(--Dark-Gray);
+            margin-bottom: 4px;
+        }
+
+        .no-results p {
+            font-size: 0.7rem;
+            color: var(--Dark-Gray);
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        /* Modal & Notification */
+        .calculator-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .calculator-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .calculator-modal-content {
+            background-color: var(--White);
+            border-radius: 6px;
+            width: 95%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calculator-modal.active .calculator-modal-content {
+            transform: scale(1);
+        }
+
+        .calculator-modal-header {
+            padding: 10px 12px;
+            background: linear-gradient(135deg, var(--Deep-Green), #1b5e20);
+            color: var(--White);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calculator-modal-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .close-calculator-modal {
+            background: none;
+            border: none;
+            color: var(--White);
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calculator-modal-body {
+            padding: 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .calculator-iframe {
+            width: 100%;
+            height: 70vh;
+            border: none;
+            display: block;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 8px;
+            right: 8px;
+            background-color: var(--Deep-Green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            z-index: 10000;
+            font-weight: 500;
+            animation: slideIn 0.2s ease;
+            max-width: 200px;
+            font-size: 0.7rem;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Configuration */
+        .config-section {
+            background-color: var(--White);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            border: 2px dashed var(--Deep-Green);
+            display: none;
+        }
+
+        .config-section h3 {
+            color: var(--Deep-Green);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .config-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--Gray);
+            padding-bottom: 8px;
+        }
+
+        .config-tab {
+            background: var(--Gray);
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+        }
+
+        .config-tab.active {
+            background-color: var(--Deep-Green);
+            color: white;
+        }
+
+        .config-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .config-input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .config-input {
+            flex: 1;
+            min-width: 140px;
+            padding: 5px 6px;
+            border: 1px solid var(--Soft-Gray);
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+
+        .config-btn {
+            background-color: var(--Deep-Green);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.7rem;
+            transition: background-color 0.2s;
+        }
+
+        .config-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .category-list {
+            margin-top: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .category-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px;
+            background-color: var(--Off-White);
+            margin-bottom: 4px;
+            border-radius: 4px;
+        }
+
+        /* Mobile Sidebar Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1400px) {
+            .tools-sidebar {
+                width: 180px;
+            }
+            
+            .history-sidebar {
+                width: 200px;
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .tools-section {
+                gap: 8px;
+            }
+            
+            .tools-main-content {
+                gap: 8px;
+            }
+            
+            .tools-sidebar {
+                width: 170px;
+                padding: 8px;
+            }
+            
+            .history-sidebar {
+                width: 180px;
+                padding: 8px;
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .tools-section {
+                flex-direction: column;
+            }
+            
+            .tools-sidebar {
+                width: 280px;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                max-height: 100vh;
+                z-index: 1000;
+                border-radius: 0 6px 6px 0;
+                transition: left 0.2s ease;
+                box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+                padding: 10px;
+            }
+            
+            .tools-sidebar.active {
+                left: 0;
+            }
+            
+            .tools-main-content {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .history-sidebar {
+                width: 100%;
+                position: static;
+                margin-top: 8px;
+                max-height: 300px;
+            }
+            
+            .sidebar-toggle {
+                display: flex;
+            }
+            
+            .sidebar-close {
+                display: flex;
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            /* Mobile default to icons view */
+            .tools-container {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 6px;
+            }
+            
+            .tools-sidebar {
+                width: 260px;
+            }
+            
+            .tools-header {
+                padding: 6px 8px;
+                min-height: 50px;
+            }
+            
+            .tools-header h1 {
+                font-size: 0.9rem;
+            }
+            
+            .tools-controls {
+                padding: 6px;
+                min-height: 40px;
+            }
+            
+            .tools-container.icons-view {
+                grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+                gap: 6px;
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 6px;
+            }
+            
+            .tools-container.list-view .tool-item {
+                padding: 5px 6px;
+                min-height: 44px;
+            }
+            
+            .history-sidebar {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tools-sidebar {
+                width: 240px;
+            }
+            
+            .tools-container.icons-view {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .tools-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            
+            .search-container {
+                min-width: 100%;
+            }
+            
+            .view-buttons, .action-buttons {
+                justify-content: center;
+            }
+            
+            .filter-sort-dropdowns {
+                flex-direction: column;
+            }
+            
+            .history-sidebar {
+                max-height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tools-container.icons-view {
+                grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            }
+            
+            .tools-container.list-view .tool-item {
+                padding: 4px 5px;
+                min-height: 40px;
+            }
+            
+            .sidebar-toggle {
+                top: 6px;
+                left: 6px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .tools-container.icons-view {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+            
+            .tools-container.grid-view {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .tools-sidebar {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SEO Content -->
+    <div class="seo-content">
+        <h1>Professional Tax Calculators Collection</h1>
+        <h2>Income Tax Calculators</h2>
+        <p>Our comprehensive income tax calculators help individuals and businesses calculate their annual tax liabilities accurately.</p>
+        <h2>Sales Tax Calculators</h2>
+        <p>Calculate sales tax for goods and services with our advanced sales tax calculators.</p>
+        <h2>Withholding Tax Tools</h2>
+        <p>Professional withholding tax calculators for salary payments, contract work, and dividend distributions.</p>
+        <h2>Property Tax Calculators</h2>
+        <p>Calculate property tax for residential and commercial properties based on location and value.</p>
+        <h2>Customs and Excise Duty Calculators</h2>
+        <p>Advanced calculators for customs duties, excise taxes, and import/export taxes.</p>
+        <h2>Provincial Tax Calculators</h2>
+        <p>Specific tax calculators for different provinces including PRA, SRB, KPRA, and BRB.</p>
+        <h2>Agriculture Tax Calculators</h2>
+        <p>Specialized calculators for agricultural taxes, considering factors like land area and crop type.</p>
+    </div>
+
+    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Open navigation menu" tabindex="0">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <section class="tools-section" id="tools-section">
+        <!-- Sidebar -->
+        <aside class="tools-sidebar" id="tools-sidebar" role="navigation" aria-label="Calculator Categories">
+            <div class="sidebar-header">
+                <h3 class="sidebar-title">Tax Calculators</h3>
+                <button class="sidebar-close" id="sidebar-close" aria-label="Close navigation menu" tabindex="0">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-categories" id="sidebar-categories">
+                <!-- Categories auto-generated -->
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="tools-main-content">
+            <!-- Main Area -->
+            <div class="main-content-area">
+                <!-- Configuration -->
+                <div class="config-section" id="config-section">
+                    <h3><i class="fas fa-cog"></i> Configuration</h3>
+                    <div class="config-tabs">
+                        <button class="config-tab active" data-tab="calculator" tabindex="0">Add Tool</button>
+                        <button class="config-tab" data-tab="category" tabindex="0">Categories</button>
+                    </div>
+                    
+                    <div class="config-form" id="calculator-form">
+                        <div class="config-input-group">
+                            <input type="text" class="config-input" id="config-name" placeholder="Tool Name *" required>
+                            <select class="config-input" id="config-category" required>
+                                <option value="">Category *</option>
+                            </select>
+                        </div>
+                        <div class="config-input-group">
+                            <input type="text" class="config-input" id="config-file" placeholder="HTML file *" required>
+                            <select class="config-input" id="config-icon-type">
+                                <option value="icon">Icon</option>
+                                <option value="image">Image URL</option>
+                            </select>
+                        </div>
+                        <div class="config-input-group" id="icon-input-group">
+                            <input type="text" class="config-input" id="config-icon" placeholder="Icon class" value="fas fa-calculator">
+                        </div>
+                        <div class="config-input-group" id="image-input-group" style="display: none;">
+                            <input type="text" class="config-input" id="config-image" placeholder="Image URL">
+                        </div>
+                        <div class="config-input-group">
+                            <textarea class="config-input" id="config-description" placeholder="Description" rows="2"></textarea>
+                        </div>
+                        <button class="config-btn" id="add-calculator" tabindex="0">Add Tool</button>
+                    </div>
+                    
+                    <div class="config-form" id="category-form" style="display: none;">
+                        <div class="config-input-group">
+                            <input type="text" class="config-input" id="new-category-id" placeholder="Category ID">
+                            <input type="text" class="config-input" id="new-category-name" placeholder="Name *" required>
+                        </div>
+                        <div class="config-input-group">
+                            <input type="text" class="config-input" id="new-category-icon" placeholder="Icon" value="fas fa-folder">
+                            <input type="color" class="config-input" id="new-category-color" value="#2E7D32" title="Color">
+                        </div>
+                        <button class="config-btn" id="add-category" tabindex="0">Add Category</button>
+                        
+                        <div class="category-list" id="category-list">
+                            <!-- Categories listed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header -->
+                <header class="tools-header">
+                    <div class="header-content">
+                        <div class="header-text">
+                            <h1>Tax Calculators</h1>
+                            <p>Professional tools for tax calculations</p>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Controls -->
+                <div class="tools-controls">
+                    <div class="filter-sort-buttons">
+                        <button class="all-btn active" id="all-category-btn" title="All Categories" tabindex="0">
+                            <i class="fas fa-layer-group"></i>
+                        </button>
+                        <button class="filter-btn" id="filter-toggle" title="Filter/Sort" tabindex="0">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+
+                    <!-- Filter/Sort -->
+                    <div class="filter-sort-dropdowns" id="filter-sort-dropdowns">
+                        <div class="filter-container">
+                            <select class="filter-select" id="filter-category" aria-label="Filter by category" tabindex="0">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                        
+                        <div class="sort-container">
+                            <select class="sort-select" id="sort-options" aria-label="Sort by" tabindex="0">
+                                <option value="name">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="popularity">Popular</option>
+                                <option value="recent">Recent</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-container">
+                        <input type="text" class="search-input" id="search-input" placeholder="Search..." aria-label="Search" tabindex="0">
+                        <i class="fas fa-search search-icon"></i>
+                        <i class="fas fa-times cancel-icon" id="cancel-search"></i>
+                    </div>
+                    
+                    <div class="view-buttons">
+                        <button class="view-btn active" data-view="icons" title="Icons View" tabindex="0">
+                            <i class="fas fa-icons"></i>
+                        </button>
+                        <button class="view-btn" data-view="grid" title="Grid View" tabindex="0">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-btn" data-view="list" title="List View" tabindex="0">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn share" id="share-section" title="Share">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="action-btn link" id="copy-link" title="Copy Link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tools Container -->
+                <div class="tools-container icons-view" id="tools-container">
+                    <!-- Tools auto-generated -->
+                </div>
+
+                <!-- No Results -->
+                <div class="no-results" id="no-results" style="display: none;" role="alert">
+                    <div class="no-results-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>No Tools Found</h3>
+                    <p>Try adjusting your search or filter.</p>
+                </div>
+            </div>
+
+            <!-- History Sidebar -->
+            <aside class="history-sidebar" role="complementary" aria-label="Recent Tools">
+                <div class="history-section" id="history-section">
+                    <div class="history-header">
+                        <h3 class="history-title">
+                            <i class="fas fa-history"></i> Recent
+                            <span class="history-count">(<span id="history-count">0</span>)</span>
+                        </h3>
+                        <div class="history-actions">
+                            <button class="clear-history-btn" id="clear-all-history" title="Clear All" tabindex="0">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="history-items-container">
+                        <div class="history-items" id="history-items">
+                            <div class="empty-history" id="empty-history">
+                                <i class="fas fa-clock"></i>
+                                <p>No recent tools.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="calculator-modal" id="calculator-modal" role="dialog" aria-modal="true" aria-labelledby="calculator-modal-title">
+        <div class="calculator-modal-content">
+            <div class="calculator-modal-header">
+                <h3 class="calculator-modal-title" id="calculator-modal-title">Calculator</h3>
+                <button class="close-calculator-modal" id="close-calculator-modal" aria-label="Close" tabindex="0">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="calculator-modal-body">
+                <iframe class="calculator-iframe" id="calculator-iframe" src="about:blank" title="Calculator" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <script>
+        (function() {
+            'use strict';
+            
+            // Data Configuration
+            const CALCULATORS_DATA = [
+                { id: 1, name: "Income Tax", category: "income", description: "Calculate annual income tax liability", features: ["Tax Slabs", "Deductions"], file: "Income-Tax-Calculator.html", icon: "fas fa-calculator", usage: 1250, added: "2023-01-01" },
+            //    { id: 2, name: "Sales Tax", category: "sales", description: "Compute sales tax for goods and services", features: ["Multiple Jurisdictions"], file: "sales-tax.html", icon: "fas fa-shopping-cart", usage: 980, added: "2023-01-02" },
+            //    { id: 3, name: "FBR Tax", category: "income", description: "Federal Board of Revenue tax calculator", features: ["FBR Compliance"], file: "fbr-tax.html", icon: "fas fa-landmark", usage: 750, added: "2023-01-03" },
+            //    { id: 4, name: "Services Tax", category: "sales", description: "Calculate service tax for various services", features: ["Service Categories"], file: "services-tax.html", icon: "fas fa-concierge-bell", usage: 620, added: "2023-01-04" },
+            //    { id: 5, name: "PRA Tax", category: "provincial", description: "Punjab Revenue Authority tax calculator", features: ["Punjab Specific"], file: "pra-tax.html", icon: "fas fa-map-marker-alt", usage: 450, added: "2023-01-05" },
+            //    { id: 6, name: "SRB Tax", category: "provincial", description: "Sindh Revenue Board tax calculator", features: ["Sindh Specific"], file: "srb-tax.html", icon: "fas fa-map-marker-alt", usage: 380, added: "2023-01-06" },
+            //    { id: 7, name: "KPRA Tax", category: "provincial", description: "Khyber Pakhtunkhwa Revenue Authority", features: ["KP Specific"], file: "kpra-tax.html", icon: "fas fa-map-marker-alt", usage: 320, added: "2023-01-07" },
+            //    { id: 8, name: "BRB Tax", category: "provincial", description: "Balochistan Revenue Board tax calculator", features: ["Balochistan Specific"], file: "brb-tax.html", icon: "fas fa-map-marker-alt", usage: 280, added: "2023-01-08" },
+            //    { id: 9, name: "Agriculture Tax", category: "agriculture", description: "Calculate agriculture tax for farms", features: ["Land Area", "Crop Type"], file: "agriculture-tax.html", icon: "fas fa-tractor", usage: 210, added: "2023-01-09" },
+            //    { id: 10, name: "Salary Withholding", category: "withholding", description: "Calculate withholding tax on salary", features: ["Salary Bands"], file: "salary-withholding.html", icon: "fas fa-money-check-alt", usage: 580, added: "2023-01-10" },
+            //    { id: 11, name: "Contract Withholding", category: "withholding", description: "Withholding tax for contracts", features: ["Contract Value"], file: "contract-withholding.html", icon: "fas fa-file-contract", usage: 490, added: "2023-01-11" },
+            //    { id: 12, name: "Network Detector", category: "customs", description: "Customs network detector calculator", features: ["Network Analysis"], file: "network-detector.html", icon: "fas fa-satellite-dish", usage: 340, added: "2023-01-12" },
+            //    { id: 13, name: "Customs Tax", category: "customs", description: "Calculate customs duties and taxes", features: ["Import Value"], file: "customs-tax.html", icon: "fas fa-boxes", usage: 380, added: "2023-01-13" },
+            //    { id: 14, name: "Mobile Purchase Tax", category: "sales", description: "Tax calculator for mobile purchases", features: ["Mobile Devices"], file: "mobile-tax.html", icon: "fas fa-mobile-alt", usage: 270, added: "2023-01-14" },
+            //    { id: 15, name: "Property Tax", category: "property", description: "Calculate property tax", features: ["Property Value"], file: "property-tax.html", icon: "fas fa-home", usage: 320, added: "2023-01-15" },
+                { id: 16, name: "Sims Network Code", category: "OtherTools", description: "Find Sims Codes", features: ["Sim Code"], file: "Sims-Network-Code.html", icon: "fas fa-numbers", usage: 320, added: "2023-01-15" }
+
+            ];
+
+            // Categories
+            let CATEGORIES = {
+                all: { name: "All Categories", icon: "fas fa-layer-group", color: "#2E7D32" },
+                income: { name: "Income Tax", icon: "fas fa-money-bill-wave", color: "#2E7D32" },
+                sales: { name: "Sales Tax", icon: "fas fa-shopping-cart", color: "#007bff" },
+                withholding: { name: "Withholding Tax", icon: "fas fa-hand-holding-usd", color: "#FFED00" },
+                property: { name: "Property Tax", icon: "fas fa-home", color: "#16FF00" },
+                customs: { name: "Customs Tax", icon: "fas fa-boxes", color: "#ff0000" },
+                provincial: { name: "Provincial Tax", icon: "fas fa-map-marker-alt", color: "#929292" },
+                agriculture: { name: "Agriculture Tax", icon: "fas fa-tractor", color: "#2E7D32" },
+                OtherTools: { name: "Other Tools", icon: "fas fa-tools", color: "#fcc203" }
+            };
+
+            // App State
+            let currentView = 'icons'; // Default to icons view
+            let currentFilter = 'all';
+            let currentSort = 'name';
+            let searchQuery = '';
+            
+            // Load from localStorage
+            let viewedToolsHistory = [];
+            let toolsUsageCount = {};
+            
+            try {
+                const storedHistory = localStorage.getItem('taxToolsViewedHistory');
+                const storedUsage = localStorage.getItem('taxToolsUsageCount');
+                const storedView = localStorage.getItem('taxToolsView');
+                
+                if (storedHistory) viewedToolsHistory = JSON.parse(storedHistory);
+                if (storedUsage) toolsUsageCount = JSON.parse(storedUsage);
+                if (storedView) currentView = storedView;
+            } catch (e) {
+                console.warn('Failed to load localStorage data');
+            }
+
+            // DOM Elements
+            const toolsContainer = document.getElementById('tools-container');
+            const searchInput = document.getElementById('search-input');
+            const cancelSearch = document.getElementById('cancel-search');
+            const viewButtons = document.querySelectorAll('.view-btn');
+            const filterToggle = document.getElementById('filter-toggle');
+            const filterSortDropdowns = document.getElementById('filter-sort-dropdowns');
+            const filterCategory = document.getElementById('filter-category');
+            const sortOptions = document.getElementById('sort-options');
+            const allCategoryBtn = document.getElementById('all-category-btn');
+            const sidebarCategories = document.getElementById('sidebar-categories');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const toolsSidebar = document.getElementById('tools-sidebar');
+            const notificationContainer = document.getElementById('notification-container');
+            const historyItems = document.getElementById('history-items');
+            const emptyHistory = document.getElementById('empty-history');
+            const historyCount = document.getElementById('history-count');
+            const clearAllHistory = document.getElementById('clear-all-history');
+            const calculatorModal = document.getElementById('calculator-modal');
+            const closeCalculatorModal = document.getElementById('close-calculator-modal');
+            const calculatorIframe = document.getElementById('calculator-iframe');
+            const calculatorModalTitle = document.getElementById('calculator-modal-title');
+            const shareSectionBtn = document.getElementById('share-section');
+            const copyLinkBtn = document.getElementById('copy-link');
+            const noResults = document.getElementById('no-results');
+
+            // Helper functions
+            const getCategoryColor = (category) => CATEGORIES[category]?.color || '#2E7D32';
+            const getCategoryName = (category) => CATEGORIES[category]?.name || 'Calculator';
+
+            const getTimeAgo = (timestamp) => {
+                const now = new Date();
+                const past = new Date(timestamp);
+                const diffMs = now - past;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                const diffDays = Math.floor(diffMs / 86400000);
+                
+                if (diffMins < 1) return 'just now';
+                if (diffMins < 60) return `${diffMins}m ago`;
+                if (diffHours < 24) return `${diffHours}h ago`;
+                if (diffDays < 7) return `${diffDays}d ago`;
+                return 'over a week ago';
+            };
+
+            const showNotification = (message) => {
+                const existing = document.querySelector('.notification');
+                if (existing) existing.remove();
+                
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.textContent = message;
+                notificationContainer.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.2s ease';
+                    setTimeout(() => notification.remove(), 200);
+                }, 2000);
+            };
+
+            // Generate category counts
+            const generateCategoryCounts = () => {
+                const counts = { all: CALCULATORS_DATA.length };
+                CALCULATORS_DATA.forEach(calc => {
+                    if (!counts[calc.category]) counts[calc.category] = 0;
+                    counts[calc.category]++;
+                });
+                return counts;
+            };
+
+            // Generate sidebar with collapsible categories
+            const generateSidebar = () => {
+                const categoryCounts = generateCategoryCounts();
+                let sidebarHTML = '';
+                
+                // All Categories
+                sidebarHTML += `
+                    <div class="category-item" data-category="all">
+                        <div class="category-header active" data-category="all">
+                            <div class="category-name">
+                                <i class="fas fa-layer-group category-icon"></i>
+                                <span>All Categories</span>
+                            </div>
+                            <span class="category-count">${categoryCounts.all}</span>
+                        </div>
+                        <div class="category-tools" style="display: none;">
+                            ${CALCULATORS_DATA.map(calc => `
+                                <div class="sidebar-tool" data-id="${calc.id}" data-category="${calc.category}" tabindex="0">
+                                    <div class="sidebar-tool-icon">
+                                        <i class="${calc.icon}"></i>
+                                    </div>
+                                    <div class="sidebar-tool-name">${calc.name}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                // Other categories
+                Object.keys(CATEGORIES).forEach(catId => {
+                    if (catId !== 'all' && categoryCounts[catId] > 0) {
+                        const category = CATEGORIES[catId];
+                        const categoryCalcs = CALCULATORS_DATA.filter(c => c.category === catId);
+                        
+                        sidebarHTML += `
+                            <div class="category-item" data-category="${catId}">
+                                <div class="category-header" data-category="${catId}">
+                                    <div class="category-name">
+                                        <i class="${category.icon} category-icon"></i>
+                                        <span>${category.name}</span>
+                                    </div>
+                                    <span class="category-count">${categoryCounts[catId]}</span>
+                                </div>
+                                <div class="category-tools">
+                                    ${categoryCalcs.map(calc => `
+                                        <div class="sidebar-tool" data-id="${calc.id}" data-category="${calc.category}" tabindex="0">
+                                            <div class="sidebar-tool-icon">
+                                                <i class="${calc.icon}"></i>
+                                            </div>
+                                            <div class="sidebar-tool-name">${calc.name}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                
+                sidebarCategories.innerHTML = sidebarHTML;
+                
+                // Add event listeners
+                document.querySelectorAll('.category-header').forEach(header => {
+                    header.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const catId = this.getAttribute('data-category');
+                        toggleCategory(catId);
+                        
+                        if (catId !== 'all') {
+                            filterCategory.value = catId;
+                            setActiveFilter(catId);
+                            allCategoryBtn.classList.remove('active');
+                        } else {
+                            setActiveFilter('all');
+                            allCategoryBtn.classList.add('active');
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.sidebar-tool').forEach(tool => {
+                    tool.addEventListener('click', function() {
+                        const toolId = parseInt(this.getAttribute('data-id'));
+                        const calculator = CALCULATORS_DATA.find(c => c.id === toolId);
+                        if (calculator) {
+                            openToolPopup(calculator);
+                            if (window.innerWidth <= 992) closeSidebar();
+                        }
+                    });
+                });
+                
+                // Apply colors
+                document.querySelectorAll('.category-icon').forEach(icon => {
+                    const categoryItem = icon.closest('.category-item');
+                    if (categoryItem) {
+                        const categoryId = categoryItem.getAttribute('data-category');
+                        if (categoryId !== 'all') {
+                            icon.style.color = getCategoryColor(categoryId);
+                        }
+                    }
+                });
+            };
+
+            // Toggle category (collapsible on all screens)
+            const toggleCategory = (categoryId) => {
+                const categoryItem = document.querySelector(`.category-item[data-category="${categoryId}"]`);
+                if (!categoryItem) return;
+                
+                const isActive = categoryItem.classList.contains('active');
+                const categoryTools = categoryItem.querySelector('.category-tools');
+                
+                // Toggle current category
+                if (isActive) {
+                    categoryItem.classList.remove('active');
+                    if (categoryTools) categoryTools.style.display = 'none';
+                    categoryItem.querySelector('.category-header').classList.remove('active');
+                } else {
+                    // Close other categories if on mobile
+                    if (window.innerWidth <= 992) {
+                        document.querySelectorAll('.category-item').forEach(item => {
+                            item.classList.remove('active');
+                            const tools = item.querySelector('.category-tools');
+                            if (tools) tools.style.display = 'none';
+                            item.querySelector('.category-header').classList.remove('active');
+                        });
+                    }
+                    
+                    categoryItem.classList.add('active');
+                    if (categoryTools) categoryTools.style.display = 'block';
+                    categoryItem.querySelector('.category-header').classList.add('active');
+                }
+                
+                // Update All Categories button
+                if (categoryId === 'all') {
+                    allCategoryBtn.classList.add('active');
+                } else {
+                    allCategoryBtn.classList.remove('active');
+                }
+            };
+
+            // Generate filter dropdown
+            const generateFilterDropdown = () => {
+                const categoryCounts = generateCategoryCounts();
+                let options = '<option value="all">All Categories</option>';
+                
+                Object.keys(CATEGORIES).forEach(catId => {
+                    if (catId !== 'all' && categoryCounts[catId] > 0) {
+                        options += `<option value="${catId}">${CATEGORIES[catId].name}</option>`;
+                    }
+                });
+                
+                filterCategory.innerHTML = options;
+            };
+
+            // Generate tools
+            const generateTools = () => {
+                toolsContainer.innerHTML = '';
+                
+                CALCULATORS_DATA.forEach(calc => {
+                    const color = getCategoryColor(calc.category);
+                    const categoryName = getCategoryName(calc.category);
+                    
+                    const toolItem = document.createElement('div');
+                    toolItem.className = 'tool-item';
+                    toolItem.setAttribute('data-id', calc.id);
+                    toolItem.setAttribute('data-category', calc.category);
+                    toolItem.setAttribute('data-usage', calc.usage || 0);
+                    toolItem.setAttribute('data-added', calc.added);
+                    toolItem.setAttribute('tabindex', '0');
+                    
+                    // Determine display content
+                    const displayContent = calc.image ? 
+                        `<img src="${calc.image}" alt="${calc.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\'${calc.icon}\\'></i>';" />` :
+                        `<i class="${calc.icon}"></i>`;
+                    
+                    // Grid view content
+                    const gridContent = `
+                        <div class="tool-image" style="background: linear-gradient(135deg, ${color}, ${color}80);">
+                            ${displayContent}
+                        </div>
+                        <span class="tool-category" style="color: ${color}; background-color: ${color}20;">${categoryName}</span>
+                        <h3 class="tool-title">${calc.name}</h3>
+                        <p class="tool-description">${calc.description}</p>
+                        <div class="tool-features">
+                            ${calc.features.map(f => `<span class="tool-feature">${f}</span>`).join('')}
+                        </div>
+                        <div class="tool-actions">
+                            <div class="tool-action-buttons">
+                                <button class="tool-icon-btn popup" data-id="${calc.id}" title="Popup" tabindex="0">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+                                <button class="tool-icon-btn new-tab" data-id="${calc.id}" title="New Tab" tabindex="0">
+                                    <i class="fas fa-external-link-square-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // List view content
+                    const listContent = `
+                        <div class="tool-image" style="background: linear-gradient(135deg, ${color}, ${color}80);">
+                            ${displayContent}
+                        </div>
+                        <div class="tool-content">
+                            <div class="tool-info">
+                                <h3 class="tool-title">${calc.name}</h3>
+                                <span class="tool-category" style="color: ${color};">${categoryName}</span>
+                            </div>
+                            <div class="tool-actions">
+                                <button class="tool-icon-btn popup" data-id="${calc.id}" title="Popup" tabindex="0">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+                                <button class="tool-icon-btn new-tab" data-id="${calc.id}" title="New Tab" tabindex="0">
+                                    <i class="fas fa-external-link-square-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Icons view content
+                    const iconsContent = `
+                        <div class="tool-image" style="background: linear-gradient(135deg, ${color}, ${color}80);">
+                            ${displayContent}
+                        </div>
+                        <h3 class="tool-title">${calc.name}</h3>
+                    `;
+                    
+                    toolItem.innerHTML = currentView === 'list' ? listContent : 
+                                      currentView === 'grid' ? gridContent : iconsContent;
+                    
+                    toolsContainer.appendChild(toolItem);
+                });
+                
+                // Add event listeners
+                document.querySelectorAll('.tool-item').forEach(tool => {
+                    tool.addEventListener('click', function(e) {
+                        if (!e.target.closest('.tool-icon-btn')) {
+                            const toolId = parseInt(this.getAttribute('data-id'));
+                            const calculator = CALCULATORS_DATA.find(c => c.id === toolId);
+                            if (calculator) openToolPopup(calculator);
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.tool-icon-btn.popup').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const toolId = parseInt(this.getAttribute('data-id'));
+                        const calculator = CALCULATORS_DATA.find(c => c.id === toolId);
+                        if (calculator) openToolPopup(calculator);
+                    });
+                });
+                
+                document.querySelectorAll('.tool-icon-btn.new-tab').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const toolId = parseInt(this.getAttribute('data-id'));
+                        const calculator = CALCULATORS_DATA.find(c => c.id === toolId);
+                        if (calculator) openToolNewTab(calculator);
+                    });
+                });
+                
+                filterTools();
+            };
+
+            // Set active view
+            const setActiveView = (view) => {
+                currentView = view;
+                localStorage.setItem('taxToolsView', view);
+                
+                viewButtons.forEach(button => {
+                    button.classList.toggle('active', button.getAttribute('data-view') === view);
+                });
+                
+                toolsContainer.className = 'tools-container ' + view + '-view';
+                generateTools(); // Regenerate with new view
+            };
+
+            // Set active filter
+            const setActiveFilter = (filter) => {
+                currentFilter = filter;
+                filterTools();
+            };
+
+            // Filter tools
+            const filterTools = () => {
+                const toolItems = document.querySelectorAll('.tool-item');
+                let visibleCount = 0;
+                
+                toolItems.forEach(tool => {
+                    const toolCategory = tool.getAttribute('data-category');
+                    const toolName = tool.querySelector('.tool-title').textContent.toLowerCase();
+                    
+                    const filterMatch = currentFilter === 'all' || toolCategory === currentFilter;
+                    const searchMatch = !searchQuery || toolName.includes(searchQuery);
+                    
+                    if (filterMatch && searchMatch) {
+                        tool.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        tool.style.display = 'none';
+                    }
+                });
+                
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+                sortTools();
+            };
+
+            // Sort tools
+            const sortTools = () => {
+                const toolItems = document.querySelectorAll('.tool-item');
+                const toolsArray = Array.from(toolItems).filter(tool => tool.style.display !== 'none');
+                
+                toolsArray.sort((a, b) => {
+                    const aId = parseInt(a.getAttribute('data-id'));
+                    const bId = parseInt(b.getAttribute('data-id'));
+                    const aCalc = CALCULATORS_DATA.find(c => c.id === aId);
+                    const bCalc = CALCULATORS_DATA.find(c => c.id === bId);
+                    
+                    if (!aCalc || !bCalc) return 0;
+                    
+                    switch(currentSort) {
+                        case 'name': return aCalc.name.localeCompare(bCalc.name);
+                        case 'name-desc': return bCalc.name.localeCompare(aCalc.name);
+                        case 'popularity': return (bCalc.usage || 0) - (aCalc.usage || 0);
+                        case 'recent': return new Date(bCalc.added) - new Date(aCalc.added);
+                        default: return aCalc.name.localeCompare(bCalc.name);
+                    }
+                });
+                
+                toolsArray.forEach(tool => toolsContainer.appendChild(tool));
+            };
+
+            // Open tool
+            const openToolPopup = (calculator) => {
+                calculatorModalTitle.textContent = calculator.name;
+                calculatorIframe.src = `Tools/${calculator.file}`;
+                calculatorModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                addToHistory(calculator);
+            };
+
+            const openToolNewTab = (calculator) => {
+                window.open(`Tools/${calculator.file}`, '_blank');
+                addToHistory(calculator);
+            };
+
+            // History management
+            const addToHistory = (calculator) => {
+                viewedToolsHistory = viewedToolsHistory.filter(item => item.id != calculator.id);
+                viewedToolsHistory.unshift({
+                    id: calculator.id,
+                    name: calculator.name,
+                    category: calculator.category,
+                    icon: calculator.icon,
+                    timestamp: new Date().toISOString()
+                });
+                
+                if (viewedToolsHistory.length > 10) viewedToolsHistory = viewedToolsHistory.slice(0, 10);
+                
+                try {
+                    localStorage.setItem('taxToolsViewedHistory', JSON.stringify(viewedToolsHistory));
+                } catch (e) {}
+                
+                renderHistoryItems();
+            };
+
+            const renderHistoryItems = () => {
+                historyItems.innerHTML = '';
+                
+                if (viewedToolsHistory.length === 0) {
+                    emptyHistory.style.display = 'block';
+                    historyCount.textContent = '0';
+                    return;
+                }
+                
+                emptyHistory.style.display = 'none';
+                historyCount.textContent = viewedToolsHistory.length;
+                
+                viewedToolsHistory.forEach(item => {
+                    const calculator = CALCULATORS_DATA.find(c => c.id === item.id);
+                    if (!calculator) return;
+                    
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.setAttribute('data-id', item.id);
+                    historyItem.setAttribute('tabindex', '0');
+                    
+                    const categoryColor = getCategoryColor(item.category);
+                    
+                    historyItem.innerHTML = `
+                        <div class="history-item-content">
+                            <div class="history-item-icon">
+                                <i class="${item.icon}" style="color: ${categoryColor};"></i>
+                            </div>
+                            <div class="history-item-info">
+                                <div class="history-item-name">${item.name}</div>
+                                <div class="history-item-category">${getCategoryName(item.category)}</div>
+                            </div>
+                        </div>
+                        <div class="history-item-time">${getTimeAgo(item.timestamp)}</div>
+                        <div class="history-item-actions">
+                            <button class="delete-history-item" data-id="${item.id}" title="Delete" tabindex="0">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    historyItem.addEventListener('click', function(e) {
+                        if (!e.target.closest('.delete-history-item')) {
+                            openToolPopup(calculator);
+                        }
+                    });
+                    
+                    historyItem.querySelector('.delete-history-item').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        deleteHistoryItem(item.id);
+                    });
+                    
+                    historyItems.appendChild(historyItem);
+                });
+            };
+
+            const deleteHistoryItem = (toolId) => {
+                viewedToolsHistory = viewedToolsHistory.filter(item => item.id != toolId);
+                try {
+                    localStorage.setItem('taxToolsViewedHistory', JSON.stringify(viewedToolsHistory));
+                } catch (e) {}
+                renderHistoryItems();
+                showNotification('Removed from history');
+            };
+
+            // Sidebar functions
+            const openSidebar = () => {
+                toolsSidebar.classList.add('active');
+                sidebarOverlay.classList.add('active');
+            };
+
+            const closeSidebar = () => {
+                toolsSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            };
+
+            // Initialize
+            const initApp = () => {
+                // Set default view based on screen size
+                if (window.innerWidth <= 992 && !localStorage.getItem('taxToolsView')) {
+                    currentView = 'icons';
+                }
+                
+                generateSidebar();
+                generateFilterDropdown();
+                generateTools();
+                renderHistoryItems();
+                
+                // Set initial active view
+                setActiveView(currentView);
+                
+                // Set All Categories as active
+                toggleCategory('all');
+            };
+
+            // Setup event listeners
+            const setupEventListeners = () => {
+                // Search
+                searchInput.addEventListener('input', function() {
+                    searchQuery = this.value.toLowerCase();
+                    cancelSearch.style.display = searchQuery ? 'block' : 'none';
+                    filterTools();
+                });
+
+                cancelSearch.addEventListener('click', function() {
+                    searchInput.value = '';
+                    searchQuery = '';
+                    this.style.display = 'none';
+                    filterTools();
+                });
+
+                // View buttons
+                viewButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        setActiveView(this.getAttribute('data-view'));
+                    });
+                });
+
+                // Filter toggle
+                filterToggle.addEventListener('click', function() {
+                    filterSortDropdowns.classList.toggle('active');
+                    filterToggle.classList.toggle('active');
+                });
+
+                // Filter and sort
+                filterCategory.addEventListener('change', function() {
+                    setActiveFilter(this.value);
+                    if (this.value === 'all') {
+                        toggleCategory('all');
+                        allCategoryBtn.classList.add('active');
+                    } else {
+                        toggleCategory(this.value);
+                        allCategoryBtn.classList.remove('active');
+                    }
+                });
+
+                sortOptions.addEventListener('change', function() {
+                    currentSort = this.value;
+                    sortTools();
+                });
+
+                // All Categories button
+                allCategoryBtn.addEventListener('click', function() {
+                    filterCategory.value = 'all';
+                    setActiveFilter('all');
+                    toggleCategory('all');
+                    this.classList.add('active');
+                });
+
+                // Clear history
+                clearAllHistory.addEventListener('click', function() {
+                    if (viewedToolsHistory.length > 0) {
+                        viewedToolsHistory = [];
+                        try {
+                            localStorage.setItem('taxToolsViewedHistory', JSON.stringify([]));
+                        } catch (e) {}
+                        renderHistoryItems();
+                        showNotification('History cleared');
+                    }
+                });
+
+                // Modal
+                closeCalculatorModal.addEventListener('click', function() {
+                    calculatorModal.classList.remove('active');
+                    calculatorIframe.src = 'about:blank';
+                    document.body.style.overflow = '';
+                });
+
+                calculatorModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        calculatorModal.classList.remove('active');
+                        calculatorIframe.src = 'about:blank';
+                        document.body.style.overflow = '';
+                    }
+                });
+
+                // Sidebar
+                sidebarToggle.addEventListener('click', openSidebar);
+                sidebarClose.addEventListener('click', closeSidebar);
+                sidebarOverlay.addEventListener('click', closeSidebar);
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        if (calculatorModal.classList.contains('active')) {
+                            calculatorModal.classList.remove('active');
+                            calculatorIframe.src = 'about:blank';
+                            document.body.style.overflow = '';
+                        } else if (toolsSidebar.classList.contains('active')) {
+                            closeSidebar();
+                        }
+                    }
+                });
+            };
+
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    initApp();
+                    setupEventListeners();
+                });
+            } else {
+                initApp();
+                setupEventListeners();
+            }
+
+            // Share functions
+            const shareToolsSection = () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Advanced Tax Calculators',
+                        text: 'Check out these professional tax calculators for accurate financial planning.',
+                        url: window.location.href
+                    }).then(() => showNotification('Thanks for sharing!'))
+                      .catch(error => console.log('Error sharing:', error));
+                } else {
+                    copySectionLink();
+                }
+            };
+
+            const copySectionLink = () => {
+                const url = window.location.href.split('#')[0] + '#tools-section';
+                navigator.clipboard.writeText(url)
+                    .then(() => showNotification('Link copied!'))
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        showNotification('Failed to copy link');
+                    });
+            };
+
+                            // Action buttons
+            shareSectionBtn.addEventListener('click', shareToolsSection);
+            copyLinkBtn.addEventListener('click', copySectionLink);
+
+        })();
+    </script>
+</body>
+</html>

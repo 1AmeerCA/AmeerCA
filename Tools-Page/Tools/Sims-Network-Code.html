@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Finder | Pakistan Mobile Code Checker</title>
+    <meta name="description" content="Instantly identify Jazz, Zong, Telenor, Ufone, Scom mobile networks. Professional tool with search history, quick codes, and live detection.">
+    <script src="taxData.js"></script>
+
+    <style>
+        /* ===== ULTRA-COMPACT CSS ===== */
+        :root {
+            --Red: #ff0000; --Blue: #007bff; --Gold: #FFED00; --Parrot: #16FF00; 
+            --Deep-Green: #2E7D32; --White: #fff; --Off-White: #f8f9fa; 
+            --Black: #000; --Gray: #f5f5f5; --Soft-Gray: #d3d3d3; --Dark-Gray: #929292;
+            --Light-Green: #4CAF50; --Light-Gold: #FFF9C4;
+            --space-2: 2px; --space-4: 4px; --space-6: 6px; --space-8: 8px; 
+            --space-12: 12px; --space-16: 16px; --space-20: 20px;
+            --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1); --shadow-md: 0 2px 8px rgba(0,0,0,0.15);
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: var(--Off-White); color: var(--Black); line-height: 1.3; padding: var(--space-12); display: flex; justify-content: center; min-height: 100vh; }
+        
+        /* ===== MAIN CONTAINER (Ultra Compact) ===== */
+        .container { 
+            width: 100%; max-width: 500px; background: var(--White); 
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-md); 
+            overflow: hidden; border: 1px solid var(--Soft-Gray);
+        }
+
+        /* ===== HEADER (Super Compact) ===== */
+        .header { 
+            background: linear-gradient(135deg, var(--Deep-Green) 0%, var(--Light-Green) 100%); 
+            color: var(--White); padding: var(--space-12) var(--space-16); 
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 3px solid var(--Gold);
+        }
+        .header-title h1 { font-size: 1.2rem; font-weight: 700; margin-bottom: var(--space-2); }
+        .header-title p { font-size: 0.75rem; opacity: 0.9; }
+        .header-actions { display: flex; gap: var(--space-8); }
+        .icon-btn { 
+            background: rgba(255,255,255,0.2); border: none; width: 32px; height: 32px; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--White); cursor: pointer; transition: var(--transition);
+        }
+        .icon-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+
+        /* ===== SEARCH SECTION (Compact with Live Results) ===== */
+        .search-section { padding: var(--space-16); border-bottom: 1px solid var(--Soft-Gray); }
+        .search-label { font-size: 0.8rem; font-weight: 600; color: var(--Dark-Gray); margin-bottom: var(--space-6); }
+        
+        .search-wrapper {
+            position: relative; display: flex; gap: var(--space-8); margin-bottom: var(--space-12);
+        }
+        .search-input {
+            flex: 1; padding: var(--space-12); font-size: 1rem; 
+            border: 2px solid var(--Soft-Gray); border-radius: var(--radius-md);
+            outline: none; transition: var(--transition);
+        }
+        .search-input:focus { border-color: var(--Deep-Green); box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.1); }
+        
+        .search-actions { display: flex; gap: var(--space-6); }
+        .action-btn { 
+            padding: var(--space-12); background: var(--Deep-Green); color: var(--White);
+            border: none; border-radius: var(--radius-md); cursor: pointer; 
+            transition: var(--transition); min-width: 40px; display: flex; align-items: center; justify-content: center;
+        }
+        .action-btn:hover { background: var(--Light-Green); transform: translateY(-1px); }
+        
+        /* ===== LIVE RESULT DISPLAY (Always Visible) ===== */
+        .live-result {
+            background: linear-gradient(135deg, var(--Off-White) 0%, var(--White) 100%);
+            border: 1px solid var(--Soft-Gray); border-radius: var(--radius-md);
+            padding: var(--space-12); display: flex; align-items: center; gap: var(--space-12);
+            min-height: 70px; transition: var(--transition);
+        }
+        .live-result.identified { border-color: var(--Deep-Green); background: var(--White); }
+        .live-result.error { border-color: var(--Red); background: #fff5f5; }
+        
+        .provider-logo {
+            width: 40px; height: 40px; border-radius: var(--radius-sm); 
+            padding: var(--space-4); background: var(--White); 
+            border: 1px solid var(--Soft-Gray); display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .provider-logo svg { width: 100%; height: auto; }
+        
+        .provider-info { flex: 1; }
+        .provider-name { font-size: 1rem; font-weight: 700; color: var(--Deep-Green); margin-bottom: var(--space-2); }
+        .provider-details { font-size: 0.8rem; color: var(--Dark-Gray); }
+        .provider-code { 
+            background: var(--Gold); color: var(--Black); padding: var(--space-2) var(--space-6); 
+            border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 600; display: inline-block;
+        }
+
+        /* ===== QUICK ACTIONS (Advanced & Compact) ===== */
+        .quick-actions { padding: var(--space-16); border-bottom: 1px solid var(--Soft-Gray); }
+        .quick-actions h3 { font-size: 0.9rem; color: var(--Dark-Gray); margin-bottom: var(--space-8); font-weight: 600; }
+        
+        .quick-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8);
+        }
+        @media (min-width: 480px) {
+            .quick-grid { grid-template-columns: repeat(6, 1fr); }
+        }
+        
+        .quick-btn {
+            padding: var(--space-8) var(--space-4); border: 1px solid var(--Soft-Gray); 
+            background: var(--Off-White); border-radius: var(--radius-md); cursor: pointer;
+            transition: var(--transition); font-size: 0.75rem; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+        }
+        .quick-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .quick-btn.jazz { border-color: var(--Red); color: var(--Red); }
+        .quick-btn.zong { border-color: var(--Parrot); color: var(--Parrot); }
+        .quick-btn.ufone { border-color: var(--Gold); color: var(--Gold); }
+        .quick-btn.telenor { border-color: var(--Blue); color: var(--Blue); }
+        .quick-btn.scom { border-color: var(--Deep-Green); color: var(--Deep-Green); }
+        .quick-btn.warid { border-color: #9C27B0; color: #9C27B0; }
+        .quick-code { font-weight: 700; font-size: 0.9rem; }
+        
+        /* ===== HISTORY SECTION (Collapsible) ===== */
+        .history-section { padding: var(--space-16); border-bottom: 1px solid var(--Soft-Gray); }
+        .history-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: var(--space-8); cursor: pointer;
+        }
+        .history-header h3 { font-size: 0.9rem; color: var(--Dark-Gray); font-weight: 600; }
+        .history-toggle { color: var(--Deep-Green); font-size: 0.8rem; }
+        
+        .history-list { max-height: 150px; overflow-y: auto; }
+        .history-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: var(--space-6) var(--space-8); background: var(--Off-White);
+            border-radius: var(--radius-sm); margin-bottom: var(--space-4);
+            font-size: 0.8rem;
+        }
+        .history-item:hover { background: var(--Gray); }
+        .history-code { font-weight: 600; color: var(--Deep-Green); }
+        .history-provider { color: var(--Dark-Gray); }
+        .history-time { color: var(--Dark-Gray); font-size: 0.7rem; }
+        .history-clear { 
+            background: none; border: none; color: var(--Red); cursor: pointer;
+            font-size: 0.7rem; padding: var(--space-2) var(--space-6);
+        }
+        .history-clear:hover { text-decoration: underline; }
+
+        /* ===== DATA TABLE (Ultra Compact) ===== */
+        .table-section { padding: var(--space-16); }
+        .table-section h3 { font-size: 0.9rem; color: var(--Dark-Gray); margin-bottom: var(--space-8); font-weight: 600; }
+        
+        .compact-table {
+            width: 100%; border-collapse: collapse; font-size: 0.75rem;
+        }
+        .compact-table th {
+            background: var(--Off-White); color: var(--Deep-Green); 
+            padding: var(--space-8); text-align: left; font-weight: 600;
+            border-bottom: 2px solid var(--Soft-Gray);
+        }
+        .compact-table td {
+            padding: var(--space-8); border-bottom: 1px solid var(--Soft-Gray);
+            color: var(--Dark-Gray);
+        }
+        .compact-table tr.highlight {
+            background: linear-gradient(135deg, var(--Gold) 0%, rgba(255,237,0,0.1) 100%);
+            border-left: 3px solid var(--Deep-Green);
+        }
+        .compact-table tr.highlight td { color: var(--Black); font-weight: 600; }
+        .code-range { font-family: monospace; font-weight: 600; color: var(--Deep-Green); }
+
+        /* ===== FOOTER (Compact) ===== */
+        .footer { 
+            padding: var(--space-12) var(--space-16); background: var(--Off-White); 
+            border-top: 1px solid var(--Soft-Gray); text-align: center;
+        }
+        .footer p { font-size: 0.7rem; color: var(--Dark-Gray); line-height: 1.2; }
+        .footer-credit { margin-top: var(--space-4); font-weight: 600; color: var(--Deep-Green); }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: var(--Black); color: var(--White); padding: var(--space-8) var(--space-16);
+            border-radius: 50px; font-size: 0.8rem; z-index: 1000; transition: transform 0.3s ease;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            body { padding: var(--space-8); }
+            .container { border-radius: var(--radius-md); }
+            .header { padding: var(--space-8) var(--space-12); }
+            .header-title h1 { font-size: 1rem; }
+            .search-section, .quick-actions, .history-section, .table-section { padding: var(--space-12); }
+        }
+
+
+        
+        /* Icon Button Styling */
+        .copy-icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--Deep-Green);
+            cursor: pointer;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+
+        .copy-icon-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .copy-icon-btn:hover {
+            background: rgba(46, 125, 50, 0.1); /* Light green glow on hover */
+            transform: scale(1.1);
+        }
+
+        .copy-icon-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Toast styling for a clean popup */
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--Black);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Icon Buttons -->
+        <header class="header">
+            <div class="header-title">
+                <h1>Mobile Network Finder</h1>
+                <p>Instant Pakistan Mobile Code Identification</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="copyToolLink()" title="Copy Tool Link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" onclick="shareTool()" title="Share Tool">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Search Section with Live Results -->
+        <section class="search-section">
+            <div class="search-label">Enter 4-digit code or full mobile number</div>
+            <div class="search-wrapper">
+                <input type="text" id="mobileInput" class="search-input" 
+                       placeholder="0300XXXXXXX or 300" maxlength="11" autocomplete="off"
+                       oninput="identifyNetwork()">
+
+                        <button class="copy-icon-btn" onclick="copyResult()" title="Copy Number">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                        <div id="toast" class="toast-notification">Copied!</div>
+
+                <div class="search-actions">
+                    <button class="action-btn" onclick="clearInput()" title="Clear">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Live Result Display (Always Visible) -->
+            <div id="liveResult" class="live-result">
+                <div class="provider-logo" id="resultLogo">
+                    <svg viewBox="0 0 24 24" fill="var(--Dark-Gray)">
+                        <path d="M17,1H7A2,2,0,0,0,5,3V21a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V3A2,2,0,0,0,17,1ZM7,19V5H17V19Z"/>
+                    </svg>
+                </div>
+                <div class="provider-info">
+                    <div class="provider-name" id="resultName">Ready to Identify</div>
+                    <div class="provider-details" id="resultDetails">Enter a mobile number to begin</div>
+                </div>
+                <div class="provider-code hidden" id="resultCode">300</div>
+            </div>
+        </section>
+
+        <!-- Advanced Quick Actions -->
+        <section class="quick-actions">
+            <h3>Quick Check Codes</h3>
+            <div class="quick-grid">
+                <button class="quick-btn jazz" onclick="quickCheck('300', 'Jazz')">
+                    <span class="quick-code">300</span>
+                    <span>Jazz</span>
+                </button>
+                <button class="quick-btn zong" onclick="quickCheck('311', 'Zong')">
+                    <span class="quick-code">311</span>
+                    <span>Zong</span>
+                </button>
+                <button class="quick-btn warid" onclick="quickCheck('320', 'Warid')">
+                    <span class="quick-code">320</span>
+                    <span>Warid</span>
+                </button>
+                <button class="quick-btn ufone" onclick="quickCheck('330', 'Ufone')">
+                    <span class="quick-code">330</span>
+                    <span>Ufone</span>
+                </button>
+                <button class="quick-btn telenor" onclick="quickCheck('340', 'Telenor')">
+                    <span class="quick-code">340</span>
+                    <span>Telenor</span>
+                </button>
+                <button class="quick-btn scom" onclick="quickCheck('350', 'Scom')">
+                    <span class="quick-code">350</span>
+                    <span>Scom</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Search History (Collapsible) -->
+        <section class="history-section">
+            <div class="history-header" onclick="toggleHistory()">
+                <h3>Recent Searches</h3>
+                <span class="history-toggle" id="historyToggle">▼</span>
+            </div>
+            <div class="history-list hidden" id="historyList">
+                <!-- History items will be inserted here by JavaScript -->
+                <div class="history-item" id="historyTemplate" style="display: none;">
+                    <div>
+                        <span class="history-code">300</span>
+                        <span class="history-provider"> - Jazz (Mobilink)</span>
+                    </div>
+                    <div class="history-time">Just now</div>
+                </div>
+                <button class="history-clear" onclick="clearHistory()">Clear All</button>
+            </div>
+        </section>
+
+        <!-- Compact Data Table -->
+        <section class="table-section">
+            <h3>Complete Code Reference</h3>
+            <table class="compact-table" id="networkTable">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Code Range</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="row-jazz">
+                        <td>Jazz (Mobilink)</td>
+                        <td><span class="code-range">300-310</span></td>
+                        <td>GSM/4G</td>
+                    </tr>
+                    <tr id="row-zong">
+                        <td>Zong (CMPak)</td>
+                        <td><span class="code-range">311-319</span></td>
+                        <td>4G/LTE</td>
+                    </tr>
+                    <tr id="row-warid">
+                        <td>Warid (Mobilink)</td>
+                        <td><span class="code-range">320-329</span></td>
+                        <td>GSM</td>
+                    </tr>
+                    <tr id="row-ufone">
+                        <td>Ufone (PTCL)</td>
+                        <td><span class="code-range">330-339</span></td>
+                        <td>GSM/4G</td>
+                    </tr>
+                    <tr id="row-telenor">
+                        <td>Telenor PK</td>
+                        <td><span class="code-range">340-349</span></td>
+                        <td>GSM/4G</td>
+                    </tr>
+                    <tr id="row-scom">
+                        <td>SCOM</td>
+                        <td><span class="code-range">350-359</span></td>
+                        <td>GSM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 Mobile Network Finder | All codes registered with PTA</p>
+            <p class="footer-credit">Professional Tool by AmeerCA</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================
+        // NETWORK DATA & CONFIGURATION
+        // ============================================
+        
+
+
+        // ============================================
+        // CORE APPLICATION
+        // ============================================
+        const NetworkFinder = {
+            // State Management
+            state: {
+                currentCode: null,
+                currentProvider: null,
+                searchHistory: [],
+                historyVisible: false
+            },
+
+            // Initialize
+            init() {
+                this.loadHistory();
+                this.setupEventListeners();
+                this.focusInput();
+            },
+
+            // Setup Event Listeners
+            setupEventListeners() {
+                const input = document.getElementById('mobileInput');
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.identify();
+                });
+                input.addEventListener('input', () => this.identify());
+            },
+
+            // Focus Input
+            focusInput() {
+                setTimeout(() => document.getElementById('mobileInput').focus(), 100);
+            },
+
+            // Extract Code from Input
+            extractCode(input) {
+                let clean = input.replace(/\D/g, '');
+                if (clean.startsWith('92')) clean = clean.substring(2);
+                if (clean.startsWith('0')) clean = clean.substring(1);
+                return clean.substring(0, 3);
+            },
+
+            // Main Identification Function
+            identify() {
+                const input = document.getElementById('mobileInput').value.trim();
+                const codeStr = this.extractCode(input);
+                const code = parseInt(codeStr);
+                
+                // Clear previous highlights
+                document.querySelectorAll('#networkTable tr').forEach(tr => {
+                    tr.classList.remove('highlight');
+                });
+                
+                const liveResult = document.getElementById('liveResult');
+                const resultName = document.getElementById('resultName');
+                const resultDetails = document.getElementById('resultDetails');
+                const resultLogo = document.getElementById('resultLogo');
+                const resultCode = document.getElementById('resultCode');
+                
+                // Reset UI
+                liveResult.className = 'live-result';
+                
+                if (input.length === 0) {
+                    // Default state
+                    resultName.textContent = 'Ready to Identify';
+                    resultDetails.textContent = 'Enter a mobile number to begin';
+                    resultLogo.innerHTML = NetworkData.logos.default;
+                    resultCode.classList.add('hidden');
+                    return;
+                }
+                
+                if (!codeStr || codeStr.length < 3) {
+                    // Invalid input
+                    liveResult.classList.add('error');
+                    resultName.textContent = 'Invalid Input';
+                    resultDetails.textContent = 'Enter at least 3 digits';
+                    resultLogo.innerHTML = NetworkData.logos.default;
+                    resultCode.classList.add('hidden');
+                    return;
+                }
+                
+                // Find matching provider
+                const provider = NetworkData.providers.find(p => 
+                    code >= p.min && code <= p.max
+                );
+                
+                if (provider) {
+                    // Found provider
+                    liveResult.classList.add('identified');
+                    resultName.textContent = provider.name;
+                    resultDetails.textContent = provider.note;
+                    resultLogo.innerHTML = NetworkData.logos[provider.logo];
+                    resultCode.textContent = codeStr;
+                    resultCode.classList.remove('hidden');
+                    
+                    // Highlight table row
+                    const rowId = `row-${provider.logo}`;
+                    document.getElementById(rowId)?.classList.add('highlight');
+                    
+                    // Add to history
+                    this.addToHistory(codeStr, provider.name);
+                    
+                } else {
+                    // Not found
+                    liveResult.classList.add('error');
+                    resultName.textContent = 'Network Not Found';
+                    resultDetails.textContent = `Code ${codeStr} not recognized`;
+                    resultLogo.innerHTML = NetworkData.logos.default;
+                    resultCode.textContent = codeStr;
+                    resultCode.classList.remove('hidden');
+                }
+                
+                // Update state
+                this.state.currentCode = codeStr;
+                this.state.currentProvider = provider;
+            },
+
+            // Quick Check Function
+            quickCheck(code, providerName) {
+                const input = document.getElementById('mobileInput');
+                input.value = code;
+                this.identify();
+                this.showToast(`Checking ${providerName} (${code})...`);
+            },
+
+            // Clear Input
+            clearInput() {
+                const input = document.getElementById('mobileInput');
+                input.value = '';
+                input.focus();
+                this.identify();
+            },
+
+            // ============================================
+            // HISTORY MANAGEMENT
+            // ============================================
+            
+            // Add to History
+            addToHistory(code, provider) {
+                const history = {
+                    code: code,
+                    provider: provider,
+                    timestamp: new Date().toISOString(),
+                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+                };
+                
+                // Add to beginning of array
+                this.state.searchHistory.unshift(history);
+                
+                // Keep only last 5 items
+                if (this.state.searchHistory.length > 5) {
+                    this.state.searchHistory = this.state.searchHistory.slice(0, 5);
+                }
+                
+                this.saveHistory();
+                this.renderHistory();
+            },
+
+            // Load History from LocalStorage
+            loadHistory() {
+                const saved = localStorage.getItem('networkFinderHistory');
+                if (saved) {
+                    this.state.searchHistory = JSON.parse(saved);
+                    this.renderHistory();
+                }
+            },
+
+            // Save History to LocalStorage
+            saveHistory() {
+                localStorage.setItem('networkFinderHistory', 
+                    JSON.stringify(this.state.searchHistory));
+            },
+
+            // Clear History
+            clearHistory() {
+                this.state.searchHistory = [];
+                this.saveHistory();
+                this.renderHistory();
+                this.showToast('History cleared');
+            },
+
+            // Toggle History Visibility
+            toggleHistory() {
+                const historyList = document.getElementById('historyList');
+                const toggle = document.getElementById('historyToggle');
+                
+                this.state.historyVisible = !this.state.historyVisible;
+                
+                if (this.state.historyVisible) {
+                    historyList.classList.remove('hidden');
+                    toggle.textContent = '▲';
+                } else {
+                    historyList.classList.add('hidden');
+                    toggle.textContent = '▼';
+                }
+            },
+
+            // Render History List
+            renderHistory() {
+                const historyList = document.getElementById('historyList');
+                const template = document.getElementById('historyTemplate');
+                
+                // Clear existing items except template and clear button
+                const items = historyList.querySelectorAll('.history-item:not(#historyTemplate)');
+                items.forEach(item => item.remove());
+                
+                if (this.state.searchHistory.length === 0) {
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'history-item';
+                    emptyMsg.textContent = 'No searches yet';
+                    emptyMsg.style.color = 'var(--Dark-Gray)';
+                    emptyMsg.style.fontStyle = 'italic';
+                    historyList.insertBefore(emptyMsg, historyList.querySelector('.history-clear'));
+                    return;
+                }
+                
+                // Add history items
+                this.state.searchHistory.forEach((item, index) => {
+                    const clone = template.cloneNode(true);
+                    clone.id = '';
+                    clone.style.display = 'flex';
+                    
+                    clone.querySelector('.history-code').textContent = item.code;
+                    clone.querySelector('.history-provider').textContent = ` - ${item.provider}`;
+                    clone.querySelector('.history-time').textContent = item.time;
+                    
+                    // Add click to reuse
+                    clone.addEventListener('click', () => {
+                        document.getElementById('mobileInput').value = item.code;
+                        this.identify();
+                    });
+                    
+                    historyList.insertBefore(clone, historyList.querySelector('.history-clear'));
+                });
+            },
+
+            // ============================================
+            // UTILITY FUNCTIONS
+            // ============================================
+            
+            // Show Toast Notification
+            showToast(message, duration = 2000) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, duration);
+            },
+
+            // Copy Tool Link
+            copyToolLink() {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => this.showToast('Link copied to clipboard'))
+                    .catch(() => this.showToast('Failed to copy link'));
+            },
+
+            // Share Tool
+            shareTool() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Mobile Network Finder',
+                        text: 'Instantly identify Pakistan mobile networks!',
+                        url: window.location.href
+                    });
+                } else {
+                    this.copyToolLink();
+                }
+            }
+        };
+
+        // ============================================
+        // GLOBAL FUNCTIONS (for onclick handlers)
+        // ============================================
+        function identifyNetwork() {
+            NetworkFinder.identify();
+        }
+
+        function quickCheck(code, provider) {
+            NetworkFinder.quickCheck(code, provider);
+        }
+
+        function clearInput() {
+            NetworkFinder.clearInput();
+        }
+
+        function toggleHistory() {
+            NetworkFinder.toggleHistory();
+        }
+
+        function clearHistory() {
+            NetworkFinder.clearHistory();
+        }
+
+        function copyToolLink() {
+            NetworkFinder.copyToolLink();
+        }
+
+        function shareTool() {
+            NetworkFinder.shareTool();
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            NetworkFinder.init();
+            
+            // Auto-detect on page load if there's a hash with code
+            const hash = window.location.hash.substring(1);
+            if (/^\d{3,4}$/.test(hash)) {
+                document.getElementById('mobileInput').value = hash;
+                NetworkFinder.identify();
+            }
+        });
+
+                function copyResult() {
+            const input = document.getElementById('mobileInput');
+            if (input.value.length > 0) {
+                // Copy to clipboard
+                navigator.clipboard.writeText(input.value);
+
+                // Show Toast Notification
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                // Hide Toast after 2 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            } else {
+                alert("Please enter a number first!");
+            }
+        }
+    </script>
+</body>
+</html>
