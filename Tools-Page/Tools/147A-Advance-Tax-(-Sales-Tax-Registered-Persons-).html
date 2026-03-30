@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRC6SC9G9Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MRC6SC9G9Z');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Section 147A Tax Calculator – AmeerCA | Pakistan Income Tax</title>
+    <meta name="description" content="Instant advance tax calculator under Section 147A. PST registered persons: 3% of monthly turnover. Adjustable credit. Mobile-optimized.">
+    <meta name="keywords" content="Section 147A, Pakistan tax, advance tax, PST registered, ATL exemption, AmeerCA">
+    <meta name="author" content="AmeerCA">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="taxData.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #f0f2f5;
+            padding: 8px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* main container – ultra compact, popup-ready */
+        .calc-card {
+            max-width: 560px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
+            padding: 16px 18px;
+        }
+        /* brand row */
+        .brand-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .brand-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            background: #2E7D32;
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFED00;
+            font-size: 1.4rem;
+        }
+        .brand-name {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #2E7D32;
+            letter-spacing: -0.3px;
+        }
+        .action-icons {
+            display: flex;
+            gap: 10px;
+        }
+        .icon-btn {
+            background: #f0f2f5;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #2E7D32;
+            transition: 0.2s;
+        }
+        .icon-btn:active { background: #2E7D32; color: white; transform: scale(0.96); }
+        /* section title */
+        .section-title {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 6px 12px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+        }
+        .sec-number {
+            background: #FFED00;
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #000;
+        }
+        /* TAX YEAR RADIO GROUP - horizontal & compact */
+        .year-radio-group {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 8px 10px;
+            margin-bottom: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .year-option {
+            flex: 1;
+            text-align: center;
+            background: white;
+            border-radius: 30px;
+            padding: 5px 0;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c3e2f;
+            border: 1px solid #d3d3d3;
+            transition: 0.1s;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+        .year-option.selected {
+            background: #2E7D32;
+            color: white;
+            border-color: #2E7D32;
+            font-weight: 600;
+        }
+        /* form compact */
+        .form-compact {
+            margin-bottom: 16px;
+        }
+        .input-block {
+            margin-bottom: 14px;
+        }
+        .input-block label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+            color: #1e2a1f;
+        }
+        .input-block input {
+            width: 100%;
+            padding: 12px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: white;
+            font-family: inherit;
+        }
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            font-size: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .checkbox-row label {
+            font-weight: 500;
+        }
+        /* result area – super tight */
+        .result-area {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 12px 14px;
+            margin: 12px 0 8px;
+            border-left: 4px solid #2E7D32;
+        }
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+        }
+        .result-line:last-child {
+            border: none;
+        }
+        .amount {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #2E7D32;
+        }
+        .badge-live {
+            background: #FFED00;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        .warning, .info-note {
+            font-size: 0.75rem;
+            padding: 8px;
+            border-radius: 16px;
+            margin-top: 6px;
+        }
+        .warning { background: #fff2f0; border-left: 3px solid #e53e3e; }
+        .success-note { background: #e6f7e6; border-left: 3px solid #2E7D32; }
+        /* collapsible sections ultra compact */
+        details {
+            margin: 8px 0;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #eef2f6;
+        }
+        summary {
+            padding: 8px 14px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            background: #fefefe;
+            border-radius: 20px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '▼';
+            font-size: 0.7rem;
+            color: #2E7D32;
+        }
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+        .details-content {
+            padding: 8px 14px 12px;
+            font-size: 0.75rem;
+            border-top: 1px solid #eef2f6;
+        }
+        .faq-item {
+            margin-bottom: 10px;
+        }
+        .faq-question {
+            font-weight: 700;
+            color: #2E7D32;
+            font-size: 0.8rem;
+        }
+        hr {
+            margin: 8px 0;
+        }
+        .text-center {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #6c757d;
+        }
+        .tooltip-icon {
+            border-bottom: 1px dashed #2E7D32;
+            cursor: help;
+        }
+        /* mobile first, no extra margins */
+        @media (max-width: 480px) {
+            .calc-card {
+                padding: 12px;
+            }
+            .year-option {
+                font-size: 0.7rem;
+                padding: 4px 0;
+            }
+            .brand-name {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="calc-card">
+    <!-- header with brand + icons -->
+    <div class="brand-row">
+        <div class="brand-left">
+            <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
+            <div class="brand-name">AmeerCA</div>
+        </div>
+        <div class="action-icons">
+            <button class="icon-btn" id="shareBtn" title="Share"><i class="fas fa-share-alt"></i></button>
+            <button class="icon-btn" id="copyBtn" title="Copy results"><i class="fas fa-copy"></i></button>
+            <button class="icon-btn" id="printBtn" title="Print"><i class="fas fa-print"></i></button>
+        </div>
+    </div>
+    <!-- section number & name -->
+    <div class="section-title">
+        <span><span class="sec-number">Section 147A</span> <strong style="margin-left:5px;">Advance Tax (Sales Tax Registered Persons)</strong></span>
+        <span style="font-size:0.7rem; text-align: center; justify-content: center;">Income Tax Ordinance, 2001 | Adjustable @ 3%</style></span>
+    </div>
+
+    <!-- TAX YEAR RADIO BUTTONS (horizontal) -->
+    <div class="year-radio-group" id="yearRadioGroup">
+        <label class="year-option" data-year="2021">2021</label>
+        <label class="year-option" data-year="2022">2022</label>
+        <label class="year-option" data-year="2023">2023</label>
+        <label class="year-option" data-year="2024">2024</label>
+        <label class="year-option" data-year="2025">2025</label>
+        <label class="year-option selected" data-year="2026">2026</label>
+        <!--<label class="year-option" data-year="2027">2027</label>-->
+    </div>
+
+    <!-- calculator form (compact) -->
+    <div class="form-compact">
+        <div class="input-block">
+            <label><i class="fas fa-rupee-sign"></i> Monthly Turnover (PKR) <span class="tooltip-icon" title="Turnover declared to provincial sales tax authority">ⓘ</span></label>
+            <input type="number" id="monthlyTurnover" placeholder="e.g., 500,000" value="500000" step="1000">
+        </div>
+        <div class="checkbox-row">
+            <input type="checkbox" id="isRegistered" checked>
+            <label for="isRegistered">✅ Provincial Sales Tax registered</label>
+        </div>
+        <div class="checkbox-row">
+            <input type="checkbox" id="isATL">
+            <label for="isATL">📋 Active Taxpayers List (ATL) as of 30 June previous year <span class="tooltip-icon" title="If checked, exemption under Sec 147A(8)">ⓘ</span></label>
+        </div>
+    </div>
+
+    <!-- RESULT AREA (live) -->
+    <div class="result-area" id="resultArea">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span style="font-weight:700; font-size:0.85rem;">📊 Tax Impact</span>
+            <span class="badge-live">live</span>
+        </div>
+        <div id="resultContent">
+            <!-- dynamic -->
+        </div>
+    </div>
+
+ <!-- 4️⃣ Section Summary (Educational) – collapsible -->
+        <details>
+            <summary>📘 Section 147A Summary</summary>
+            <div class="details-content">
+                <p><strong>What it is:</strong> Advance tax at 3% on turnover declared to provincial revenue authority by PST registered persons. Paid monthly with sales tax return.</p>
+                <p><strong>Who it applies to:</strong> All provincial sales tax registered persons (except those on ATL).</p>
+                <p><strong>Why it matters:</strong> This is an adjustable advance tax – it can be credited against your final annual tax liability. Any excess is refundable.</p>
+                <p><em>Reference: Section 147A(1), (5), (7)</em></p>
+            </div>
+        </details>
+
+        <!-- 5️⃣ How This Calculator Works -->
+        <details>
+            <summary>⚙️ How This Calculator Works</summary>
+            <div class="details-content">
+                <ol>
+                    <li><strong>Input:</strong> You provide the monthly turnover declared to provincial revenue authority.</li>
+                    <li><strong>Check conditions:</strong> We verify if you are registered and if you are on ATL (exemption).</li>
+                    <li><strong>Rate:</strong> 3% (adjusts automatically based on selected tax year.</li>
+                    <li><strong>Calculation:</strong> Monthly tax = Turnover × rate. Annual projection = Monthly tax × 12.</li>
+                    <li><strong>Result:</strong> Shows monthly liability, annual projection, and explains credit/refund.</li>
+                </ol>
+            </div>
+        </details>
+
+        <!-- 6️⃣ Practical Example -->
+        <details>
+            <summary>📌 Practical Example</summary>
+            <div class="details-content">
+                <p><strong>Scenario:</strong> A retailer in Punjab (PST registered) has monthly turnover of PKR 800,000. Not on ATL. Tax Year 2026.</p>
+                <p><strong>Calculation:</strong> 800,000 × 3% = PKR 24,000 per month. Annual advance tax = 24,000 × 12 = PKR 288,000.</p>
+                <p>This amount is adjustable against final income tax liability. If final tax is lower, the excess will be refunded under section 170.</p>
+            </div>
+        </details>
+
+        <!-- 7️⃣ Key Conditions & Warnings -->
+        <details>
+            <summary>⚠️ Key Conditions & Warnings</summary>
+            <div class="details-content">
+                <ul>
+                    <li><strong>ATL exemption:</strong> If your name appears in the Active Taxpayers’ List on 30 June of the previous year, this section does NOT apply. (Sec 147A(8))</li>
+                    <li><strong>Monthly payment:</strong> Tax must be paid at the same time as the monthly sales tax return. (Sec 147A(2))</li>
+                    <li><strong>Adjustable:</strong> This is an advance tax – it will be adjusted against your final tax demand. (Sec 147A(3),(5))</li>
+                    <li><strong>Refund:</strong> Any unused credit is refunded under section 170. (Sec 147A(7))</li>
+                    <li><strong>Non‑filing:</strong> Failure to pay may attract default provisions (treated as tax due under assessment). (Sec 147A(4))</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- 8️⃣ FAQ (SEO boost) -->
+        <details>
+            <summary>❓ Frequently Asked Questions</summary>
+            <div class="details-content">
+                <div class="faq-item">
+                    <div class="faq-question">1. What turnover is used for this tax?</div>
+                    <div class="faq-answer">The turnover declared before the provincial revenue authority in your monthly sales tax return. (Sec 147A(1))</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">2. Can I adjust this tax later?</div>
+                    <div class="faq-answer">Yes, it is adjustable advance tax. It will be taken into account while computing advance tax under section 147 and also allowed as a tax credit against your final income tax liability. (Sec 147A(3),(5))</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">3. What if I am on the Active Taxpayers List?</div>
+                    <div class="faq-answer">If your name was on ATL on 30 June of the previous tax year, Section 147A does not apply – you are exempt from this advance tax. (Sec 147A(8))</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">4. Is this tax in addition to sales tax?</div>
+                    <div class="faq-answer">Yes, it is an advance income tax, separate from sales tax. It is paid along with your sales tax return but is an income tax liability.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">5. What if I overpay?</div>
+                    <div class="faq-answer">Any tax credit not fully adjusted against your tax liability for the year will be refunded to you under section 170. (Sec 147A(7))</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">6. Does this apply to companies?</div>
+                    <div class="faq-answer">Yes, if the company is a provincial sales tax registered person. The section applies to all persons (individual, AOP, company) registered under provincial sales tax.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">7. How often do I need to pay?</div>
+                    <div class="faq-answer">Monthly, at the time of filing your provincial sales tax return. (Sec 147A(2))</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">8. Where can I find the official rate?</div>
+                    <div class="faq-answer">The rate is fixed at 3% by Section 147A(1). Our calculator uses the same rate for all years.</div>
+                </div>
+            </div>
+        </details>
+
+    <hr>
+    <div class="text-center">⚖️ Based on Income Tax Ordinance 2001. For guidance only. Consult tax advisor.</div>
+</div>
+<div id="copyToast" style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#2E7D32; color:white; padding:5px 16px; border-radius:40px; font-size:0.7rem; opacity:0; transition:0.2s; pointer-events:none; z-index:1000;">Copied!</div>
+
+<script>
+    (function() {
+  
+
+        // DOM elements
+        const yearOptions = document.querySelectorAll('.year-option');
+        let selectedYear = 2026;
+        const turnoverInput = document.getElementById('monthlyTurnover');
+        const isRegistered = document.getElementById('isRegistered');
+        const isATL = document.getElementById('isATL');
+        const resultContent = document.getElementById('resultContent');
+
+        // format PKR
+        const formatPKR = (val) => 'PKR ' + val.toLocaleString('en-PK', {minimumFractionDigits:0, maximumFractionDigits:0});
+
+        // update UI for radio selection
+        function setYearRadio(year) {
+            yearOptions.forEach(opt => {
+                const yr = parseInt(opt.getAttribute('data-year'), 10);
+                if (yr === year) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+            selectedYear = year;
+            updateCalculation();
+        }
+
+        // attach click on radio labels
+        yearOptions.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                const yearVal = parseInt(opt.getAttribute('data-year'), 10);
+                setYearRadio(yearVal);
+            });
+        });
+
+        // core calculation
+        function updateCalculation() {
+            let turnover = parseFloat(turnoverInput.value);
+            if (isNaN(turnover) || turnover < 0) turnover = 0;
+
+            const registered = isRegistered.checked;
+            const atlExempt = isATL.checked;
+            const rate = TaxData.getRate(selectedYear);
+
+            let monthlyTax = 0;
+            let applicable = true;
+            let message = '';
+
+            if (!registered) {
+                applicable = false;
+                message = 'You are not a provincial sales tax registered person. Section 147A does not apply.';
+            } else if (atlExempt) {
+                applicable = false;
+                message = 'Exempt under Section 147A(8) – you are on Active Taxpayers List as of 30 June previous year.';
+            } else {
+                monthlyTax = turnover * rate;
+            }
+
+            const annualTax = monthlyTax * 12;
+            let html = '';
+
+            if (!applicable) {
+                html += `<div class="warning"><strong>⛔ No tax payable</strong><br>${message}</div>`;
+            } else {
+                html += `<div class="result-line"><span>Monthly advance tax (${selectedYear}):</span> <span class="amount">${formatPKR(monthlyTax)}</span></div>`;
+                html += `<div class="result-line"><span>Projected annual advance tax*:</span> <span class="amount">${formatPKR(annualTax)}</span></div>`;
+                html += `<div class="success-note" style="margin-top:6px;"><strong>✅ Adjustable credit</strong><br>Credited against final income tax liability. Refundable excess u/s 170.</div>`;
+                html += `<div class="text-center" style="font-size:0.7rem; margin-top:5px;">*Assuming constant monthly turnover</div>`;
+            }
+            html += `<div class="text-center" style="font-size:0.65rem; margin-top:6px;">Rate: ${(rate*100).toFixed(1)}% (Tax Year ${selectedYear})</div>`;
+            resultContent.innerHTML = html;
+        }
+
+        // event listeners
+        turnoverInput.addEventListener('input', updateCalculation);
+        isRegistered.addEventListener('change', updateCalculation);
+        isATL.addEventListener('change', updateCalculation);
+
+        // initial load
+        setYearRadio(2026);
+
+        // ----- SHARE, COPY, PRINT functionality (clean) -----
+        const shareBtn = document.getElementById('shareBtn');
+        const copyResBtn = document.getElementById('copyBtn');
+        const printBtn = document.getElementById('printBtn');
+        const toast = document.getElementById('copyToast');
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 1800);
+        }
+
+        // copy results (text)
+        if (copyResBtn) {
+            copyResBtn.addEventListener('click', () => {
+                let resultText = '';
+                const turnoverVal = parseFloat(turnoverInput.value) || 0;
+                const registeredStatus = isRegistered.checked ? 'Registered' : 'Not registered';
+                const atlStatus = isATL.checked ? 'ATL exempt' : 'Not exempt';
+                let taxSummary = '';
+                const applicableTax = (!isRegistered.checked || isATL.checked) ? 'No tax' : 
+                    `Monthly: ${formatPKR(parseFloat(turnoverInput.value||0) * TaxData.getRate(selectedYear))}`;
+                taxSummary = resultContent.innerText.trim();
+                const finalCopy = `AmeerCA Tax Calculator (Section 147A)\nTax Year: ${selectedYear}\nTurnover: ${formatPKR(turnoverVal)}\nRegistration: ${registeredStatus}\nATL status: ${atlStatus}\n\n${taxSummary}`;
+                navigator.clipboard.writeText(finalCopy).then(() => showToast('📋 Results copied')).catch(() => alert('Could not copy'));
+            });
+        }
+
+        // share
+        if (shareBtn) {
+            shareBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Section 147A Tax Calculator',
+                        text: 'Calculate advance tax under Pakistan Income Tax Ordinance',
+                        url: window.location.href,
+                    }).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    showToast('🔗 Link copied');
+                }
+            });
+        }
+
+        // print
+        if (printBtn) {
+            printBtn.addEventListener('click', () => window.print());
+        }
+    })();
+</script>
+</body>
+</html>

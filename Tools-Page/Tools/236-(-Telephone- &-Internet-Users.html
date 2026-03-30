@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRC6SC9G9Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MRC6SC9G9Z');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Section 236 Tax Calculator – AmeerCA | Income Tax Ordinance 2001</title>
+    <!-- SEO meta -->
+    <meta name="description" content="Free, accurate advance tax calculator for Section 236 of Income Tax Ordinance 2001 (Pakistan). Compute tax on telephone/internet bills, prepaid cards, and electronic units. Updated for Tax Year 2026.">
+    <meta name="keywords" content="Section 236, Income Tax Ordinance 2001, telephone tax, internet tax, Pakistan tax calculator, advance tax, non‑filer 75%, AmeerCA">
+    <meta name="author" content="AmeerCA">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="Section 236 Tax Calculator – AmeerCA">
+    <meta property="og:description" content="Calculate advance tax on telephone/internet under Pakistan Income Tax Ordinance.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=AmeerCA+Tax+Calculator">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --deep-green: #2E7D32;
+            --gold: #FFED00;
+            --white: #ffffff;
+            --off-white: #f8f9fa;
+            --gray: #f5f5f5;
+            --soft-gray: #d3d3d3;
+            --dark-gray: #6c757d;
+            --black: #212529;
+            --font-main: 'Open Sans', sans-serif;
+        }
+        body {
+            font-family: var(--font-main);
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.4;
+            padding: 0.75rem;
+        }
+        .calculator-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 1rem;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--soft-gray);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo-placeholder {
+            width: 36px;
+            height: 36px;
+            background: var(--deep-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .brand-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+        .action-buttons {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .action-btn {
+            background: var(--white);
+            border: 1px solid var(--soft-gray);
+            padding: 0.3rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--deep-green);
+        }
+        .action-btn:hover {
+            background: var(--deep-green);
+            color: var(--white);
+            border-color: var(--deep-green);
+        }
+        .hero {
+            background: linear-gradient(145deg, var(--deep-green) 0%, #1f5a22 100%);
+            color: var(--white);
+            padding: 0.8rem 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .hero .sub {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .card {
+            background: var(--gray);
+            border-radius: 0.75rem;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--deep-green);
+        }
+        .input-ty-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .form-group {
+            flex: 1 1 180px;
+        }
+        label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            display: block;
+            color: var(--deep-green);
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 0.4rem;
+            border: 1px solid var(--soft-gray);
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+        }
+        .tax-year-selector {
+            background: var(--white);
+            padding: 0.3rem 0.6rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            color: var(--deep-green);
+            border: 1px solid var(--gold);
+            font-size: 0.85rem;
+            width: auto;
+        }
+        .result-area {
+            background: var(--off-white);
+            border-radius: 0.75rem;
+            padding: 0.8rem;
+            border: 2px dashed var(--deep-green);
+            margin: 1rem 0;
+        }
+        .result-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .tax-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--deep-green);
+            background: var(--white);
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .tax-breakdown {
+            background: var(--white);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.5rem;
+            flex: 1;
+            font-size: 0.8rem;
+        }
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.2rem 0;
+            border-bottom: 1px dashed var(--soft-gray);
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .badge-success { background: #28a745; color: white; }
+        .badge-warning { background: var(--gold); color: var(--black); }
+        .badge-danger { background: #dc3545; color: white; }
+        details {
+            background: var(--white);
+            border: 1px solid var(--soft-gray);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+        summary {
+            font-weight: 700;
+            color: var(--deep-green);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "▶";
+            color: var(--gold);
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+        details[open] summary::before { content: "▼"; }
+        .faq-item {
+            margin: 0.4rem 0;
+            border-bottom: 1px solid var(--soft-gray);
+            padding-bottom: 0.3rem;
+        }
+        .faq-question {
+            font-weight: 700;
+            color: var(--deep-green);
+            font-size: 0.8rem;
+        }
+        .faq-answer {
+            margin-left: 1rem;
+            font-size: 0.75rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.65rem;
+            color: var(--dark-gray);
+        }
+        @media (max-width: 500px) {
+            .top-bar { flex-direction: column; align-items: flex-start; }
+            .action-buttons { align-self: flex-end; }
+            .tax-amount { font-size: 1.5rem; }
+        }
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+        [data-tooltip]:hover:after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background: var(--black);
+            color: var(--white);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.3rem;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            bottom: 150%;
+            left: 0;
+            z-index: 10;
+        }
+    </style>
+    <script src="taxData.js"></script>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="top-bar">
+            <div class="brand">
+            <div>
+                <img src="/images/AmeerCA_Logo.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            </div>                <div class="brand-name">AmeerCA</div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="shareBtn" title="Share this page">📤 Share</button>
+                <button class="action-btn" id="copyBtn" title="Copy tax result">📋 Copy</button>
+                <button class="action-btn" id="printBtn" title="Print this page">🖨️ Print</button>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div class="sub">📞 Section 236: Telephone & Internet Users</div>
+            <div style="font-size:0.8rem; margin-top:0.2rem;">Advance Tax Calculator | Income Tax Ordinance 2001</div>
+        </div>
+
+        <div class="card">
+            <div class="input-ty-container">
+                <h2>⚙️ Calculate Advance Tax</h2>
+                <div class="Input-TY">
+                    <label for="taxYear">Tax Year</label>
+                    <select id="taxYear" class="tax-year-selector"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category <i data-tooltip="Choose the type of telephone/internet usage">ⓘ</i></label>
+                    <select id="category"></select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount (Rs.) <i data-tooltip="Bill amount or prepaid card value">ⓘ</i></label>
+                    <input type="number" id="amount" min="0" step="1" value="1500" placeholder="e.g., 1500">
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="exempt"> ✅ Exempt (Govt/Diplomat/Certificate)
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="nonFiler"> ⚠️ Non‑filer (u/s 114B)
+                </label>
+            </div>
+        </div>
+
+        <div class="result-area">
+            <h2>📊 Tax Payable</h2>
+            <div class="result-grid">
+                <div class="tax-amount" id="taxAmount">Rs. 0</div>
+                <div class="tax-breakdown">
+                    <div class="breakdown-item"><span>Applicable rate:</span> <span id="rateDisplay">0%</span></div>
+                    <div class="breakdown-item"><span>Bill amount:</span> <span id="billDisplay">Rs. 0</span></div>
+                    <div class="breakdown-item"><span>Tax:</span> <span id="taxDisplay">Rs. 0</span></div>
+                </div>
+            </div>
+            <div id="warningMessage" style="margin-top:0.4rem; font-size:0.7rem;"></div>
+        </div>
+
+        <details>
+            <summary>📘 Section 236 Summary</summary>
+            <p><strong>What this section does:</strong> It mandates advance tax collection on telephone and internet bills, prepaid cards, and electronic units. The tax is collected by the service provider at the time of issuing the bill or selling the card.</p>
+            <p><strong>Who it applies to:</strong> All subscribers/users of telephones (landline/mobile), internet, and purchasers of prepaid cards or electronic top‑ups.</p>
+            <p><strong>Why it matters:</strong> It broadens the tax base and ensures advance collection. Non‑filers face a higher rate (75%) on most categories as per the proviso under section 114B.</p>
+        </details>
+        <details>
+            <summary>🧮 How This Calculator Works</summary>
+            <ol style="margin-left:1.5rem;">
+                <li><strong>Input:</strong> Select category, enter amount, and tick exemption/non‑filer status if applicable.</li>
+                <li><strong>Processing:</strong> Based on the selected tax year, the calculator applies the correct rate from Division V of Part IV of First Schedule. For landline, tax applies only if amount > Rs.1,000. For other categories, full amount is taxable. If exempt, tax = 0. If non‑filer and category is not landline, rate becomes 75%.</li>
+                <li><strong>Output:</strong> Instant display of tax payable and a detailed breakdown.</li>
+            </ol>
+        </details>
+        <details>
+            <summary>📝 Practical Example</summary>
+            <p><strong>Scenario:</strong> Mr. A has a monthly mobile bill of Rs. 2,500. He is a filer. <br>➡️ Category: Mobile telephone, amount Rs.2,500, no exemption, not non‑filer. <br><strong>Calculation:</strong> Rate = 15% → Tax = 2,500 × 0.15 = Rs.375.</p>
+            <p><strong>Non‑filer example:</strong> Same bill but Mr. A is a non‑filer. <br>➡️ Rate = 75% → Tax = 2,500 × 0.75 = Rs.1,875.</p>
+        </details>
+        <details>
+            <summary>⚠️ Key Conditions & Warnings</summary>
+            <ul style="margin-left:1.5rem;">
+                <li>🔹 Exemption applies only to Government, a foreign diplomat, a diplomatic mission in Pakistan, or a person who produces a certificate from the Commissioner that his income during the tax year is exempt from tax.</li>
+                <li>🔹 The higher 75% rate for non‑filers applies only to internet, mobile, prepaid cards, and electronic units – <strong>not to landline</strong>.</li>
+                <li>🔹 For landline, no tax is collected if the monthly bill is ≤ Rs.1,000.</li>
+                <li>🔹 Always keep your CNIC/ NTN updated with the service provider to avoid incorrect deduction.</li>
+                <li>🔹 The tax collected is adjustable against final tax liability when filing your return.</li>
+            </ul>
+        </details>
+        <details>
+            <summary>❓ Frequently Asked Questions (FAQ)</summary>
+            <div class="faq-item"><div class="faq-question">1. Is this tax refundable?</div><div class="faq-answer">It is advance tax, adjustable against your total income tax liability when you file your annual return. If excess is paid, you can claim a refund.</div></div>
+            <div class="faq-item"><div class="faq-question">2. Do I have to pay this tax if I use a prepaid SIM?</div><div class="faq-answer">Yes, at the time of purchasing a prepaid card or recharging via electronic medium, 15% (or 75% for non‑filers) is collected as advance tax.</div></div>
+            <div class="faq-item"><div class="faq-question">3. Who determines if I am a non‑filer?</div><div class="faq-answer">The FBR issues Income Tax General Orders under section 114B listing non‑filers. Service providers use that list to apply the 75% rate.</div></div>
+            <div class="faq-item"><div class="faq-question">4. What if my landline bill is exactly Rs.1,000?</div><div class="faq-answer">No tax is deducted because the threshold is “exceeds Rs. 1,000”.</div></div>
+            <div class="faq-item"><div class="faq-question">5. Are overseas Pakistanis exempt?</div><div class="faq-answer">Generally no, unless they fall under the exempt categories (diplomat, etc.). However, non‑filer restrictions may not apply to certain NICOP holders – see section 114B exceptions.</div></div>
+            <div class="faq-item"><div class="faq-question">6. Can I get a certificate to avoid this tax?</div><div class="faq-answer">Yes, if your income is exempt from tax, you can obtain a certificate from the Commissioner, and present it to the service provider.</div></div>
+            <div class="faq-item"><div class="faq-question">7. Does this section apply to internet dongles?</div><div class="faq-answer">Yes, internet subscribers include dongles, fibre, or any broadband connection.</div></div>
+            <div class="faq-item"><div class="faq-question">8. What is the legal basis for the 75% rate?</div><div class="faq-answer">The proviso to clause (b) of Division V, Part IV of the First Schedule, read with section 114B, empowers FBR to notify non‑filers for whom the rate becomes 75%.</div></div>
+        </details>
+
+        <footer>
+            ⚖️ This calculator is based on the Income Tax Ordinance, 2001 (Tax Year 2021 To 2026). – always verify with current law.
+        </footer>
+    </div>
+
+    <script>
+        (function () {
+            // Ensure config loaded
+            if (typeof TaxCalculatorConfig === 'undefined') {
+                console.error('TaxCalculatorConfig not found. Make sure taxData.js is loaded.');
+                return;
+            }
+
+            // DOM elements
+            const taxYearSelect = document.getElementById('taxYear');
+            const categorySelect = document.getElementById('category');
+            const amountInput = document.getElementById('amount');
+            const exemptCheck = document.getElementById('exempt');
+            const nonFilerCheck = document.getElementById('nonFiler');
+            const taxAmountSpan = document.getElementById('taxAmount');
+            const rateDisplay = document.getElementById('rateDisplay');
+            const billDisplay = document.getElementById('billDisplay');
+            const taxDisplay = document.getElementById('taxDisplay');
+            const warningDiv = document.getElementById('warningMessage');
+
+            // Populate tax years
+            const years = Object.keys(TaxCalculatorConfig.taxYears).sort();
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                if (year === TaxCalculatorConfig.defaultYear) option.selected = true;
+                taxYearSelect.appendChild(option);
+            });
+
+            // Populate categories
+            TaxCalculatorConfig.categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat.id;
+                option.textContent = cat.name;
+                categorySelect.appendChild(option);
+            });
+
+            function getCurrentRates() {
+                const year = taxYearSelect.value;
+                return TaxCalculatorConfig.taxYears[year] || TaxCalculatorConfig.taxYears[TaxCalculatorConfig.defaultYear];
+            }
+
+            function computeTax() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const exempt = exemptCheck.checked;
+                const nonFiler = nonFilerCheck.checked;
+                const catId = categorySelect.value;
+                const category = TaxCalculatorConfig.categories.find(c => c.id === catId);
+                const rates = getCurrentRates();
+
+                let applicableRate = 0;
+                let taxableAmount = 0;
+                let tax = 0;
+                let warning = '';
+
+                if (exempt) {
+                    applicableRate = 0;
+                    taxableAmount = amount;
+                    tax = 0;
+                    warning = '✅ Exempt person – no tax collected.';
+                } else {
+                    // Determine base rate based on category
+                    if (category.type === 'landline') {
+                        const threshold = rates[category.thresholdKey] || 1000;
+                        if (amount > threshold) {
+                            applicableRate = rates[category.rateKey];
+                            taxableAmount = amount;
+                        } else {
+                            applicableRate = 0;
+                            taxableAmount = amount;
+                            warning = `ℹ️ Landline bill ≤ Rs. ${threshold} – no tax.`;
+                        }
+                    } else {
+                        applicableRate = rates[category.rateKey];
+                        taxableAmount = amount;
+                    }
+
+                    // Apply non‑filer rate if applicable
+                    if (nonFiler && category.type !== 'landline') {
+                        // Check if the current tax year has a defined nonFilerRate
+                        if (typeof rates.nonFilerRate === 'number' && !isNaN(rates.nonFilerRate)) {
+                            applicableRate = rates.nonFilerRate;
+                            warning = '⚠️ Non‑filer: Higher rate (75%) applied.';
+                        } else {
+                            // Non‑filer rate not defined for this year (e.g., 2021-2024)
+                            warning = 'ℹ️ Non‑filer rate not applicable for this tax year. Standard rate applied.';
+                            // Keep applicableRate as already set
+                        }
+                    } else if (nonFiler && category.type === 'landline') {
+                        warning = 'ℹ️ Non‑filer rate does not apply to landline. Standard 10% used.';
+                    }
+
+                    tax = taxableAmount * applicableRate;
+                }
+
+                return {
+                    amount: amount,
+                    taxableAmount: taxableAmount,
+                    rate: applicableRate * 100,
+                    tax: tax,
+                    warning: warning,
+                    categoryType: category.type,
+                    exempt: exempt,
+                    nonFiler: nonFiler
+                };
+            }
+
+            function updateUI() {
+                const result = computeTax();
+                taxAmountSpan.textContent = `Rs. ${result.tax.toFixed(2)}`;
+                rateDisplay.textContent = `${result.rate.toFixed(2)}%`;
+                billDisplay.textContent = `Rs. ${result.amount.toFixed(2)}`;
+                taxDisplay.textContent = `Rs. ${result.tax.toFixed(2)}`;
+                warningDiv.innerHTML = result.warning ? `<span class="badge ${result.exempt ? 'badge-success' : (result.nonFiler ? 'badge-danger' : 'badge-warning')}">${result.warning}</span>` : '';
+
+                if (!result.exempt && result.nonFiler && result.categoryType === 'landline') {
+                    warningDiv.innerHTML += ' <span class="badge badge-warning">Standard 10% applies to landline</span>';
+                }
+            }
+
+            // Event listeners
+            taxYearSelect.addEventListener('change', updateUI);
+            categorySelect.addEventListener('change', updateUI);
+            amountInput.addEventListener('input', updateUI);
+            exemptCheck.addEventListener('change', updateUI);
+            nonFilerCheck.addEventListener('change', updateUI);
+            updateUI();
+
+            // Action buttons
+            document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+            document.getElementById('shareBtn').addEventListener('click', () => {
+                const shareData = {
+                    title: 'Section 236 Tax Calculator – AmeerCA',
+                    text: 'Calculate advance tax on telephone/internet under Pakistan Income Tax Ordinance.',
+                    url: window.location.href
+                };
+                if (navigator.share) {
+                    navigator.share(shareData).catch(err => console.log('Share cancelled', err));
+                } else {
+                    alert('Share not supported. You can copy the link manually.');
+                }
+            });
+
+            document.getElementById('copyBtn').addEventListener('click', () => {
+                const result = computeTax();
+                const copyText = `Tax Calculation (Section 236):
+Amount: Rs. ${result.amount.toFixed(2)}
+Applicable Rate: ${result.rate.toFixed(2)}%
+Tax Payable: Rs. ${result.tax.toFixed(2)}
+Status: ${result.exempt ? 'Exempt' : (result.nonFiler ? 'Non-Filer' : 'Filer')}
+Category: ${categorySelect.options[categorySelect.selectedIndex]?.text}
+Tax Year: ${taxYearSelect.value}`;
+                navigator.clipboard.writeText(copyText).then(() => {
+                    alert('✅ Tax result copied to clipboard!');
+                }).catch(() => alert('Could not copy. Please select manually.'));
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MRC6SC9G9Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MRC6SC9G9Z');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Section 231AB Tax Calculator | Cash Withdrawal Tax Pakistan (TY 2026)</title>
+  <meta name="description"
+    content="Accurate tax calculator for Section 231AB – advance tax on cash withdrawals. Applies 0.8% (TY 2026) on total daily withdrawal if > Rs. 50,000 and person NOT on ATL. Instant results, mobile-optimized.">
+  <meta name="keywords"
+    content="Section 231AB, cash withdrawal tax, Pakistan tax calculator, ATL, FBR, tax year 2026, advance adjustable tax, AmeerCA">
+  <meta name="author" content="AmeerCA">
+  <!-- Font Awesome 6 (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Open Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- External tax data (separate file) -->
+  <script src="taxData.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --deep-green: #2E7D32;
+      --gold: #FFED00;
+      --white: #ffffff;
+      --off-white: #f8f9fa;
+      --gray: #f5f5f5;
+      --soft-gray: #e0e0e0;
+      --dark-gray: #6c757d;
+      --black: #212529;
+      --blue: #007bff;
+      --font: 'Open Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: linear-gradient(145deg, #f0f2f5 0%, #e9ecef 100%);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Main container – centered, responsive */
+    .calc-wrapper {
+      max-width: 560px;
+      width: 100%;
+      background: var(--white);
+      border-radius: 28px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .brand-header {
+      background: var(--deep-green);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .brand-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .logo-circle {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--deep-green);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .brand-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    /* Section badge */
+    .section-badge {
+      background: var(--gold);
+      padding: 0.4rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--black);
+    }
+
+    /* Content */
+    .content {
+      padding: 1rem;
+    }
+
+    /* Input card */
+    .input-card {
+      background: var(--off-white);
+      border-radius: 20px;
+      padding: 0.9rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--soft-gray);
+    }
+
+    /* ATL toggle – modern switch style */
+    .atl-toggle {
+      display: flex;
+      background: var(--white);
+      border-radius: 40px;
+      padding: 0.2rem;
+      border: 1px solid var(--soft-gray);
+      margin-bottom: 1rem;
+    }
+
+    .atl-option {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem 0;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--dark-gray);
+    }
+
+    .atl-option.active {
+      background: var(--deep-green);
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Year selector row */
+    .year-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .year-label {
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .year-selector {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .year-selector select {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      border-radius: 30px;
+      border: 1.5px solid var(--soft-gray);
+      background: var(--white);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* Amount input */
+    .amount-group {
+    margin-bottom: 0.8rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+      }
+
+    .amount-group label {
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    .tooltip {
+      border-bottom: 1px dashed var(--dark-gray);
+      cursor: help;
+      font-size: 0.7rem;
+    }
+
+    .amount-group input {
+      /*width: 100%;*/
+      padding: 0.7rem 0.8rem;
+      border: 1.5px solid var(--soft-gray);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-family: var(--font);
+      background: var(--white);
+    }
+
+    .live-badge {
+      background: var(--gold);
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      /*margin-top: 0.3rem;*/
+    }
+
+    .atl-link {
+      text-align: right;
+      font-size: 0.65rem;
+      margin-top: 0.6rem;
+    }
+
+    .atl-link a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    /* Result area */
+    .result-area {
+      background: #fff9e6;
+      border-radius: 20px;
+      padding: 0.7rem;
+      border: 1px solid var(--gold);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .tax-amount {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--deep-green);
+      line-height: 1.2;
+      margin: 0.1rem 0;
+    }
+
+    .breakdown {
+      background: var(--white);
+      padding: 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      border-left: 3px solid var(--gold);
+      text-align: left;
+      margin: 0.5rem 0;
+    }
+
+    .breakdown p {
+      margin: 0.2rem 0;
+    }
+
+    .adjustable-note {
+      font-size: 0.65rem;
+      color: var(--dark-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* Collapsible sections */
+    details {
+      background: var(--gray);
+      border-radius: 16px;
+      margin: 0.6rem 0;
+      border: 1px solid var(--soft-gray);
+      overflow: hidden;
+    }
+
+    summary {
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.6rem 0.9rem;
+      cursor: pointer;
+      color: var(--deep-green);
+      background: var(--off-white);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::before {
+      content: "▶";
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::before {
+      transform: rotate(90deg);
+    }
+
+    .collapsible-content {
+      padding: 0.2rem 0.9rem 0.6rem;
+      font-size: 0.75rem;
+      border-top: 1px solid var(--soft-gray);
+    }
+
+    .collapsible-content ul,
+    .collapsible-content ol {
+      padding-left: 1.2rem;
+      margin: 0.3rem 0;
+    }
+
+    .collapsible-content li {
+      margin: 0.2rem 0;
+    }
+
+    hr {
+      margin: 0.6rem 0;
+      border: 0;
+      border-top: 1px solid var(--soft-gray);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.6rem;
+      color: var(--dark-gray);
+      margin-top: 0.6rem;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--deep-green);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 0.5rem;
+      }
+
+      .brand-name {
+        font-size: 1.2rem;
+      }
+
+      .section-badge {
+        font-size: 1.1rem;
+      }
+
+      .tax-amount {
+        font-size: 1.6rem;
+      }
+
+      .atl-option {
+        font-size: 0.7rem;
+        padding: 0.4rem 0;
+      }
+
+      .year-row {
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .TY-row {
+        /*flex-direction: column-reverse;*/
+        align-items: center;
+        justify-content: center;
+        display: ruby;
+      }
+
+    .amount-group {
+    /*margin-bottom: 0.8rem;*/
+    display: block;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    justify-self: center;
+    }
+
+      .year-selector select {
+        padding: 0.5rem;
+      }
+    }
+
+    .TY-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    /*margin-bottom: 1rem;*/
+    flex-wrap: wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="calc-wrapper">
+    <div class="brand-header">
+      <div class="brand-left">
+        <div class="logo-circle"><i class="fas fa-calculator"></i></div>
+        <div class="brand-name">AmeerCA</div>
+      </div>
+      <div class="action-buttons">
+        <button class="action-btn" id="shareBtn" title="Share"><i class="fas fa-share-alt"></i></button>
+        <button class="action-btn" id="copyBtn" title="Copy results"><i class="fas fa-copy"></i></button>
+        <button class="action-btn" id="printBtn" title="Print"><i class="fas fa-print"></i></button>
+      </div>
+    </div>
+    <div class="section-badge">231AB · Cash withdrawal tax</div>
+
+    <div class="content">
+      <!-- Input card -->
+      <div class="input-card">
+        <!-- ATL toggle -->
+        <div class="atl-toggle" id="atlToggle">
+          <div class="atl-option" data-value="yes">
+            <i class="fas fa-check-circle"></i>
+            On ATL (Exempt)
+            <label>
+              <span class="tooltip" title="Check ATL Status On IRIS 2.0">
+                <a href="https://iris.fbr.gov.pk/" target="_blank" rel="noopener noreferrer" style="color: red;">
+                  <i class="fas fa-external-link-alt">
+                  </i>
+              </span>
+              </a>
+            </label>
+          </div>
+          <div class="atl-option active" data-value="no"><i class="fas fa-exclamation-triangle"></i> NOT on ATL</div>
+        </div>
+
+        <!-- Year selector row -->
+        <div class="year-row">
+          <div class="live-badge">⚡ Live results — updates instantly</div>
+          <div class="TY-row">
+            <div class="year-label"><i class="fas fa-calendar-alt"></i> Tax year <span class="tooltip"
+                title="Section not applicable for TY22 & TY23 due to omission.">ⓘ</span></div>
+            <div class="year-selector">
+              <select id="taxYearSelect"></select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amount input -->
+        <div class="amount-group">
+          <label><i class="fas fa-rupee-sign"></i> Total daily cash withdrawal <span class="tooltip"
+              title="Aggregate of ALL cash withdrawals across ANY bank in a single day">ⓘ</span></label>
+          <input type="number" id="withdrawalAmount" min="0" step="1000" value="80000" placeholder="e.g., 80,000">
+        </div>
+
+      </div>
+
+      <!-- Result area -->
+      <div class="result-area">
+        <div class="result-header">
+          <span>🧾 Tax payable</span>
+          <span class="badge" id="appliedRateBadge"
+            style="background: var(--gold); padding: 0.1rem 0.5rem; border-radius: 40px; font-size: 0.7rem;">0.8%</span>
+        </div>
+        <div class="tax-amount" id="taxAmountDisplay">Rs. 0</div>
+        <div class="breakdown" id="breakdownText">
+          <p>Enter withdrawal details to see calculation</p>
+        </div>
+        <div class="adjustable-note" id="adjustableNote"><i class="fas fa-info-circle"></i> Advance adjustable – claim
+          credit in annual return</div>
+      </div>
+
+      <!-- Educational sections (collapsible) -->
+      <details>
+        <summary>📘 What is Section 231AB?</summary>
+        <div class="collapsible-content">
+          <ul>
+            <li>Advance tax on <strong>total daily cash withdrawals</strong> from any bank (aggregate across all banks).
+            </li>
+            <li>Applies if person is <strong>NOT on Active Taxpayers List (ATL)</strong>.</li>
+            <li>Trigger: total withdrawals in a day exceed <strong>Rs. 50,000</strong>.</li>
+            <li>Tax = <strong>total withdrawal amount × applicable rate%</strong> (not just excess).</li>
+            <li>Tax is <strong>adjustable</strong> against final income tax liability.</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>⚙️ How this calculator works</summary>
+        <div class="collapsible-content">
+          <ol>
+            <li>Select your <strong>ATL status</strong> (On ATL → exempt).</li>
+            <li>Enter the <strong>total cash withdrawn from all banks in a single day</strong>.</li>
+            <li>Choose the <strong>tax year</strong> – independent rates per year.</li>
+            <li>If NOT on ATL and total > Rs. 50,000 → tax = total × rate%.</li>
+            <li>If on ATL or total ≤ Rs. 50,000 → tax = Rs. 0.</li>
+            <li>Result shows exact tax, breakdown, and compliance note.</li>
+          </ol>
+        </div>
+      </details>
+      <details>
+        <summary>📌 Practical example (TY 2026)</summary>
+        <div class="collapsible-content">
+          <ul>
+            <li><strong>Mr. A</strong> (NOT on ATL) withdraws Rs. 40,000 from HBL and Rs. 90,000 from UBL on the same
+              day.</li>
+            <li><strong>Total daily withdrawal</strong> = Rs. 130,000 (aggregated across banks).</li>
+            <li>Exceeds Rs. 50,000 → Tax = Rs. 130,000 × 0.8% = <strong>Rs. 1,040</strong>.</li>
+            <li>Banks jointly deduct tax (or the second bank applies tax on the excess).</li>
+            <li>If total were ≤ Rs. 50,000 → no tax.</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>⚠️ Key conditions & risks</summary>
+        <div class="collapsible-content">
+          <ul>
+            <li><strong>Aggregation rule:</strong> All cash withdrawals from <strong>any bank</strong> on the same day
+              are added together.</li>
+            <li><strong>ATL is mandatory for exemption:</strong> Being a filer alone is not enough.</li>
+            <li><strong>Adjustable tax:</strong> Keep deduction certificates from banks to claim credit.</li>
+            <li><strong>Banks' responsibility:</strong> If bank fails to deduct, it may be liable for tax + penalty.
+            </li>
+            <li><strong>Rates vary by year:</strong> Each tax year has its own independent rate.</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>❓ Frequently asked questions</summary>
+        <div class="collapsible-content">
+          <ul>
+            <li><strong>Q:</strong> Tax on total or just excess? <strong>A:</strong> On the <strong>entire total
+                withdrawal</strong> if it exceeds Rs. 50,000.</li>
+            <li><strong>Q:</strong> Does it aggregate across different banks? <strong>A:</strong> Yes, total across all
+              banks in a single day.</li>
+            <li><strong>Q:</strong> On ATL but bank deducted? <strong>A:</strong> Request refund or claim credit in
+              return.</li>
+            <li><strong>Q:</strong> Is this tax final? <strong>A:</strong> No, it's advance adjustable tax.</li>
+            <li><strong>Q:</strong> How to check ATL status? <strong>A:</strong> <a href="https://iris.fbr.gov.pk/"
+                target="_blank">IRIS 2.0 portal</a>.</li>
+            <li><strong>Q:</strong> Does it apply to business cash? <strong>A:</strong> Yes, regardless of purpose.</li>
+          </ul>
+        </div>
+      </details>
+
+      <hr>
+      <div class="footer">
+        Based on Income Tax Ordinance 2001, Sec 231AB (aggregate daily withdrawals across all banks).<br>
+        For professional advice consult your tax advisor.
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script>
+    (function () {
+      // DOM elements
+      const yearSelect = document.getElementById('taxYearSelect');
+      const amountInput = document.getElementById('withdrawalAmount');
+      const taxDisplay = document.getElementById('taxAmountDisplay');
+      const breakdownDiv = document.getElementById('breakdownText');
+      const rateBadge = document.getElementById('appliedRateBadge');
+      const adjustableNote = document.getElementById('adjustableNote');
+      let currentAtl = 'no'; // 'yes' or 'no'
+
+      // ATL toggle
+      const atlOptions = document.querySelectorAll('.atl-option');
+      atlOptions.forEach(opt => {
+        opt.addEventListener('click', () => {
+          const value = opt.getAttribute('data-value');
+          currentAtl = value;
+          atlOptions.forEach(o => o.classList.remove('active'));
+          opt.classList.add('active');
+          update();
+        });
+      });
+
+      // Populate year selector from taxData (external)
+      function populateYears() {
+        const years = window.taxData?.taxYears || [];
+        if (!years.length) {
+          yearSelect.innerHTML = '<option>2026 (0.8%)</option>';
+          return;
+        }
+        const sorted = [...years].sort((a, b) => a.year - b.year);
+        yearSelect.innerHTML = '';
+        sorted.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.year;
+          opt.textContent = `${item.year} (${item.ratePercent}%)`;
+          if (item.year === 2026) opt.selected = true;
+          yearSelect.appendChild(opt);
+        });
+      }
+
+      function getCurrentYearData() {
+        const year = parseInt(yearSelect.value, 10);
+        const found = window.taxData?.taxYears?.find(y => y.year === year);
+        return found || { year: 2026, ratePercent: 0.8, threshold: 50000 };
+      }
+
+      function update() {
+        let amount = parseFloat(amountInput.value);
+        if (isNaN(amount) || amount < 0) amount = 0;
+        const isAtlExempt = (currentAtl === 'yes');
+        const yearData = getCurrentYearData();
+        const rate = yearData.ratePercent;
+        const threshold = 50000;
+
+        rateBadge.textContent = `${rate}% (${yearData.year})`;
+
+        let tax = 0;
+        let breakdownHtml = '';
+        let noteText = '';
+
+        if (isAtlExempt) {
+          tax = 0;
+          breakdownHtml = `<p><i class="fas fa-check-circle" style="color: #2E7D32;"></i> <strong>On ATL – exempt</strong></p>
+                         <p>Total daily withdrawal: Rs. ${amount.toFixed(0)}<br>No tax is deductible under section 231AB.</p>`;
+          noteText = '✔ No deduction – you are in Active Taxpayers List.';
+        } else {
+          if (amount > threshold) {
+            tax = (amount * rate) / 100;
+            breakdownHtml = `<p><i class="fas fa-chart-line"></i> <strong>Tax calculation</strong></p>
+                           <p>Total daily withdrawal: Rs. ${amount.toFixed(0)}<br>
+                           Threshold: Rs. ${threshold}<br>
+                           Since total > threshold and NOT on ATL, tax applies on <strong>total withdrawal</strong>.</p>
+                           <p>Tax = Rs. ${amount.toFixed(0)} × ${rate}% = <strong>Rs. ${tax.toFixed(2)}</strong></p>`;
+            noteText = `⚠️ Advance tax deducted at source. Adjustable in annual return.`;
+          } else {
+            tax = 0;
+            breakdownHtml = `<p><i class="fas fa-info-circle"></i> <strong>No tax</strong></p>
+                           <p>Total daily withdrawal Rs. ${amount.toFixed(0)} ≤ Rs. ${threshold}<br>Section 231AB not triggered.</p>`;
+            noteText = `ℹ️ Below daily threshold, no deduction.`;
+          }
+        }
+
+        taxDisplay.textContent = `Rs. ${tax.toFixed(2)}`;
+        breakdownDiv.innerHTML = breakdownHtml;
+        adjustableNote.innerHTML = `<i class="fas fa-info-circle"></i> ${noteText}`;
+      }
+
+      amountInput.addEventListener('input', update);
+      yearSelect.addEventListener('change', update);
+      amountInput.addEventListener('blur', function () { if (this.value < 0) this.value = 0; update(); });
+
+      populateYears();
+      update();
+
+      // Action buttons
+      const shareBtn = document.getElementById('shareBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const printBtn = document.getElementById('printBtn');
+      const toast = document.getElementById('toast');
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 2000);
+      }
+
+      shareBtn.addEventListener('click', async () => {
+        const shareData = {
+          title: 'Section 231AB Tax Calculator',
+          text: `Calculate advance tax on cash withdrawals under Pakistan tax law. Current tax: ${taxDisplay.textContent}`,
+          url: window.location.href,
+        };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+          } catch (err) { }
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          showToast('Link copied to clipboard!');
+        }
+      });
+
+      copyBtn.addEventListener('click', () => {
+        let copyText = `Section 231AB Tax Calculator\n`;
+        copyText += `Tax Year: ${yearSelect.options[yearSelect.selectedIndex]?.text || '2026'}\n`;
+        copyText += `ATL Status: ${currentAtl === 'yes' ? 'On ATL (Exempt)' : 'NOT on ATL'}\n`;
+        copyText += `Total Daily Withdrawal: Rs. ${amountInput.value || 0}\n`;
+        copyText += `Tax Payable: ${taxDisplay.textContent}\n`;
+        copyText += `Breakdown: ${breakdownDiv.innerText.trim()}`;
+        navigator.clipboard.writeText(copyText).then(() => showToast('Results copied!')).catch(() => showToast('Failed'));
+      });
+
+      printBtn.addEventListener('click', () => window.print());
+    })();
+  </script>
+</body>
+
+</html>
