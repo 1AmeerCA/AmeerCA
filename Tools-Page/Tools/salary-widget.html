@@ -154,67 +154,6 @@
     </article>
 
     <script src="taxData.js"></script>
-    <script>
-        let mode = 'M';
-        const YEAR = "TY2026";
 
-        function setMode(m) {
-            mode = m;
-            document.getElementById('btnM').classList.toggle('active', m === 'M');
-            document.getElementById('btnA').classList.toggle('active', m === 'A');
-            calculate();
-        }
-
-        function calculate() {
-            const val = parseFloat(document.getElementById('salInp').value) || 0;
-            const annual = mode === 'M' ? val * 12 : val;
-            
-            // Core Tax Calculation Logic
-            const slabs = ALL_SLABS[YEAR].salaried;
-            let nTax = 0;
-            for (let i = 0; i < slabs.length; i++) {
-                const prev = i === 0 ? 0 : slabs[i-1].limit;
-                if (annual <= slabs[i].limit) {
-                    nTax = slabs[i].base + ((annual - prev) * slabs[i].rate);
-                    break;
-                }
-            }
-
-            // Silent Backend logic for Surcharge & Super Tax
-            const sur = SURCHARGE_RATES[YEAR];
-            let surcharge = (annual > sur.threshold) ? (nTax * sur.salaried) : 0;
-            const cSlabs = SUPER_TAX_SLABS[YEAR];
-            let sTax = 0;
-            for (let i = 0; i < cSlabs.length; i++) {
-                const prev = i === 0 ? 0 : cSlabs[i-1].limit;
-                if (annual <= cSlabs[i].limit) {
-                    sTax = cSlabs[i].base + ((annual - prev) * cSlabs[i].rate);
-                    break;
-                }
-            }
-
-            const totalTax = nTax + surcharge + sTax;
-            const net = annual - totalTax;
-
-            const fmt = (v) => Math.round(v).toLocaleString();
-            document.getElementById('outM').innerText = fmt(annual / 12);
-            document.getElementById('outY').innerText = fmt(annual);
-            document.getElementById('outT').innerText = fmt(totalTax);
-            document.getElementById('outNet').innerText = fmt(net);
-        }
-
-        function shareMe() {
-            if (navigator.share) {
-                navigator.share({ title: 'Salary Tax Calculator', url: window.location.href });
-            } else {
-                alert("Share not supported on this browser. Copy URL instead.");
-            }
-        }
-
-        function copyResults() {
-            const text = `Monthly: ${document.getElementById('outM').innerText} | Yearly Tax: ${document.getElementById('outT').innerText}`;
-            navigator.clipboard.writeText(text).then(() => alert("Results Copied!"));
-        }
-    </script>
 </body>
 </html>
