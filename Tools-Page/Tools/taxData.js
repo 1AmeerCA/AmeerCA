@@ -394,3 +394,81 @@ const TaxCalculatorConfig = (function () {
 
             return { getRate: (year) => rates[year] || 0.03 };
         })();
+
+
+
+
+
+
+
+
+
+// =====================================================================================================
+// Section 236C & 236K : Tax Slabs For Propety Tax For The Period Of TY 2026  
+// =====================================================================================================
+
+
+
+id="taxDataModule">
+        // Using the exact variable name requested: Property_Tax
+        const Property_Tax = (function() {
+            // Slab thresholds (PKR)
+            const SLAB_LIMIT_1 = 50_000_000;
+            const SLAB_LIMIT_2 = 100_000_000;
+
+            // Helper to determine slab category
+            function getSlabCategory(value) {
+                if (value > SLAB_LIMIT_2) return 'slab3';
+                if (value > SLAB_LIMIT_1) return 'slab2';
+                return 'slab1';
+            }
+
+            // Rates based on Income Tax Ordinance 2001 (Section 236C, 236K, Tenth Schedule)
+            const rateTable = {
+                // BUY (Section 236K)
+                BUY: {
+                    FILER: { slab1: 1.5, slab2: 2.0, slab3: 2.5 },      // Division XVIII
+                    LATE: { slab1: 4.5, slab2: 5.5, slab3: 6.5 },       // Rule 1A (late filer)
+                    NON:  { slab1: 10.5, slab2: 14.5, slab3: 18.5 }      // Tenth Schedule for non-filer
+                },
+                // SELL (Section 236C)
+                SELL: {
+                    FILER: { slab1: 4.5, slab2: 5.0, slab3: 5.5 },       // Division X
+                    LATE: { slab1: 7.5, slab2: 8.5, slab3: 9.5 },        // Rule 1A (late filer)
+                    NON:  { flat: 11.5 }                                 // Tenth Schedule: 11.5% flat for non-filer
+                }
+            };
+
+            return {
+                activeYear: 2026,
+                getRate: function(transactionType, status, propertyValue) {
+                    const val = Math.max(0, Number(propertyValue) || 0);
+                    const trans = transactionType === 'BUY' ? 'BUY' : 'SELL';
+                    const stat = (status === 'FILER' || status === 'LATE' || status === 'NON') ? status : 'FILER';
+                    
+                    const ratesForType = rateTable[trans];
+                    if (!ratesForType) return 0;
+                    
+                    const rateGroup = ratesForType[stat];
+                    if (!rateGroup) return 0;
+                    
+                    // handle non-filer SELL (flat rate)
+                    if (trans === 'SELL' && stat === 'NON' && rateGroup.flat !== undefined) {
+                        return rateGroup.flat;
+                    }
+                    
+                    const slab = getSlabCategory(val);
+                    return rateGroup[slab] || 0;
+                }
+            };
+        })();
+    
+
+
+
+// =====================================================================================================
+// Sales Tax Rates Of ( FBR , PRA , KPRA , SRB , BRB , AJK ) Tax For The Period Of TY 2024 To 2026  
+// =====================================================================================================
+
+
+    
