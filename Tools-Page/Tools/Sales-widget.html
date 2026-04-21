@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        :root {
+            --Red: #ff0000; --Blue: #007bff; --Gold: #FFED00; --Parrot: #16FF00;
+            --Deep-Green: #2E7D32; --White: #ffffff; --Off-White: #f8f9fa;
+            --Black: #000000; --Gray: #f5f5f5; --Soft-Gray: #d3d3d3; --Dark-Gray: #929292;
+        }
+
+        .pro-tax-card {
+            width: 250px; height: 130px; background: var(--White);
+            border: 2px solid var(--Deep-Green); border-radius: 6px;
+            padding: 4px 6px; box-sizing: border-box; 
+            font-family: 'Open Sans', sans-serif;
+            display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .t-header { display: flex; justify-content: space-between; align-items: center; }
+        .t-brand { font-size: 10px; font-weight: 800; color: var(--Black); letter-spacing: -0.2px; }
+        .t-select-year { font-size: 9px; font-weight: 700; border: 1px solid var(--Blue); color: var(--Blue); border-radius: 3px; background: var(--Off-White); }
+
+        .t-grid-btns { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
+        .btn-p { 
+            font-size: 8px; font-weight: 700; border: 1px solid var(--Soft-Gray); 
+            background: var(--Gray); padding: 2px 0; border-radius: 2px; cursor: pointer; color: var(--Black);
+        }
+        .btn-p.active { background: var(--Deep-Green); color: var(--White); border-color: var(--Deep-Green); }
+
+        .t-input-group { 
+            display: flex; align-items: center; gap: 4px; 
+            background: var(--Gray); padding: 3px 5px; border-radius: 4px; border-left: 3px solid var(--Deep-Green);
+        }
+        .t-input-group label { font-size: 8px; font-weight: 800; color: var(--Black); width: 45%; }
+        .t-input-group input { 
+            width: 55%; font-size: 12px; font-weight: 800; border: none; 
+            background: white; color: var(--Black); text-align: right; outline: none; border-radius: 10px;
+        }
+
+        .t-res-grid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 3px; align-items: center; }
+        .t-res-item { display: flex; flex-direction: column; }
+        .t-res-item label { font-size: 7px; font-weight: 800; color: var(--Dark-Gray); margin-bottom: -2px; }
+        .t-res-item b { font-size: 11px; font-weight: 700; color: var(--Black); }
+        
+        .t-total-highlight { background: var(--Gold); padding: 2px 4px; border-radius: 3px; }
+        .t-total-highlight label { color: var(--Deep-Green); }
+        .t-total-highlight b { font-size: 13px; font-weight: 800; color: var(--Black); }
+
+        .t-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--Gray); padding-top: 2px; }
+        .t-tools { display: flex; gap: 10px; }
+        .t-tools button { background: none; border: none; cursor: pointer; font-size: 11px; color: var(--Dark-Gray); transition: 0.2s; padding: 0;}
+        .t-tools button:hover { color: var(--Blue); transform: scale(1.1); }
+        .t-status { font-size: 8px; font-weight: 700; color: var(--Dark-Gray); }
+
+        @media print { body * { visibility: hidden; } .pro-tax-card, .pro-tax-card * { visibility: visible; } }
+    </style>
+</head>
+<body>
+
+<div class="pro-tax-card" id="SalesTaxApp">
+    <div class="t-header">
+        <span class="t-brand">SALES TAX <span style="color:var(--Blue)" id="displayYear">2026</span></span>
+        <select id="tYear" class="t-select-year">
+           <!-- <option value="2024">2024</option>
+            <option value="2025">2025</option> -->
+            <option value="2026" selected>2026</option>
+        </select>
+    </div>
+
+    <div class="t-grid-btns" id="tProvGrid"></div>
+
+    <div class="t-input-group">
+        <label>EXCLUDING VALUE</label>
+        <input type="number" id="tAmount" value="25000">
+    </div>
+
+    <div class="t-res-grid">
+        <div class="t-res-item">
+            <label>RATE</label>
+            <b id="vRate">18%</b>
+        </div>
+        <div class="t-res-item">
+            <label>TAX</label>
+            <b id="vTax">4,500</b>
+        </div>
+        <div class="t-res-item t-total-highlight">
+            <label>INCLUDING VALUE</label>
+            <b id="vTotal">29,500</b>
+        </div>
+    </div>
+
+    <div class="t-footer">
+        <div class="t-tools">
+            <button id="btnCopy"><i class="fas fa-copy"></i></button>
+            <button id="btnPrint"><i class="fas fa-print"></i></button>
+            <button id="btnShare"><i class="fas fa-share-alt"></i></button>
+        </div>
+        <div class="t-status">Verified <i class="fas fa-check-circle" style="color:var(--Deep-Green)"></i></div>
+    </div>
+</div>
+
+<script src="taxData.js"></script>
+
+<script>
+/**
+ * Isolated Module to prevent global scope pollution
+ */
+(function() {
+    // Reference the centralized database loaded from taxData.js
+    const db = window.SalesTaxRatesDB || {};
+
+    let activeP = "FBR";
+    const yearS = document.getElementById('tYear');
+    const amtI = document.getElementById('tAmount');
+    const grid = document.getElementById('tProvGrid');
+    const displayYear = document.getElementById('displayYear');
+
+    const updateCalc = function() {
+        const selectedYear = yearS.value;
+        displayYear.innerText = selectedYear;
+        
+        if (!db[selectedYear]) return;
+
+        const rate = db[selectedYear][activeP];
+        const val = parseFloat(amtI.value) || 0;
+        const tax = val * (rate / 100);
+        const total = val + tax;
+
+        document.getElementById('vRate').innerText = rate + "%";
+        document.getElementById('vTax').innerText = tax.toLocaleString();
+        document.getElementById('vTotal').innerText = total.toLocaleString();
+        renderP();
+    };
+
+    function renderP() {
+        const selectedYear = yearS.value;
+        if (!db[selectedYear]) return;
+
+        grid.innerHTML = "";
+        Object.keys(db[selectedYear]).forEach(p => {
+            const btn = document.createElement('button');
+            btn.className = `btn-p ${p === activeP ? 'active' : ''}`;
+            btn.innerText = p;
+            btn.onclick = () => { activeP = p; updateCalc(); };
+            grid.appendChild(btn);
+        });
+    }
+
+    const handleAction = async (act) => {
+        const report = `TAX REPORT\nProv: ${activeP} (${yearS.value})\nRate: ${document.getElementById('vRate').innerText}\nExcl: ${amtI.value}\nTax: ${document.getElementById('vTax').innerText}\nTotal: ${document.getElementById('vTotal').innerText}`;
+        
+        if(act === 'copy') { 
+            await navigator.clipboard.writeText(report); 
+            alert("Copied!"); 
+        }
+        else if(act === 'print') {
+            window.print();
+        }
+        else if(act === 'share') { 
+            if(navigator.share) navigator.share({text: report}); 
+            else { await navigator.clipboard.writeText(report); alert("Link Copied!"); }
+        }
+    };
+
+    // Attach Event Listeners (Isolated from HTML attributes)
+    yearS.addEventListener('change', updateCalc);
+    amtI.addEventListener('input', updateCalc);
+    document.getElementById('btnCopy').addEventListener('click', () => handleAction('copy'));
+    document.getElementById('btnPrint').addEventListener('click', () => handleAction('print'));
+    document.getElementById('btnShare').addEventListener('click', () => handleAction('share'));
+
+    // Initial Run
+    renderP();
+    updateCalc();
+})();
+</script>
+
+</body>
+</html>
