@@ -460,6 +460,25 @@ const TaxCalculatorConfig = (function () {
 
 
 
+// =====================================================================================================
+// Sales Tax ( FBR , PRA , KPRA , SRB , BRB , AJK ) For The Period Of TY 2020 To 2026 
+// =====================================================================================================
+
+
+// taxData.js - Centralized Tax Rates
+window.SalesTaxRatesDB = {    // FBR Rates Are Verified By MySelf From Act
+
+    2020: { FBR:17, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },
+    2021: { FBR:17, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },
+    2022: { FBR:17, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },
+    2023: { FBR:18, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },  // Here In TY 23 FBR Rate Was Changed In Feb-23 From 17% To 18%
+    2024: { FBR:18, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },
+    2025: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 },
+    2026: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 }
+};
+
+
+
 
 
 
