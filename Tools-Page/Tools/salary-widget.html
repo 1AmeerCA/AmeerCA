@@ -1,1 +1,221 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Salary Tax Calculator TY 2026 | Pakistan Income Tax Widget</title>
+    <meta name="description" content="Calculate your Pakistan monthly and yearly salary tax for TY 2026. Instant results for Net Income, Surcharge, and Super Tax.">
+    <meta name="keywords" content="Salary Tax Calculator, Pakistan Income Tax, FBR Tax TY 2026, AmeerCA Tax Tool">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AmeerCA Salary Tax Calculator",
+      "url": "https://yourwebsite.com",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "abstract": "Calculates Pakistan salary income tax including Section 4AB Surcharge and 4C Super Tax.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PKR" }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+          :root {
+            --Red: #ff0000;
+            --Blue: #007bff;
+            --Gold: #FFED00;
+            --Parrot: #16FF00;
+            --Deep-Green: #2E7D32;
+            --White: #ffffff;
+            --Off-White: #f8f9fa;
+            --Black: #000000;
+            --Gray: #f5f5f5;
+            --Soft-Gray: #d3d3d3;
+            --Dark-Gray: #929292;
+        }
+
+        
+        .salary-widget {
+            width: 250px;
+            height: 130px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1.5px solid var(--Deep-Green);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header with Share Button */
+        .widget-header {
+            background: linear-gradient(98deg, var(--Deep-Green) 0%, #1e5631 100%);
+            padding: 8px 8px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand-text { font-size: 11px; font-weight: 900; letter-spacing: 0.6px; display: flex; align-items: center; gap: 4px; }
+        .header-actions { display: flex; gap: 8px; align-items: center; }
+        .head-icon { font-size: 9px; cursor: pointer; opacity: 0.9; transition: opacity 0.2s; }
+        .head-icon:hover { opacity: 1; color: #fbbf24; }
+
+        .widget-body { padding: 5px 8px; flex-grow: 1; display: flex; flex-direction: column; gap: 4px; }
+
+        /* Input Controls */
+        .input-row { display: flex; align-items: center; gap: 4px; }
+        .salary-input {
+            flex: 1;
+            /*border: 1.5px solid var(--Border);*/
+            border-radius: 5px;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-weight: 700;
+            outline: none;
+            color: var(--Deep-Green);
+            width: 120px;
+        }
+        .mode-toggle { display: flex; background: #f1f5f9; border-radius: 5px; padding: 2px; }
+        .tgl-btn {
+            padding: 2px 5px;
+            font-size: 7px;
+            font-weight: 800;
+            border: none;
+            background: var(--Gold);
+            cursor: pointer;
+            border-radius: 3px;
+            text-transform: uppercase;
+            color: var(--Black);
+        }
+        .tgl-btn.active { background: var(--Deep-Green); color: var(--White); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+
+        /* Boxed Outputs for Trust */
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .out-box { 
+            background: #f8fafc; 
+            border: 1px solid var(--Border); 
+            border-radius: 6px; 
+            padding: 3px 6px; 
+        }
+        .res-label { font-size: 8.5px; font-weight: 700; color: var(--Black); text-transform: uppercase; display: block; letter-spacing: 2px; }
+        .res-val { font-size: 15px; font-weight: 800; line-height: 1.1; }
+
+        .blue-val { color: var(--Blue); }
+        .red-val { color: var(--Red); }
+        .green-val { color: var(--Deep-Green); }
+    </style>
+</head>
+<body>
+
+    <article class="salary-widget">
+        <header class="widget-header">
+            <span class="brand-text"><i class="fas fa-shield-check"></i><strong>SALARY TAX CALC   |   TY - 2026</strong></span>
+            <div class="header-actions">
+                <i class="fas fa-share-nodes head-icon" onclick="shareMe()" title="Share Tool"></i>
+                <i class="fas fa-print head-icon" onclick="window.print()" title="Print Summary"></i>
+                <i class="fas fa-copy head-icon" onclick="copyResults()" title="Copy"></i>
+            </div>
+        </header>
+
+        <section class="widget-body">
+            <div class="input-row">
+                <input type="number" id="salInp" class="salary-input" placeholder="Salary Amount" oninput="calculate()">
+                <div class="mode-toggle">
+                    <button id="btnM" class="tgl-btn active" onclick="setMode('M')">Monthly</button>
+                    <button id="btnA" class="tgl-btn" onclick="setMode('A')">Yearly</button>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <div class="out-box">
+                    <span class="res-label">Monthly Inc</span>
+                    <span id="outM" class="res-val blue-val">0</span>
+                </div>
+                <div class="out-box">
+                    <span class="res-label">Yearly Inc</span>
+                    <span id="outY" class="res-val blue-val">0</span>
+                </div>
+                <div class="out-box">
+                    <span class="res-label">Yearly Tax</span>
+                    <span id="outT" class="res-val red-val">0</span>
+                </div>
+                <div class="out-box">
+                    <span class="res-label">After Tax</span>
+                    <span id="outNet" class="res-val green-val">0</span>
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <script src="taxData.js"></script>
+    <script>
+        let mode = 'M';
+        const YEAR = "TY2026";
+
+        function setMode(m) {
+            mode = m;
+            document.getElementById('btnM').classList.toggle('active', m === 'M');
+            document.getElementById('btnA').classList.toggle('active', m === 'A');
+            calculate();
+        }
+
+        function calculate() {
+            const val = parseFloat(document.getElementById('salInp').value) || 0;
+            const annual = mode === 'M' ? val * 12 : val;
+            
+            // Core Tax Calculation Logic
+            const slabs = ALL_SLABS[YEAR].salaried;
+            let nTax = 0;
+            for (let i = 0; i < slabs.length; i++) {
+                const prev = i === 0 ? 0 : slabs[i-1].limit;
+                if (annual <= slabs[i].limit) {
+                    nTax = slabs[i].base + ((annual - prev) * slabs[i].rate);
+                    break;
+                }
+            }
+
+            // Silent Backend logic for Surcharge & Super Tax
+            const sur = SURCHARGE_RATES[YEAR];
+            let surcharge = (annual > sur.threshold) ? (nTax * sur.salaried) : 0;
+            const cSlabs = SUPER_TAX_SLABS[YEAR];
+            let sTax = 0;
+            for (let i = 0; i < cSlabs.length; i++) {
+                const prev = i === 0 ? 0 : cSlabs[i-1].limit;
+                if (annual <= cSlabs[i].limit) {
+                    sTax = cSlabs[i].base + ((annual - prev) * cSlabs[i].rate);
+                    break;
+                }
+            }
+
+            const totalTax = nTax + surcharge + sTax;
+            const net = annual - totalTax;
+
+            const fmt = (v) => Math.round(v).toLocaleString();
+            document.getElementById('outM').innerText = fmt(annual / 12);
+            document.getElementById('outY').innerText = fmt(annual);
+            document.getElementById('outT').innerText = fmt(totalTax);
+            document.getElementById('outNet').innerText = fmt(net);
+        }
+
+        function shareMe() {
+            if (navigator.share) {
+                navigator.share({ title: 'Salary Tax Calculator', url: window.location.href });
+            } else {
+                alert("Share not supported on this browser. Copy URL instead.");
+            }
+        }
+
+        function copyResults() {
+            const text = `Monthly: ${document.getElementById('outM').innerText} | Yearly Tax: ${document.getElementById('outT').innerText}`;
+            navigator.clipboard.writeText(text).then(() => alert("Results Copied!"));
+        }
+    </script>
+</body>
+</html>
