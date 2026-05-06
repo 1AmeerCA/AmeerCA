@@ -1,1 +1,957 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AmeerCA & KPS | Premium Tax & Business Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===================== RESET & TOKENS ===================== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --green:       #2E7D32;
+  --green-dark:  #1B5E20;
+  --green-light: #E8F5E9;
+  --gold:        #D4AF37;
+  --gold-light:  #FFF8DC;
+  --navy:        #0D1B8E;
+  --text:        #1A1A1A;
+  --muted:       #5A6472;
+  --border:      #E2E8E2;
+  --bg:          #F7FAF7;
+  --white:       #FFFFFF;
+  --radius:      20px;
+  --radius-lg:   28px;
+  --shadow-sm:   0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md:   0 8px 28px rgba(0,0,0,0.10);
+  --shadow-lg:   0 20px 50px rgba(0,0,0,0.12);
+  --g-green:     linear-gradient(135deg, #2E7D32, #1B5E20);
+  --g-gold:      linear-gradient(135deg, #FFED00, #D4AF37);
+  --g-hero:      linear-gradient(160deg, #0f2b10 0%, #1B5E20 50%, #2E7D32 100%);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ===================== KEYFRAMES ===================== */
+@keyframes fadeDown  { from { opacity:0; transform:translateY(-24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp    { from { opacity:0; transform:translateY(32px);  } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeIn    { from { opacity:0; }                              to { opacity:1; } }
+@keyframes slideLeft { from { opacity:0; transform:translateX(-32px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideRight{ from { opacity:0; transform:translateX(32px);  } to { opacity:1; transform:translateX(0); } }
+@keyframes pulse     { 0%,100% { transform:scale(1); } 50% { transform:scale(1.06); } }
+@keyframes float     { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+@keyframes shimmer   { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+
+.anim-1 { animation: fadeDown  0.7s ease both; }
+.anim-2 { animation: fadeUp    0.7s ease 0.15s both; }
+.anim-3 { animation: fadeUp    0.7s ease 0.3s  both; }
+.anim-4 { animation: fadeIn    0.7s ease 0.45s both; }
+.anim-5 { animation: fadeUp    0.7s ease 0.6s  both; }
+.anim-6 { animation: slideLeft 0.7s ease 0.2s  both; }
+.anim-7 { animation: slideRight 0.7s ease 0.2s both; }
+
+/* ===================== HERO ===================== */
+.hero {
+  background: var(--g-hero);
+  padding: 56px 20px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  color: #FFED00;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 40px;
+  margin-bottom: 20px;
+}
+.hero-logo-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.logo-box {
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,237,0,0.4);
+  border-radius: 14px;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  color: #FFED00;
+  font-size: 1rem;
+  line-height: 1.1;
+  animation: float 3.5s ease-in-out infinite;
+}
+.logo-amp {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.4);
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5vw, 3rem);
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.hero h1 span { color: #FFED00; }
+.hero p {
+  color: rgba(255,255,255,0.8);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--g-gold);
+  color: #1B5E20;
+  font-weight: 700;
+  padding: 13px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(212,175,55,0.4);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(212,175,55,0.55); }
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-weight: 600;
+  padding: 13px 28px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-3px); }
+
+/* ===================== STATS BAR ===================== */
+.stats-bar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+}
+.stats-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.stat {
+  text-align: center;
+  padding: 8px 16px;
+  flex: 1;
+  min-width: 100px;
+}
+.stat strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--green);
+  line-height: 1;
+}
+.stat span { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+.stat-divider { width: 1px; height: 40px; background: var(--border); }
+
+/* ===================== SECTION HEADERS ===================== */
+.section-head {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.section-head .label {
+  display: inline-block;
+  background: var(--green-light);
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 30px;
+  margin-bottom: 10px;
+}
+.section-head h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--text);
+  line-height: 1.2;
+}
+.section-head h2 span { color: var(--green); }
+.section-head p { color: var(--muted); margin-top: 10px; font-size: 0.95rem; }
+.bar { width: 56px; height: 3px; background: var(--g-gold); margin: 12px auto 0; border-radius: 4px; }
+
+/* ===================== ABOUT + WHY ===================== */
+.section { padding: 56px 0; }
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  height: 100%;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.card-icon { font-size: 2rem; margin-bottom: 12px; }
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+  padding-left: 12px;
+  border-left: 3px solid var(--gold);
+}
+.card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tag {
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 30px;
+}
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.why-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text);
+  transition: background 0.2s, border-color 0.2s;
+}
+.why-item:hover { background: var(--green-light); border-color: var(--green); color: var(--green-dark); }
+
+/* ===================== SERVICES ===================== */
+.services-bg { background: var(--white); }
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--green); }
+.service-card:hover .svc-head { background: var(--green-dark); }
+.svc-head {
+  background: var(--g-green);
+  color: #fff;
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.25s;
+}
+.svc-list { list-style: none; padding: 16px 20px; }
+.svc-list li {
+  font-size: 0.87rem;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  transition: color 0.15s;
+}
+.svc-list li:last-child { border: none; }
+.svc-list li:hover { color: var(--green); }
+.svc-list li::before { content:'→'; color: var(--green); font-size: 0.8rem; flex-shrink: 0; }
+
+/* ===================== EXPERTS ===================== */
+.experts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.expert-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.expert-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.expert-avatar {
+  width: 80px; height: 80px;
+  background: var(--g-green);
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(46,125,50,0.3);
+}
+.expert-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+}
+.expert-title {
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.contact-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 9px 16px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.contact-pill:hover { background: var(--green); border-color: var(--green); color: #fff; transform: scale(1.02); }
+.cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.cta-call {
+  background: var(--g-gold);
+  color: var(--green-dark);
+  font-weight: 700;
+  padding: 11px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-call:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(212,175,55,0.4); }
+.cta-wa {
+  background: #25D366;
+  color: #fff;
+  font-weight: 700;
+  padding: 11px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-wa:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(37,211,102,0.4); }
+
+/* ===================== REVIEWS ===================== */
+.reviews-bg { background: var(--bg); }
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.review-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s;
+}
+.review-card:hover { transform: translateY(-4px); }
+.stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px; }
+.review-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; font-style: italic; }
+.reviewer { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-top: 12px; }
+
+/* ===================== LOCATION ===================== */
+.location-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.map-frame { height: 280px; }
+.map-frame iframe { width:100%; height:100%; border:0; display:block; }
+.address-pane {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.address-pane h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--green-dark);
+  margin-bottom: 12px;
+}
+.address-pane p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 40px;
+  text-decoration: none;
+  margin-top: 16px;
+  width: fit-content;
+  transition: background 0.2s, transform 0.2s;
+}
+.map-link:hover { background: var(--green); color: #fff; transform: translateX(3px); }
+
+/* ===================== FORM ===================== */
+.form-section { background: var(--white); }
+.form-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+}
+.form-group { margin-bottom: 14px; }
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.btn-submit {
+  width: 100%;
+  background: var(--g-green);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(46,125,50,0.35); background: var(--green-dark); }
+.form-note { font-size: 0.75rem; color: var(--muted); text-align:center; margin-top: 10px; }
+
+/* ===================== WEBSITE CTA ===================== */
+.cta-strip {
+  background: var(--g-hero);
+  padding: 48px 20px;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  margin: 40px 0;
+  position: relative;
+  overflow: hidden;
+}
+.cta-strip h2 {
+  font-family: 'Playfair Display', serif;
+  color: #fff;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  margin-bottom: 12px;
+}
+.cta-strip p { color: rgba(255,255,255,0.75); margin-bottom: 24px; font-size: 0.95rem; }
+
+/* ===================== FOOTER ===================== */
+.footer {
+  background: #0d200d;
+  color: #c8dcc8;
+  padding: 40px 0 24px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 28px;
+  margin-bottom: 32px;
+}
+.footer h4 {
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+.footer a { color: var(--text); text-decoration: none; font-size: 0.85rem; display: block; margin-bottom: 6px; transition: color 0.15s; }
+.footer a:hover { color: #FFED00; }
+.footer p { font-size: 0.85rem; line-height: 1.7; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #6a8a6a;
+}
+.footer-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #25D366;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: transform 0.2s;
+}
+.footer-wa:hover { transform: scale(1.04); color:#fff; }
+
+/* ===================== WHATSAPP FLOAT ===================== */
+.wa-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+  text-decoration: none;
+  color: #fff;
+  z-index: 999;
+  animation: pulse 2.5s ease-in-out infinite;
+  transition: transform 0.2s;
+}
+.wa-float:hover { transform: scale(1.1); }
+
+/* ===================== SCROLL REVEAL ===================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================== DIVIDER ===================== */
+.divider { height: 1px; background: var(--border); margin: 0; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .location-card { grid-template-columns: 1fr; }
+  .map-frame { height: 220px; }
+  .stat-divider { display: none; }
+  .stats-inner { gap: 0; }
+  .stat { padding: 10px 8px; }
+  .section { padding: 40px 0; }
+  .cta-row { grid-template-columns: 1fr 1fr; }
+  .hero { padding: 44px 20px 40px; }
+}
+@media (max-width: 480px) {
+  .hero-logo-row { gap: 10px; }
+  .logo-box { width: 52px; height: 52px; font-size: 0.85rem; }
+  .form-card { padding: 22px 16px; }
+  .expert-card { padding: 22px 16px; }
+}
+
+
+
+
+
+/* Logo Group Container */
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Logo Image Styling */
+.logo-img {
+    height: 75px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    border-radius: 16px;
+    transition: transform 0.25s ease, filter 0.2s;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.05));
+}
+
+.logo-img:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));
+}
+
+/* Original Ameer/CA box (if kept) */
+.logo-item {
+    background: linear-gradient(145deg, #f0f4f0, #ffffff);
+    width: 75px;
+    height: 75px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: #2E7D32;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 12px -6px rgba(0,0,0,0.08);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.logo-item small {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Brand Name Styling with Your Colors */
+.brand-name {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ameer {
+    color: #1B5E20;   /* Deep Green */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.amp {
+    color: #D4AF37;   /* Premium Gold */
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.kps {
+    color: #0400e7;   /* Navy Blue */
+}
+
+/* Responsive adjustments */
+@media (max-width: 680px) {
+    .logo-group {
+        gap: 14px;
+        justify-content: center;
+        text-align: center;
+    }
+    .brand-name {
+        font-size: 1.5rem;
+    }
+    .amp {
+        font-size: 1.5rem;
+    }
+    .logo-img {
+        height: 60px;
+    }
+    .logo-item {
+        width: 60px;
+        height: 60px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-name {
+        font-size: 1.25rem;
+        gap: 4px;
+    }
+    .amp {
+        font-size: 1.25rem;
+    }
+    .logo-img {
+        height: 50px;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+
+    <div class="logo-group">
+        <img src="Combined Brand logo.png" alt="AmeerCA & KPS Logo" class="logo-img">
+        <div class="brand-name">
+            <span class="ameer" style="color: #FFED00;">AmeerCA</span>
+            <span class="amp">&</span>
+            <span class="kps">KPS</span>
+        </div>
+    </div>
+
+  <div>
+    <h1 class="anim-3">Your Trusted Partner for<br><span>Tax, Compliance</span> & Business Growth</h1>
+    <p class="anim-4">Simplifying Compliance · Empowering Growth</p>
+  </div>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
+<!-- ===== ABOUT + WHY ===== -->
+<section class="section">
+  <div class="container">
+    <div class="two-col">
+      <div class="card reveal anim-6">
+        <div class="card-icon">📖</div>
+        <h3>About AmeerCA & KPS</h3>
+        <p>Big 4-inspired, modern tax solutions for Pakistan's businesses and individuals. Led by <strong>Ameer Hamza (CA Finalist)</strong> and <strong>Muzammal Hussain (Senior Tax Consultant)</strong>, we deliver confidential, data-driven compliance that drives real business success.</p>
+        <div class="tag-row">
+          <span class="tag">✔ 100% Confidential</span>
+        </div>
+      </div>
+      <div class="card reveal anim-7">
+        <div class="card-icon">⭐</div>
+        <h3>Why Choose AmeerCA & KPS</h3>
+        <div class="why-grid">
+          <div class="why-item">✅ Professional &amp; Reliable</div>
+          <div class="why-item">⚡ Accurate &amp; Efficient</div>
+          <div class="why-item">🔒 Secure &amp; Confidential</div>
+          <div class="why-item">📊 Tech-Driven Solutions</div>
+          <div class="why-item">🏆 24/7 Client Support</div>
+          <div class="why-item">💡 Big 4 Standard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== SERVICES ===== -->
+<section class="section services-bg">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">What We Offer</span>
+      <h2>Our <span>Core Services</span></h2>
+      <div class="bar"></div>
+      <p>Comprehensive tax, legal, and financial solutions tailored to your needs.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card reveal">
+        <div class="svc-head">📑 Tax & Regulatory</div>
+        <ul class="svc-list">
+          <li>Income Tax Return Filing & Compliance</li>
+          <li>NTN Registration ( Individuals & Business )</li>
+          <li>7E Form</li>
+          <li>Property Tax Compliance</li>
+
+          <li>Sales Tax Return Filing (FBR, PRA, SRb, KPRA, BRB, AJK)</li>
+          <li>Withholding Tax Statements & Compliance</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-head">⚖️ Business & Legal</div>
+        <ul class="svc-list">
+          <li>Company Incorporation (SECP)</li>
+          <li>NPO / Trust Registration</li>
+          <li>Annual Returns &amp; Compliance</li>
+          <li>Trademark Registration</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="svc-head">📈 Financial Advisory</div>
+        <ul class="svc-list">
+          <li>Tax Planning &amp; Strategic Advisory</li>
+          <li>Bookkeeping &amp; Accounting Systems</li>
+          <li>Financial Statements Preparation</li>
+          <li>Excel Automation & Smart Solutions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== MEET THE EXPERTS ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="label">Our Team</span>
+      <h2>Meet <span>Our Experts</span></h2>
+      <div class="bar"></div>
+    </div>
+    <div class="experts-grid">
+      <!-- Ameer Hamza -->
+      <div class="expert-card reveal">
+        <div class="expert-avatar">A</div>
+        <div class="expert-name">Ameer Hamza</div>
+        <div class="expert-title">CA Finalist · Tax &amp; Compliance Lead</div>
+        <a href="tel:+923094153886" class="contact-pill">📞 +92-309-4153886</a>
+        <a href="mailto:1ameerca@gmail.com" class="contact-pill">✉️ 1ameerca@gmail.com</a>
+        <div class="cta-row">
+          <a href="tel:+923094153886" class="cta-call">📞 Call</a>
+          <a href="https://wa.me/923094153886?text=Hello%20Ameer%2C%20I%20need%20expert%20tax%20solutions." target="_blank" class="cta-wa">💬 WhatsApp</a>
+        </div>
+      </div>
+      <!-- Muzammal -->
+      <div class="expert-card reveal">
+        <div class="expert-avatar" style="background:linear-gradient(135deg,#0D1B8E,#0a1260);">M</div>
+        <div class="expert-name">Muzammal Hussain</div>
+        <div class="expert-title">Senior Tax Consultant · KPS</div>
+        <a href="tel:+923274589089" class="contact-pill">📞 +92-327-4589089</a>
+        <a href="mailto:kpstax6@gmail.com" class="contact-pill">✉️ kpstax6@gmail.com</a>
+        <div class="cta-row">
+          <a href="tel:+923274589089" class="cta-call">📞 Call</a>
+          <a href="https://wa.me/923274589089?text=Hello%20Muzammal%2C%20I%20need%20tax%20consultation." target="_blank" class="cta-wa">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:28px;">
+      <a href="https://www.ameerca.com" target="_blank" class="btn-primary" style="background:var(--g-green); color:#fff; box-shadow:0 4px 18px rgba(46,125,50,0.3);">🌐 Visit Official Website</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<div class="divider"></div>
+
+
+
+<div class="divider"></div>
+
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>AmeerCA &amp; KPS</h4>
+        <p>Premium Tax &amp; Business Solutions. Big 4 Standard — For Every Client.</p>
+        <a href="https://wa.me/923094153886" target="_blank" class="footer-wa">💬 WhatsApp Now</a>
+      </div>
+     
+      <div>
+        <h4>Services</h4>
+        <a href="#">Tax &amp; Regulatory</a>
+        <a href="#">Business &amp; Legal</a>
+        <a href="#">Financial Advisory</a>
+        <a href="#">Excel Automation</a>
+      </div>
+      <div>
+        <h4>Contact Info</h4>
+        <p>📞 +92 309 4153886<br>📞 +92 327 4589089<br>✉️ 1ameerca@gmail.com<br>✉️ kpstax6@gmail.com<br><br></p>
+      </div>
+    </div>
+   
+  </div>
+</footer>
+
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Form
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '✅ Sent! We\'ll contact you within 24 hours.';
+  btn.style.background = '#25D366';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
