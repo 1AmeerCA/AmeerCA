@@ -1,1 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1.0">
+  <title>Complete Sitemap | Ameer CA – Tax Calculators & Tools</title>
+  <meta name="description" content="Complete sitemap of Ameer CA featuring all professional tax calculators, widgets, and tools. Find Income Tax, Sales Tax, Property Tax, and compliance tools all in one place.">
+  <meta name="keywords" content="tax calculator, income tax Pakistan, sales tax widget, property tax calculator, section 236, advance tax, sim network code, FBR tools, Ameer CA sitemap">
+  <meta name="author" content="Ameer CA">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Complete Sitemap | Ameer CA">
+  <meta property="og:description" content="Navigate all tax calculators and tools easily. Income Tax, Sales Tax, Property Tax, Advance Tax & more.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ameerca.com/sitemap.html">
+  <meta name="twitter:card" content="summary">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      background: #f0f7f0;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1a2e1f;
+      line-height: 1.5;
+    }
+
+    /* main container */
+    .sitemap-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header brand */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1a5d1a, #2d8c2d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.3rem;
+    }
+
+    .header p {
+      color: #4a6741;
+      font-size: 1rem;
+    }
+
+    /* search bar */
+    .search-section {
+      max-width: 550px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .search-box {
+      display: flex;
+      background: white;
+      border-radius: 60px;
+      border: 1px solid #cde0cd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: #1a5d1a;
+      box-shadow: 0 0 0 3px rgba(26,93,26,0.1);
+    }
+
+    .search-icon {
+      padding: 0.9rem 0 0.9rem 1.2rem;
+      color: #6f8c62;
+      font-size: 1.1rem;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 0.9rem 0.2rem 0.9rem 0;
+      font-size: 1rem;
+      outline: none;
+      background: transparent;
+      font-weight: 400;
+    }
+
+    .search-box button {
+      background: #1a5d1a;
+      border: none;
+      padding: 0 1.8rem;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .search-box button:hover {
+      background: #0e3a0e;
+    }
+
+    .search-stats {
+      font-size: 0.75rem;
+      text-align: center;
+      margin-top: 0.5rem;
+      color: #5b7c4e;
+    }
+
+    /* category grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.6rem;
+    }
+
+    /* card style */
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border-top: 5px solid #d4af37;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px -12px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-header {
+      background: #fcfaf2;
+      padding: 0.9rem 1.4rem;
+      border-bottom: 1px solid #e9ecdf;
+    }
+
+    .card-header h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1a5d1a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-body {
+      padding: 0.4rem 0.2rem 0.8rem 0;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .link-list li {
+      border-bottom: 1px solid #eff3ea;
+      transition: 0.1s;
+    }
+
+    .link-list a {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      text-decoration: none;
+      padding: 0.7rem 1.2rem;
+      color: #2b4827;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .link-list a:hover {
+      background: #f5f9ef;
+      border-left-color: #d4af37;
+      padding-left: 1.5rem;
+      color: #0f3b0f;
+    }
+
+    .link-icon {
+      font-size: 1.2rem;
+      min-width: 28px;
+    }
+
+    .link-text {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .badge-tool {
+      background: #eef5e8;
+      border-radius: 30px;
+      font-size: 0.6rem;
+      padding: 0.15rem 0.6rem;
+      color: #2b6e2b;
+      font-weight: 600;
+      white-space: nowrap;
+      margin-left: 0.5rem;
+    }
+
+    .footer-note {
+      margin-top: 3rem;
+      background: #fcf9f0;
+      border-radius: 20px;
+      padding: 1rem 1.5rem;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #5e7352;
+      border: 1px solid #e3e8da;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 1rem; }
+      .category-grid { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="sitemap-wrapper">
+  <div class="header">
+    <h1>📌 AmeerCA · Complete Navigation Hub</h1>
+    <p>Professional tax calculators, widgets, compliance tools & resources — full sitemap</p>
+  </div>
+
+  <!-- SEARCH BAR (live filter) -->
+  <div class="search-section">
+    <div class="search-box">
+      <div class="search-icon">🔍</div>
+      <input type="text" id="liveSearch" placeholder="Search tools, calculators, pages... (e.g. Income Tax, Section 236, SIM)">
+      <button id="clearSearchBtn" style="color: gold;">✕ Clear</button>
+    </div>
+    <div class="search-stats" id="searchStats"></div>
+  </div>
+
+  <!-- MAIN SITEMAP GRID — ALL REAL LINKS ORGANIZED PROFESSIONALLY -->
+  <div class="category-grid" id="sitemapGrid">
+    
+    <!-- CARD 1: Core & Corporate Pages -->
+    <div class="card" data-category="core">
+      <div class="card-header">
+        <h2><span>🏛️</span> Core & Firm Profile</h2>
+      </div>
+      <div class="card-body">
+        <ul class="link-list">
+          <li><a href="https://ameerca.com/" target="_blank" rel="noopener noreferrer"><span class="link-icon">🏠</span><span class="link-text">Home – Professional Tax Calculators Hub</span><span class="badge-tool">Flagship</span></a></li>
+          <li><a href="https://ameerca.com/Landing-Page/LP.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🤝</span><span class="link-text">AmeerCA & KPS – Trusted Tax & Compliance Partner</span><span class="badge-tool">About</span></a></li>
+          <li><a href="https://ameerca.com/tools-page/tools-page.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🛠️</span><span class="link-text">Master Tools Index – Calculators Overview</span><span class="badge-tool">Directory</span></a></li>
+          <li><a href="https://ameerca.com/Testing-Page/Testing.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🧪</span><span class="link-text">Testing Environment (Sandbox)</span><span class="badge-tool">Dev</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CARD 2: Income Tax & Surcharge Suite -->
+    <div class="card" data-category="tax">
+      <div class="card-header">
+        <h2><span>💰</span> Income Tax & Surcharge</h2>
+      </div>
+      <div class="card-body">
+        <ul class="link-list">
+          <li><a href="https://ameerca.com/Tools-Page/Tools/Income-Tax-Calculator.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">📊</span><span class="link-text">Income Tax Calculator – Salaried & Business Persons (FY 2026)</span><span class="badge-tool">Essential</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/4AB-Surcharge.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">⚡</span><span class="link-text">Section 4AB – Surcharge 9% / 10% (Income > 10M)</span><span class="badge-tool">Surcharge</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/147A-Advance-Tax-(-Sales-Tax-Registered-Persons-).html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🏭</span><span class="link-text">Section 147A – Advance Tax (Sales Tax Registered Persons)</span><span class="badge-tool">Advance Tax</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/231AB-(-Tax-On-Cash-Withdrawal-).html" target="_blank" rel="noopener noreferrer"><span class="link-icon">💸</span><span class="link-text">Section 231AB – Cash Withdrawal Tax Calculator</span><span class="badge-tool">Withholding</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/236-(-Telephone-Internet-Users-).html" target="_blank" rel="noopener noreferrer"><span class="link-icon">📞</span><span class="link-text">Section 236 – Telephone & Internet Users Tax (Utility Bill)</span><span class="badge-tool">Advance Tax</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CARD 3: Widgets – Salary, Sales, Property -->
+    <div class="card" data-category="widgets">
+      <div class="card-header">
+        <h2><span>📈</span> Financial Widgets & Analytics</h2>
+      </div>
+      <div class="card-body">
+        <ul class="link-list">
+          <li><a href="https://ameerca.com/Tools-Page/Tools/salary-widget.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">💵</span><span class="link-text">Salary & Income Tax Widget – Monthly / Yearly Breakdown</span><span class="badge-tool">Salary Tool</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/Sales-widget.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">📊</span><span class="link-text">Sales Tax Widget – FBR, PRA, SRB, KPRA (18% Rate)</span><span class="badge-tool">Sales Tax</span></a></li>
+          <li><a href="https://ameerca.com/Tools-Page/Tools/Property-widget.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🏠</span><span class="link-text">Property Tax Calculator – TY 2026 (Buy/Sell/Filer)</span><span class="badge-tool">Property</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CARD 4: Utility & SIM Network Tool -->
+    <div class="card" data-category="utilities">
+      <div class="card-header">
+        <h2><span>📡</span> Network & Identification Tools</h2>
+      </div>
+      <div class="card-body">
+        <ul class="link-list">
+          <li><a href="https://ameerca.com/Tools-Page/Tools/Sims-Network-Code.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">📱</span><span class="link-text">SIM Network Code Finder – Jazz, Zong, Telenor, Ufone, SCOM</span><span class="badge-tool">Utility</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CARD 5: Extra Reference & Testing -->
+    <div class="card" data-category="reference">
+      <div class="card-header">
+        <h2><span>📁</span> Development & Resources</h2>
+      </div>
+      <div class="card-body">
+        <ul class="link-list">
+          <li><a href="https://ameerca.com/Testing-Page/Testing.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🧪</span><span class="link-text">Testing Page – Experimental Features</span><span class="badge-tool">Sandbox</span></a></li>
+          <li><a href="https://ameerca.com/tools-page/tools-page.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🗂️</span><span class="link-text">Complete Tools Overview (Portal)</span><span class="badge-tool">Index</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <p>✅ <strong>SEO-optimized sitemap</strong> – every link opens in a new tab for seamless browsing. All 14+ real pages indexed, from the main tax calculators to the SIM finder and testing environment.<br>
+    📌 <strong>Use the live search filter</strong> (above) to instantly find any tool by name – “Section 236”, “Cash Withdrawal”, “Salary Widget” etc.<br>
+    © 2026 Ameer CA – Professional Tax & Compliance Platform. All calculators are indicative, for planning purposes.</p>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const searchInput = document.getElementById('liveSearch');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const statsDiv = document.getElementById('searchStats');
+    const allCards = document.querySelectorAll('.card');
+    const allLinks = document.querySelectorAll('.link-list a');
+
+    function updateFilter() {
+      const term = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+      let totalVisibleLinks = 0;
+
+      if (term === "") {
+        // show all cards and all links normally
+        allCards.forEach(card => {
+          card.style.display = "";
+          const linksInCard = card.querySelectorAll('.link-list li');
+          linksInCard.forEach(li => {
+            li.style.display = "";
+          });
+        });
+        statsDiv.innerText = `✨ Showing all ${allLinks.length} tools & pages`;
+        return;
+      }
+
+      // filter logic: show only cards that contain matching links
+      allCards.forEach(card => {
+        const listItems = card.querySelectorAll('.link-list li');
+        let cardHasMatch = false;
+        
+        listItems.forEach(li => {
+          const anchor = li.querySelector('a');
+          if (!anchor) return;
+          const linkText = anchor.innerText.toLowerCase();
+          const linkHref = anchor.href.toLowerCase();
+          if (linkText.includes(term) || linkHref.includes(term)) {
+            li.style.display = "";
+            cardHasMatch = true;
+            totalVisibleLinks++;
+          } else {
+            li.style.display = "none";
+          }
+        });
+        
+        if (cardHasMatch) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+      
+      statsDiv.innerText = `🔍 "${term}" — ${totalVisibleLinks} matching link${totalVisibleLinks !== 1 ? 's' : ''} in ${visibleCount} section${visibleCount !== 1 ? 's' : ''}`;
+    }
+
+    searchInput.addEventListener('input', updateFilter);
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      updateFilter();
+      searchInput.focus();
+    });
+
+    // initial stats
+    statsDiv.innerText = `✨ Showing all ${allLinks.length} tools & pages`;
+  })();
+</script>
+</body>
+</html>
