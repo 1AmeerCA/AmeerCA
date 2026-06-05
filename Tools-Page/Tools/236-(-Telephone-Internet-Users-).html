@@ -486,7 +486,7 @@
                         const threshold = rates[category.thresholdKey] || 1000;
                         if (amount > threshold) {
                             applicableRate = rates[category.rateKey];
-                            taxableAmount = amount;
+                            taxableAmount = amount - threshold;
                         } else {
                             applicableRate = 0;
                             taxableAmount = amount;
