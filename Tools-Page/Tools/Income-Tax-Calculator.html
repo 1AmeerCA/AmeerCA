@@ -995,37 +995,32 @@
             const rate = surchargeInfo[type] || 0;
             return { amount: normalTax * rate, rate: rate };
         }
-
+        
         function calculateSuperTax(taxableIncome, year) {
             const superTaxSlabs = SUPER_TAX_SLABS[year];
-            if (!superTaxSlabs || taxableIncome < 150000000) { 
+            // No super tax if slabs missing or income below the first threshold (150M)
+            if (!superTaxSlabs || taxableIncome < superTaxSlabs[0].limit) {
                 return { amount: 0, rateText: "N/A" };
             }
-
-            let superTaxPayable = 0;
-            let previousLimit = 0;
-            let effectiveRate = 0;
-
+        
+            // Find the applicable slab (slabs are ordered by limit ascending)
+            let applicableSlab = null;
             for (const slab of superTaxSlabs) {
-                if (taxableIncome > previousLimit) {
-                    if (taxableIncome <= slab.limit) {
-                        const taxableAmount = taxableIncome - previousLimit;
-                        superTaxPayable = slab.base + (taxableAmount * slab.rate);
-                        effectiveRate = slab.rate;
-                        break; 
-                    } else if (slab.limit !== Infinity) {
-                        superTaxPayable = slab.base + ((slab.limit - previousLimit) * slab.rate);
-                    } else {
-                        const taxableAmount = taxableIncome - previousLimit;
-                        superTaxPayable = slab.base + (taxableAmount * slab.rate);
-                        effectiveRate = slab.rate;
-                        break;
-                    }
+                if (taxableIncome <= slab.limit) {
+                    applicableSlab = slab;
+                    break;
                 }
-                previousLimit = slab.limit;
             }
-            
-            return { amount: Math.max(0, superTaxPayable), rateText: `${(effectiveRate * 100).toFixed(1)}%` };
+            // If income exceeds the highest finite limit, the last slab (Infinity) applies
+            if (!applicableSlab) {
+                applicableSlab = superTaxSlabs[superTaxSlabs.length - 1];
+            }
+        
+            // Flat tax = total income × rate
+            const superTaxAmount = taxableIncome * applicableSlab.rate;
+            const ratePercent = (applicableSlab.rate * 100).toFixed(1);
+        
+            return { amount: superTaxAmount, rateText: `${ratePercent}%` };
         }
 
         // --- MAIN CALCULATION FUNCTION ---
