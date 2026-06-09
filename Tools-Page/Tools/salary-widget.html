@@ -185,14 +185,21 @@
             // Silent Backend logic for Surcharge & Super Tax
             const sur = SURCHARGE_RATES[YEAR];
             let surcharge = (annual > sur.threshold) ? (nTax * sur.salaried) : 0;
+            // Calculate Super Tax (flat percentage on total income)
             const cSlabs = SUPER_TAX_SLABS[YEAR];
             let sTax = 0;
-            for (let i = 0; i < cSlabs.length; i++) {
-                const prev = i === 0 ? 0 : cSlabs[i-1].limit;
-                if (annual <= cSlabs[i].limit) {
-                    sTax = cSlabs[i].base + ((annual - prev) * cSlabs[i].rate);
-                    break;
+            if (cSlabs && annual >= cSlabs[0].limit) {  // first slab limit is 150M
+                let applicableSlab = null;
+                for (let i = 0; i < cSlabs.length; i++) {
+                    if (annual <= cSlabs[i].limit) {
+                        applicableSlab = cSlabs[i];
+                        break;
+                    }
                 }
+                if (!applicableSlab) {
+                    applicableSlab = cSlabs[cSlabs.length - 1]; // last slab (Infinity)
+                }
+                sTax = annual * applicableSlab.rate;
             }
 
             const totalTax = nTax + surcharge + sTax;
