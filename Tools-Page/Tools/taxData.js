@@ -12,17 +12,19 @@ const ALL_SLABS = {
             { limit: 600000, rate: 0.00, base: 0, description: "Tax Exempt" },
             { limit: 1200000, rate: 0.01, base: 0, description: "1% on excess over 600,000" },
             { limit: 2200000, rate: 0.11, base: 6000, description: "6,000 + 11% on excess over 1,200,000" },
-            { limit: 3200000, rate: 0.23, base: 116000, description: "116,000 + 23% on excess over 2,200,000" },
-            { limit: 4100000, rate: 0.30, base: 346000, description: "346,000 + 30% on excess over 3,200,000" },
-            { limit: Infinity, rate: 0.35, base: 616000, description: "616,000 + 35% on excess over 4,100,000" }
+            { limit: 3200000, rate: 0.20, base: 116000, description: "116,000 + 20% on excess over 2,200,000" },
+            { limit: 4100000, rate: 0.25, base: 316000, description: "316,000 + 25% on excess over 3,200,000" },
+            { limit: 5600000, rate: 0.29, base: 541000, description: "541,000 + 29% on excess over 4,100,000" },
+            { limit: 7000000, rate: 0.32, base: 976000, description: "976,000 + 32% on excess over 5,600,000" },
+            { limit: Infinity, rate: 0.35, base: 1424000, description: "1,424,000 + 35% on excess over 7,000,000" }
         ],
         business: [
             { limit: 600000, rate: 0.00, base: 0, description: "Tax Exempt" },
-            { limit: 1200000, rate: 0.05, base: 0, description: "5% on excess over 600,000" },
-            { limit: 1600000, rate: 0.20, base: 30000, description: "30,000 + 20% on excess over 1,200,000" },
-            { limit: 3200000, rate: 0.30, base: 110000, description: "110,000 + 30% on excess over 1,600,000" },
-            { limit: 5600000, rate: 0.40, base: 590000, description: "590,000 + 40% on excess over 3,200,000" },
-            { limit: Infinity, rate: 0.45, base: 1550000, description: "1,550,000 + 45% on excess over 5,600,000" }
+            { limit: 1200000, rate: 0.15, base: 0, description: "15% on excess over 600,000" },
+            { limit: 1600000, rate: 0.20, base: 90000, description: "90,000 + 20% on excess over 1,200,000" },
+            { limit: 3200000, rate: 0.30, base: 170000, description: "170,000 + 30% on excess over 1,600,000" },
+            { limit: 5600000, rate: 0.40, base: 650000, description: "650,000 + 40% on excess over 3,200,000" },
+            { limit: Infinity, rate: 0.45, base: 1610000, description: "1,610,000 + 45% on excess over 5,600,000" }
         ]
     },
 
