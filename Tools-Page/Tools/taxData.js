@@ -195,7 +195,7 @@ const ALL_SLABS = {
 
 // --- SECTION 4AB (SURCHARGE) DATA ---
 const SURCHARGE_RATES = {
-    TY2027: { salaried: 0.09, business: 0.10, threshold: 10000000 },
+    TY2027: { salaried: 0.00, business: 0.10, threshold: 10000000 },
     TY2026: { salaried: 0.09, business: 0.10, threshold: 10000000 },
     TY2025: { salaried: 0.10, business: 0.10, threshold: 10000000 },
    
@@ -209,65 +209,57 @@ const SURCHARGE_RATES = {
 // --- SECTION 4C (SUPER TAX) DATA ---
 const SUPER_TAX_SLABS = {
     TY2027: [
-        { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.015, base: 500000, description: "500,000 + 1.5% on excess over 200M" },
-        { limit: 300000000, rate: 0.02, base: 1250000, description: "1,250,000 + 2% on excess over 250M" },
-        { limit: 350000000, rate: 0.025, base: 2250000, description: "2,250,000 + 2.5% on excess over 300M" },
-        { limit: 400000000, rate: 0.03, base: 3500000, description: "3,500,000 + 3% on excess over 350M" },
-        { limit: 450000000, rate: 0.035, base: 5000000, description: "5,000,000 + 3.5% on excess over 400M" },
-        { limit: 500000000, rate: 0.04, base: 6750000, description: "6,750,000 + 4% on excess over 450M" },
-        { limit: Infinity, rate: 0.04, base: 8750000, description: "8,750,000 + 4% on excess over 500M" }
+        { limit: 500000000, rate: 0.08, base: 0, description: "8% on Taxable Income" }
     ],
     TY2026: [
         { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.015, base: 0, description: "0 + 1.5% on excess over 200M" },
-        { limit: 300000000, rate: 0.025, base: 0, description: "0 + 2.5% on excess over 250M" },
-        { limit: 350000000, rate: 0.035, base: 0, description: "0 + 3.5% on excess over 300M" },
-        { limit: 400000000, rate: 0.055, base: 0, description: "0 + 5.5% on excess over 350M" },
-        { limit: 500000000, rate: 0.075, base: 0, description: "0 + 7.5% on excess over 400M" },
-        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on excess over 500M" }
+        { limit: 200000000, rate: 0.01, base: 0, description: "1% on Total Income" },
+        { limit: 250000000, rate: 0.015, base: 0, description: "0 + 1.5% on Taxable Income" },
+        { limit: 300000000, rate: 0.025, base: 0, description: "0 + 2.5% on Taxable Incomee" },
+        { limit: 350000000, rate: 0.035, base: 0, description: "0 + 3.5% on Taxable Income" },
+        { limit: 400000000, rate: 0.055, base: 0, description: "0 + 5.5% on Taxable Income" },
+        { limit: 500000000, rate: 0.075, base: 0, description: "0 + 7.5% on Taxable Income" },
+        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on Taxable Income" }
     ],
     TY2025: [
         { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on excess over 200M" },
-        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on excess over 250M" },
-        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 300M" },
-        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on excess over 350M" },
-        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on excess over 400M" },
-        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on excess over 500M" }
+        { limit: 200000000, rate: 0.01, base: 0, description: "1% on Taxable Income" },
+        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on Taxable Income" },
+        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on Taxable Income" },
+        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on Taxable Income" },
+        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on Taxable Income" },
+        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on Taxable Income" }
     ],
     TY2024: [
         { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on excess over 200M" },
-        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on excess over 250M" },
-        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 300M" },
-        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on excess over 350M" },
-        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on excess over 400M" },
-        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on excess over 500M" }
+        { limit: 200000000, rate: 0.01, base: 0, description: "1% on Taxable Income" },
+        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on Taxable Income" },
+        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on Taxable Income" },
+        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on Taxable Income" },
+        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on Taxable Income" },
+        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on Taxable Income" }
     ],
     TY2023: [
         { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on excess over 200M" },
-        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on excess over 250M" },
-        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 300M" },
-        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on excess over 350M" },
-        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on excess over 400M" },
-        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on excess over 500M" }
+        { limit: 200000000, rate: 0.01, base: 0, description: "1% on Taxable Income" },
+        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on Taxable Income" },
+        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on Taxable Income" },
+        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: 400000000, rate: 0.06, base: 0, description: "0 + 6% on Taxable Income" },
+        { limit: 500000000, rate: 0.08, base: 0, description: "0 + 8% on Taxable Income" },
+        { limit: Infinity, rate: 0.1, base: 0, description: "0 + 10% on Taxable Income" }
     ],
     TY2022: [
         { limit: 150000000, rate: 0.00, base: 0, description: "No Super Tax" },
-        { limit: 200000000, rate: 0.01, base: 0, description: "1% on excess over 150M" },
-        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on excess over 200M" },
-        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on excess over 250M" },
-        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 300M" },
-        { limit: 400000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 350M" },
-        { limit: 500000000, rate: 0.04, base: 0, description: "0 + 4% on excess over 400M" },
-        { limit: Infinity, rate: 0.04, base: 0, description: "0 + 4% on excess over 500M" }
+        { limit: 200000000, rate: 0.01, base: 0, description: "1% on Taxable Income" },
+        { limit: 250000000, rate: 0.02, base: 0, description: "0 + 2% on Taxable Income" },
+        { limit: 300000000, rate: 0.03, base: 0, description: "0 + 3% on Taxable Income" },
+        { limit: 350000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: 400000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: 500000000, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" },
+        { limit: Infinity, rate: 0.04, base: 0, description: "0 + 4% on Taxable Income" }
     ],
     TY2021: []
 };
@@ -311,7 +303,7 @@ const NetworkData = {
 
 
 // =====================================================================================================
-// Tax On Cash Withdrawal For The Period Of TY 2021 To 2026 Plus TY 2027 As Dummy Data 
+// Tax On Cash Withdrawal For The Period Of TY 2021 To 2026 Plus TY 2027 Based On Purposed Finance Bill
 // =====================================================================================================
 
 window.taxData = {
@@ -322,7 +314,7 @@ window.taxData = {
         { year: 2024, ratePercent: 0.6, threshold: 50000 },
         { year: 2025, ratePercent: 0.6, threshold: 50000 },
         { year: 2026, ratePercent: 0.8, threshold: 50000 },   // Official rate for TY 2026
-    //    { year: 2027, ratePercent: 0.9, threshold: 50000 }    // Estimated – change as needed
+        { year: 2027, ratePercent: 0.8, threshold: 50000 }    // Estimated – change as needed
     ]
 };
 
@@ -368,7 +360,7 @@ const TaxCalculatorConfig = (function () {
         taxYears: taxYears,
         categories: categories,
         exemptionCategories: exemptionCategories,
-        defaultYear: "2026"
+        defaultYear: "2027"
     };
 })();
 
@@ -461,7 +453,7 @@ const TaxCalculatorConfig = (function () {
 
 
 // =====================================================================================================
-// Sales Tax ( FBR , PRA , KPRA , SRB , BRB , AJK ) For The Period Of TY 2020 To 2026 
+// Sales Tax ( FBR , PRA , KPRA , SRB , BRB , AJK ) For The Period Of TY 2020 To 2027 
 // =====================================================================================================
 
 
@@ -474,7 +466,8 @@ window.SalesTaxRatesDB = {    // FBR Rates Are Verified By MySelf From Act
     2023: { FBR:18, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },  // Here In TY 23 FBR Rate Was Changed In Feb-23 From 17% To 18%
     2024: { FBR:18, PRA:16, SRB:13, KPRA:15, BRB:15, AJK:16 },
     2025: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 },
-    2026: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 }
+    2026: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 },
+    2027: { FBR:18, PRA:16, SRB:15, KPRA:15, BRB:15, AJK:16 }
 };
 
 
