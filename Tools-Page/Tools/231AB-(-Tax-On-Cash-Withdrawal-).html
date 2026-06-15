@@ -15,12 +15,12 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>Tax On Cash Withdrawal in Pakistan - TY 2026 | Section 231AB Tax Calculator </title>
+  <title>Tax On Cash Withdrawal in Pakistan - TY 2027 | Section 231AB Tax Calculator </title>
   <link rel="canonical" href="https://ameerca.com/Tools-Page/Tools/231AB-(-Tax-On-Cash-Withdrawal-).html" />
   <meta name="description"
-    content="Accurate tax calculator for Section 231AB – advance tax on cash withdrawals. Applies 0.8% (TY 2026) on total daily withdrawal if > Rs. 50,000 and person NOT on ATL. Instant results, mobile-optimized.">
+    content="Accurate tax calculator for Section 231AB – advance tax on cash withdrawals. Applies 0.8% (TY 2027) on total daily withdrawal if > Rs. 50,000 and person NOT on ATL. Instant results, mobile-optimized.">
   <meta name="keywords"
-    content="Section 231AB, cash withdrawal tax, Pakistan tax calculator, ATL, FBR, tax year 2026, advance adjustable tax, AmeerCA">
+    content="Section 231AB, cash withdrawal tax, Pakistan tax calculator, ATL, FBR, tax year 2027, advance adjustable tax, AmeerCA">
   <meta name="author" content="AmeerCA">
   <!-- Font Awesome 6 (icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -646,7 +646,7 @@
       function populateYears() {
         const years = window.taxData?.taxYears || [];
         if (!years.length) {
-          yearSelect.innerHTML = '<option>2026 (0.8%)</option>';
+          yearSelect.innerHTML = '<option>2027 (0.8%)</option>';
           return;
         }
         const sorted = [...years].sort((a, b) => a.year - b.year);
@@ -655,7 +655,7 @@
           const opt = document.createElement('option');
           opt.value = item.year;
           opt.textContent = `${item.year} (${item.ratePercent}%)`;
-          if (item.year === 2026) opt.selected = true;
+          if (item.year === 2027) opt.selected = true;
           yearSelect.appendChild(opt);
         });
       }
@@ -663,7 +663,7 @@
       function getCurrentYearData() {
         const year = parseInt(yearSelect.value, 10);
         const found = window.taxData?.taxYears?.find(y => y.year === year);
-        return found || { year: 2026, ratePercent: 0.8, threshold: 50000 };
+        return found || { year: 2027, ratePercent: 0.8, threshold: 50000 };
       }
 
       function update() {
