@@ -318,8 +318,8 @@
         <label class="year-option" data-year="2023">2023</label>
         <label class="year-option" data-year="2024">2024</label>
         <label class="year-option" data-year="2025">2025</label>
-        <label class="year-option selected" data-year="2026">2026</label>
-        <!--<label class="year-option" data-year="2027">2027</label>-->
+        <label class="year-option" data-year="2026">2026</label>
+        <label class="year-option selected" data-year="2027">2027</label>
     </div>
 
     <!-- calculator form (compact) -->
@@ -448,7 +448,7 @@
 
         // DOM elements
         const yearOptions = document.querySelectorAll('.year-option');
-        let selectedYear = 2026;
+        let selectedYear = 2027;
         const turnoverInput = document.getElementById('monthlyTurnover');
         const isRegistered = document.getElementById('isRegistered');
         const isATL = document.getElementById('isATL');
@@ -523,7 +523,7 @@
         isATL.addEventListener('change', updateCalculation);
 
         // initial load
-        setYearRadio(2026);
+        setYearRadio(2027);
 
         // ----- SHARE, COPY, PRINT functionality (clean) -----
         const shareBtn = document.getElementById('shareBtn');
